@@ -1,3 +1,3 @@
-# How to create a Camera Application
+# 카메라 앱 만드는 방법
 
-Our introductory tutorial, which guides you through connecting to your drone's camera to display a live video feed in your app, through which you can take photos and videos.
+처음 튜토리얼로서 여러분의 드론에 잇는 카메라를 앱에서 라이브 비디오로 볼 수 있도록 연결하는 방법을 배워본다. 이를 통해 사진이나 비디오 촬영이 가능하다.

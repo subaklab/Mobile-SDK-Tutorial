@@ -28,28 +28,29 @@ Android Studio를 열고 **Open an existing Android Studio project**를 선택�
 ## Eclipse 버전 import하기
 
 ### 1. DJI Android SDK 다운받기
-Please download DJI Android SDK: <dev.dji.com/en/products/sdk/mobile-sdk/downloads>
+DJI Android SDK 다운받기: <dev.dji.com/en/products/sdk/mobile-sdk/downloads>
 
-Unzip the downloaded package. Find the **Eclipse** folder under the path "./V2.1.0/Eclipse". 
+다운 받은 패키지의 압축을 푼다. "./V2.1.0/Eclipse" 아래 **Eclipse**  폴더를 찾는다.
 
-### 2. Importing the project
 
-Open Android Studio, select **Import project(Eclipse ADT, Gradle,etc.)**. A dialog window will pop-up asking you to select the project path. Select the path "./V2.1.0/Eclipse/DJI-SDK-Android-V2.1.0" to import the DJI SDK Demo.
+### 2. 프로젝트 Import 하기
+
+Android Studio를 열어서 **Import project(Eclipse ADT, Gradle,etc.)**를 선택한다. 다이얼로그 팝업 윈도우가 뜨면 프로젝트 경로를 선택하라고 요청한다. "./V2.1.0/Eclipse/DJI-SDK-Android-V2.1.0" 경로를 선택하여 DJI SDK Demo를 import한다.
 
 ![importEclipseProject](../../images/Android/AndroidStudioMigration/importEclipseProject.png)
 
-Click "Next" for all the remaining dialogue boxes, the default values will be fine. After you click "Finish" on the last window, you will receive a pop-up window asking you to add dependency libraries. Just click "OK".
+모든 다이얼로그 박스를 남겨두고 "Next"를 클릭한다. 기본 값으로 남겨둔다. 마지막 창에서 "Finish"를 클릭한 후에 팝업 윈도우가 떠서 dependency 라이브러리를 추가를 묻는다. 그냥 "OK"를 클릭하자.
 
-Please confirm that in your project's DJI-SDK-LIB's folder "libs", there are the following .so libs or jars:
+여러분의 프로젝트에서 DJI-SDK-LIB의 "libs" 폴더를 확인하고 .so나 jars 형태이다.
 
 ![neededLibs](../../images/Android/AndroidStudioMigration/neededLibs.png)
 
-If the "run" icon is grayed out, you will need your edit configurations. Click "Run->Edit Configurations...", then click the plus sign "+" and select Android Application. In the settings, change the "Target Device" to "USB device" and click "OK".
+만약 "run" 아이콘이 회색처리 되어 있다면 edit configuration이 필요하다. "Run->Edit Configurations..."를 클릭하고 "+" 기호를 클릭하여 Android Application를 선택한다. 설정에서 "Target Device"를 "USB device"로 변경하고 "OK"를 클릭한다.
 
 ![7.png](../../images/Android/AndroidStudioMigration/7.png)
 ![8.png](../../images/Android/AndroidStudioMigration/8.png)
 
-Your run icon should now be green. Click it to compile and install the demo on your Android device.
+아이콘이 녹색이여야 정상이다. 이를 클릭하면 컴파일 및 데모를 안드로이드 장치에 설치된다.
 
 ![compileAndRun](../../images/Android/AndroidStudioMigration/compileAndRun.png)
 

@@ -1,34 +1,28 @@
-# Creating a Camera Application
+# 카메라 앱 만들기
 
 <!-- toc -->
 
-You can download the final project for this tutorial here: <https://github.com/DJI-Mobile-SDK/Android-FPVDemo-Part2.git>. 
+이 튜토리얼의 최종 프로젝트를 다운 받을 수 있다: <https://github.com/DJI-Mobile-SDK/Android-FPVDemo-Part2.git>. 
 
-We *strongly* recommend that you download the final project code and have it open as reference as you work through this tutorial.
+최종 프로젝트 코드를 다운받기를 추천하며 이 튜토리얼을 참조할 수 있도록 열어놨다.
 
-## Preparation
+## 준비하기
 
-(1) Download the Mobile SDK for Android from the following URL: 
+(1) Mobile SDK for Android를 아래 링크에서 다운받기 : 
 <http://dev.dji.com/cn/products/sdk/mobile-sdk/downloads>
 
-(2) Update the firmware of the aircraft (Phantom 3 Professional, Phantom 3 Advanced or Inspire 1) through the URL: <http://dev.dji.com/cn/products/sdk/mobile-sdk/downloads>(
-*Refer to "Updating the Aircraft Firmware": <http://download.dji-innovations.com/downloads/phantom_3/en/How_to_Update_Firmware_en.pdf> for instructions on updating the firmware.*)
+(2) 비행장치(Phantom 3 Professional, Phantom 3 Advanced or Inspire 1) 펌웨어 업데이트 하기: <http://dev.dji.com/cn/products/sdk/mobile-sdk/downloads>(
+*"비행장치 펌웨어 업데이트" 참조: <http://download.dji-innovations.com/downloads/phantom_3/en/How_to_Update_Firmware_en.pdf> 펌웨어 업데이트를 위한 설명서*)
 
-(3) Set up an Android development environment (if you do not yet have one). Throughout this tutorial we will be using Eclipse 4.2.2, which you can download here: <https://eclipse.org/downloads/packages/eclipse-classic-422/junosr2>. Once Eclipse is installed, you will then have to install the Eclipse Android Development Tool Plug-In, with instructions on how to do so found here: http://developer.android.com/intl/zh-TW/sdk/installing/installing-adt.html
+(3) 안드로이드 개발 환경 설정(아직 설정하지 않은 경우). 이 튜토리얼에서 Eclipse 4.2.2를 사용한다. 아래 링크에서 다운받을 수 있다: <https://eclipse.org/downloads/packages/eclipse-classic-422/junosr2>. 일단 Eclipse가 설치하고나면, Eclipse Android 개발 툴 Plug-In을 설치해야만 한다. 방법은 아래 링크에서 찾을 수 있다: http://developer.android.com/intl/zh-TW/sdk/installing/installing-adt.html
 
-*Note: Google's support for Android Development Tools in Eclipse is ending. If you would like to complete this demo using Eclipse as we have, or if you have already completed this demo in Eclipse, you can find instructions to migrate your project into Android Studio here: <https://developer.android.com/intl/zh-TW/sdk/installing/migrate.html>. If you would like to follow this tutorial using Android Studio, the mobile SDK folder contains an Android Studio library as well as an Eclipse one. Instructions on how to import the SDK library are given for both Eclipse and Android Studio below. However, we recommend that you follow this guide using the provided installation of Eclipse, and migrate your project afterwards, as we cannot ensure that results in Android Studio will be identical to those displayed in this tutorial.*
+*주의: 구글은 Eclipse의 안드로이드 개발 도구에 대한 지원이 끝났다. 이 데모를 완성하기 위해서는 Eclipse를 사용하거나 이미 데모를 완성했다면 Android Studio로 옮기는 방법을 아래 링크에서 찾을 수 있다: <https://developer.android.com/intl/zh-TW/sdk/installing/migrate.html>. 만약에 이 튜토리얼을 Android Studio에서 따라한다면, mobile SDK 폴더는 Eclipse뿐만 아니라 Android Studio 라이브러리를 포함해야 한다. Instructions on how to import the SDK library are given for both Eclipse and Android Studio below. However, we recommend that you follow this guide using the provided installation of Eclipse, and migrate your project afterwards, as we cannot ensure that results in Android Studio will be identical to those displayed in this tutorial.*
 
-## Setting up your Programming Environment
+## 프로그래밍 환경 설정하기
 
 ### Eclipse
 
-(1) Create a new 'Android Application Project'. Name the Application, Project and Package as you please. Under the 'Create Activity' page of the project set-up, create a blank activity, and name it 'FPVActivity'. The layout activity should automatically fill out with 'activity_fpv'.
-
-(2) Unzip the SDK package downloaded from the DJI website. Import the folder **Lib** (Eclipse\DJI-SDK-Android-V2.1.0) into Eclipse (File -> Import -> Android -> Existing Android Code into Workspace). Next, add the imported file to your library (right click on your project -> Select "**Properties**" -> Select "**Android**" -> Add).
-![setLib](../../images/Android/FPVDemo/1_importLib.png)
-
-(3) The imported library should now be located as shown below:
-![checkLib](../../images/Android/FPVDemo/1_CheckLib.png)
+ 삭제 
 
 ### Android Studio
 
@@ -124,7 +118,7 @@ Check the 'LogCat' panel at the bottom of your coding environment window for a r
 
 ![logcat](../../images/Android/FPVDemo/logcatScreenshot.png)
 
-Check the error code against the table below:
+아래 테이블의 error 코드를 확인하자.
 
 
 Error Code  	  | Description 
@@ -150,16 +144,16 @@ Error Code  	  | Description
 -18 | Empty app key
 -1000 | Server error 
 
-If you have received an error code that is not 0, follow the instructions below:
+0이 아닌 error 코드를 받으면 아래와 같은 지시를 따르도록 하자:
 
-1. Ensure that you have access to the internet
-2. Ensure that, when creating an app on the http://dev.dji.com website, you have filled out the 'Identification Code' field with your project package name 
-3. Ensure that APP KEY has not reach its installed capacity limit. If this does not solve the issue, refer to the table below for further troubleshooting.
-If you have further questions, contact our mobile SDK support by sending emails to <sdk@dji.com>
+1. 인터넷에 연결되어 있는지 확인하기
+2. http://dev.dji.com 사이트에서 앱을 생성할 때, 입력한 'Identification Code'와 프로젝트 패키지 이름이 같은지 확인하기 
+3. APP KEY의 설치한 용량 제한을 넘었는지 확인하기. 만약 이런 문제가 해결되지 않는다면, 추가 문제해결을 위한 테이블을 참고하자.
+추가 질문이 있다면 mobile SDK 지원을 담당하는 <sdk@dji.com>에 메일일 보낸다.
 
 
 
-## Adding Android Open Accessory (AOA) support
+## Android Open Accessory (AOA) 지원 추가하기
 
 The latest firmware on DJI's newest remote controllers connect to external devices using USB Accessory, rather than USB Debugging older models do. This requires Android Open Accessory (AOA) support. In the future, when you go on to create your own apps to use with DJI drones, you will need to add AOA support as shown below. This set up is also backwards compatible with older remotes.
 
