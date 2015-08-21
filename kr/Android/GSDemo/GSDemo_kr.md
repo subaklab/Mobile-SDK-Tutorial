@@ -1,24 +1,24 @@
-# Creating a MapView and Waypoint Application
+# MapView와 Waypoint 앱 만들기
 
 <!-- toc -->
 
-In this tutorial, you will learn how to setup the DJI PC Simulator, update the firmware of Inspire 1, Phantom 3 Professional and Phantom 3 to its beta version, and how to test the GroundStation API with DJI PC Simulator. Also, you will get in touch with the basic process of using DJI GroundStation's Waypoint feature. So let's get started!
+이 튜토리얼에서는 DJI PC Simulator를 설정하는 법을 배운고 Inspire 1, Phantom 3 Professional 그리고 Phantom 3의 펌웨어를 베타 버전으로 업데이트 한다. 그리고 DJI PC 시뮬레이터로 그라운드 스테이션 API를 테스트하는 방법을 배운다. DJI 그라운드스테이션의 Waypoint 기능을 사용하는 기본 절차를 경험한다. 자 이제 시작해보자.
 
-You can download the demo project for this tutorial from: <https://github.com/DJI-Mobile-SDK/Android-GSDemo-Part2-GoogleMap.git>
+데모 프로젝트를 다운받자 : <https://github.com/DJI-Mobile-SDK/Android-GSDemo-Part2-GoogleMap.git>
 
-## Using the DJI PC Simulator
+## DJI PC Simulator 사용하기
 
-### 1. Introduction
+### 1. 소개
 
-The DJI PC Simulator is a flight simulator dedicated for SDK developers. The simulator creates a virtual 3D environment and transfer the flight data to the PC via the UDP protocol for data analysis purpose.
+The DJI PC Simulator는 SDK 개발자를 위한 비행 simulator이다. simulator는 가상 3D 환경을 생성하고 UDP 프로토콜을 이용해서 데이터 분석 목적으로 비행 데이터를 PC로 전송한다.
 
-**Supported Operating Systems**: Windows 7, Windows 8 and Windows 8.1
+**지원 운영체제**: Windows 7, Windows 8 그리고 Windows 8.1
 
-**Supported DJI Platforms**: Matrice 100, Inspire 1, Phantom 3 Professional and Advanced
+**지원 DJI 플랫폼**: Matrice 100, Inspire 1, Phantom 3 Professional 그리고 Advanced
 
-### 2. Install and setup DJI PC Simulator
+### 2. DJI PC 시뮬레이터 설치 및 설정
 
-Download the DJI PC Simulator installation files and WIN Driver from : <http://dev.dji.com/en/products/sdk/onboard-sdk/downloads>
+DJI PC Simulator 설치파일 및 WIN 드라이버 다운받기 : <http://dev.dji.com/en/products/sdk/onboard-sdk/downloads>
 - DJI PC Simulator Installer & User Manual V1.0
 - WIN Driver Installer
 
