@@ -1,25 +1,25 @@
-# Creating a Photo and Video Playback Application
+# 사진 및 비디오 재생 앱 만들기
 <!-- toc -->
 
-*Note: The code in this tutorial has been written to be run on the iPad. Please make sure you run this code on an iPad or an iPad simulator. This tutorial is only for Phantom 3 Professional and Inspire 1*
+*주의: 이 튜토리얼의 코드는 iPad에서 실행되도록 작성되었다. 해당 코드를 iPad나 iPad simulator에서 실행하도록 하자. 이 튜토리얼은 Phantom 3 Professional와 Inspire 1에 해당된다.
 
-In this tutorial, you will learn how to use DJI Mobile SDK to access the media resources in the SD card of the aircraft's camera. By the end of this tutorial you will have an app that you can use to preview photos, play videos, download or delete files and so on.
+이 튜토리얼에서 비행체 카메라의 SD카드 내에 있는 미디어 리소스에 접근하기 위해서 DJI Mobile SDK 사용하는 방법을 배운다. 이 튜토리얼의 마지막에는 사진 미리보기, 비디오 재생, 파일을 다운받고 삭제하는 앱이 완성될 것이다.
 
-In order for our app to manage photos and videos, however, it must first be able to take and record them. Fortunately, in our previous tutorial [Creating a Camera Application](../../../iOS/FPVDemo/FPVDemo_en.md) we show you how to implement **Capture** and **Record** functions. Make sure you have read through that tutorial first before embarking on this one.
+사진과 비디오를 관리하는 앱을 위해서 먼저 촬영하는 기능이 필요하다. 운좋게 이전 튜토리얼 [Creating a Camera Application](../../../iOS/FPVDemo/FPVDemo_kr.md)에서 **Capture**와 **Record** 기능을 구현하는 방법을 보여주낟. 진행하기 전에 먼저 튜토리얼을 읽도록 하자.
 
-You can download the demo project for this tutorial from here: <https://github.com/DJI-Mobile-SDK/iOS-PlaybackDemo.git>
+이 튜토리얼과 관련된 데모 프로젝트를 다운로드할 수 있다: <https://github.com/DJI-Mobile-SDK/iOS-PlaybackDemo.git>
 
-Let's get started!
+자 이제 시작해 보자!
 
-## Previewing Photos and Videos
+## 사진 및 비디오 미리보기
 
-### 1. Importing the Framework and Libraries
+### 1. Framework와 라이브러리 Import하기
 
-  Create a new project in Xcode and name it "**PlaybackDemo**", copy the **DJISDK.framework** into your Xcode project's folder. Next, find the "VideoPreviewer" folder in the downloaded SDK. Copy the entire "VideoPreviewer" folder into your Xcode project's "ThirdParty" folder. Set the **Header Search Paths** and **Library Search Paths** for **FFMPEG** in the **Build Settings**. If this is a bit confusing, just check our previous tutorial [**Creating a Camera Application**](../../../iOS/FPVDemo/FPVDemo_en.md) for further explanation. Then, select the project target and go to Build Phases -> Link Binary With Libraries. Click the "+" button at the bottom and add two libraries to your project: **libstdc++.6.0.9.dylib** and **libz.dylib**. Take a look at the screenshot below:
+  Xcode에 "**PlaybackDemo**" 이름의 새로운 프로젝트를 생성하고, **DJISDK.framework**를 Xcode 프로젝트의 폴더에 복사하자. 다음으로 다운받은 SDK에 "VideoPreviewer" 폴더를 찾자. 전체 "VideoPreviewer" 폴더를 여러분의 Xcode 프로젝트의 "ThirdParty" 폴더에 복사한다. **Build Settings**에서 **FFMPEG**를 위해 **Header Search Paths** 와 **Library Search Paths**를 설정한다. 잘 모르겠다면 이전 튜토리얼 [**Creating a Camera Application**](../../../iOS/FPVDemo/FPVDemo_kr.md)을 확인하자. 다음으로 프로젝트 타겟을 선택하고 Build Phases -> Link Binary With Libraries로 이동한다. 밑에 있는 "+" 버튼을 클릭하고 2개 라이브러리 **libstdc++.6.0.9.dylib** 와 **libz.dylib**를 추가한다. 아래 스크린 샷을 보자 :
 
   ![navigator](../../../images/iOS/PlaybackDemo/navigator.png)
   
-### 2. Switching Playback Modes
+### 2. 재생 모드 전환
 
   Now, let's delete the **ViewController.h** and **ViewController.m** files, which were created by Xcode when you created the project. Then, create a viewController named "DJIRootViewController" and set it as the **Root View Controller** in Main.storyboard**. This demo and its code was written to be used with the iPad, so we'll have to adjust the User Interface of **Main.storyboard** accordingly. We'll change the **Root View Controller**'s frame. Let's set its size to **Freeform** under the **Size** dropdown in the **Simulated Metrics** section. In the view section, change the width to **1024** and height to **768**. Take a look at the changes made below:
 
