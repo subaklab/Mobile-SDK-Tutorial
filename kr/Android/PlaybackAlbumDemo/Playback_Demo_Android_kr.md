@@ -1,17 +1,17 @@
-# Creating a Photo and Video Playback Application
+# 사진과 비디오 재생 앱 생성하기
 
-*Note: This tutorial is only for Phantom 3 Professional and Inspire 1*
+*주의: 이 튜토리얼은 Phantom 3 Professional와 Inspire 1에만 해당된다.*
 
 <!-- toc -->
 
-## Introduction
+## 소개
 In this tutorial, you will familiarize yourself with the various Camera Modes the Inspire 1, Phantom 3 Professional and M100 have, how to switch and get the Camera Mode, how to build a friendly UI for a Photo and Video Album app, and how to select and download media files. Let's get started!
 
 You can download the demo project for this tutorial from here: <https://github.com/DJI-Mobile-SDK/Android-PlaybackDemo>
 
 We **strongly** recommend that you have the source code for the demo project open while working your way through this tutorial.
 
-## Camera Modes
+## 카메라 모드
 
 Before developing the album app, we should briefly cover the capabilities the SDK has in each camera mode. For the Inspire 1, Phantom 3 Professional and M100, there are four camera modes, **Capture Mode, Record Mode, Playback Mode** and **Download Mode**. In **Capture Mode**, users are allowed to use capture functions, such as taking photos and setting up parameters for the camera. In the **Record Mode**, these capture functions are blocked and users can only start and stop recording video. **Playback Mode** allows the user to preview the media files in the SD card. **Download Mode** lets the user download media files, but must be set up correctly beforehand.
 

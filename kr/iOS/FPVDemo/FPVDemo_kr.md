@@ -1,24 +1,24 @@
-# Creating a Camera Application
+# 카메라 앱 만들기
 
 <!-- toc -->
 
-*Note: The code in this tutorial has been written to be run on the iPad. Please make sure you run this code on an iPad or an iPad simulator.*
+*주의: 이 튜토리얼의 코드는 iPad에서 실행되도록 작성하였다. 따라서 iPad나 iPad simulator에서 이 코드를 실행하시오.*
 
-This tutorial is designed for you to gain a basic understanding of the DJI Mobile SDK. It will implement the FPV view and two basic camera functionalities: **Take Photo** and **Record video**.
+이 튜토리얼은 DJI Mobile SDK의 기초를 이해를 돕도록 설계하였다. FPV 보기와 2가지 기본 카메라 기능을 구현한다: **사진 찍기** and **비디오 녹화**.
 
-   You can download the entire project for this tutorial here: <https://github.com/DJI-Mobile-SDK/iOS-FPVDemo.git>
+   이 튜토리얼의 전체 프로젝트를 다운받을 수 있다 : <https://github.com/DJI-Mobile-SDK/iOS-FPVDemo.git>
 
-## Download the SDK
+## SDK 다운로드
 
-You can download the latest iOS SDK from here: <https://dev.dji.com/en/products/sdk/mobile-sdk/downloads>
+최신 iOS SDK 다운받기 : <https://dev.dji.com/en/products/sdk/mobile-sdk/downloads>
 
-The development package includes:
+개발 패키지는 다음알 포함한다 :
 
-- SDK demo project (This includes implementation of main features such as camera, gimbal control, Ground Station and Joystick)
+- SDK demo 프로젝트 (카메라, gimbal 제어, 그라운드 스테이션과 제이스틱과 같은 주요 기능을 구현)
 - Documentations
 - Framework
 
-Minimum Requirement: iOS 6.1 or above
+최소 요구: iOS 6.1 이상
 
 ## Import the SDK framework
 

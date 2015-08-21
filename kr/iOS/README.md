@@ -1,7 +1,8 @@
-# iOS Mobile SDK Tutorials
+# iOS Mobile SDK 튜토리얼
 
-- **How to create a Camera Application**: Our introductory tutorial, which guides you through connecting to your drone's camera to display a live video feed in your app, through which you can take photos and videos.
+- **카메라 앱 만드는 방법**: 튜토리얼에서 드론의 카메라를 앱에서 라이브 비디오로 출력하는 방법을 알아보고 이를 통해 사진이나 비디오를 촬영할 수 있다.
 
-- **How to create a Photo and Video Playback Application**: A follow up to the FPV tutorial, this tutorial teaches you how to construct an application to view media files onboard a DJI drone's SD card, specifically for Phantom 3 Professional and Inspire 1.
+- **사진과 비디오 재생 앱 만드는 방법**
+재생하는 앱을 만드는 방법을 통해 미디어 파일(이미지, 비디오)의 미리보기 기능과 드론에서 파일을 다운받거나 삭제하는 것을 익힌다.
 
-- **How to create a MapView and Waypoint Application**: Teaches you how to construct a Groundstation app, which allows you to plot a flight route for your drone by placing waypoints on a map.
+- **MapView와 Waypoint 앱 만드는 방법**: 그라운드 스테이션 앱을 만드는 방법을 배워서 지도에서 waypoint를 찍어서 해당 경로로 비행하도록 한다.

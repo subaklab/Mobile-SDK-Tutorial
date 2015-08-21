@@ -1,3 +1,3 @@
-# How to create a MapView and Waypoint Application
+# Waypoint 생성하는 방법
 
-Teaches you how to construct a Groundstation app, which allows you to plot a flight route for your drone by placing waypoints on a map.
+그라운드스테이션 앱을 만드는 방법을 배워본다. 이를 통해 지도 상에 waypoint를 찍어서 경로로 비행하도록 한다.
