@@ -144,13 +144,13 @@ Developers can use this enum to notify users of deletion progress.</td>
 </tbody>
 </table>
 
-As you can see, there are a lot of attributes in this class. Some of them contain basic information about media files and others provide important information for developers to identify what camera mode is being used and how the application should act accordingly. For example, developers can us the information from DJICameraPlaybackState to choose with UI elements to display.
+ 본 것처럼 이 클래스에는 많은 속성이 있다. 이들 중 일부는 미디어 파일에 대한 기본 정보를 포함하며, 다른 정보는 카메라가 무엇을 사용하고 app이 이에 따라서 적절하게 동작하는지 개발자에게 중요한 정보이다. 예를 들면, 개발자는 표시할 UI 앨리먼트를 선택하기 위해서 DJICameraPlaybackState 정보를 이용할 수 있다.
 
-Now that you are familiar with the playback information provided by the SDK we can begin to build our album application.
+이제 SDK가 제공하는 재생 정보에 알아봤으며 앨범 app을 만들어보자.
 
-## UI Components For The Photo Album Application
+## 포토 앨범 app을 위한 UI 컴포넌트
 
-### 1. GridView for Multiple preview playback mode
+### 1. 다중 프리뷰 재생 모드를 위한 GridView
 
 In our official drone companion app, DJI Pilot, you can see that there are eight thumbnails in the app view while the camera is in the multiple playback mode (if you don't yet have DJI Pilot installed on your Android device [click here to install it now](https://play.google.com/store/apps/details?id=dji.pilot&hl=en)). To achieve a comfortable user experience, we will provide a similar UI component for developers to include in their apps. The first thing we will implement is the Gridview (for further information on GridView from the official Android tutorial [click here](http://developer.android.com/reference/android/widget/GridView.html)).
 
