@@ -165,11 +165,11 @@ DJI의 최신 리모트 컨트롤러의 최신 펌웨어는 USB Accessory를 이
 <uses-feature android:name="android.hardware.usb.host" android:required="false" />
 ~~~ 
 
-Under the 'application' element, add the following line of code:
+'application' 엘리멘트 아래에 다음 코드를 추가한다 :
 ~~~xml
 uses-library android:name="com.android.future.usb.accessory"
 ~~~
-Your **AndroidManifest.xml** file should look something like this:
+**AndroidManifest.xml** 파일은 아래와 같아야 한다 :
 
 ~~~xml
 	...
@@ -202,7 +202,8 @@ Your **AndroidManifest.xml** file should look something like this:
 		</activity>
 ~~~
 
-(2) Create a new Android Activity Page, using **DJIAoaActivity** as the activity name. (Right click on your package -> New -> Other -> Android -> Android Activity). In your newly created **DJIAoaActivity.java** file, locate the '**onCreate()** method, and replace the code inside with the following code to enable AOA support.
+(2) 새로운 Android Activity 페이지를 생성하고 **DJIAoaActivity**를 activity 이름으로 사용하라. ()
+Create a new Android Activity Page, using **DJIAoaActivity** as the activity name. (package에서 오른쪽 클릭을 해서 New -> Other -> Android -> Android Activity) 새로 생성한 **DJIAoaActivity.java** 파일에서 **onCreate()** 메소드에서 AOA 지원이 가능하도록 다음 코드로 교체하자.
 
 ~~~java
 	private static boolean isStarted = false;
@@ -236,9 +237,9 @@ Your **AndroidManifest.xml** file should look something like this:
 	...
 ~~~ 
 
-Let's run through this code bit by bit.
+코드를 하나씩 살펴보자.
 
-We created the variable **isStarted** so that the set up only occurs when the app starts up.
+app이 시작할 때만 설정이 일어나도록 변수 **isStarted**를 생성했다.
 
 ~~~java
 	private static boolean isStarted = false;
@@ -256,16 +257,16 @@ We created the variable **isStarted** so that the set up only occurs when the ap
 	}
 ~~~
 
-If the app is being started up, we set up an intent that will take us to our main activity **FPVActivity**, as shown in these two lines of code:
+app이 사작되면, main activity인 **FPVActivity**에서 intent를 설정해 준다. 아래 2줄 코드와 같다 :
 
 ~~~java
 Intent intent = new Intent(DJIAoaActivity.this, FPVActivity.class);
 startActivity(intent);
 ~~~
 
-*Note: In the future when you are adding AOA support for your own apps to use with the DJI remote, you will want to replace "FPVActivity.class" with the name of your own class. Additionally, if you haven't named your first activity 'FPVActivity', you'll need to put the name you chose here instead.*
+*주의: 향후 여러분의 app이 DJI remote와 사용하는 AOA 지원이 추가될 때, "FPVActivity.class"를 여러분의 class 이름으로 대체하기를 원할 것이다. 추가로 여러분이 첫번째 activity에 'FPVActivity'을 주지 않았다면 대신에 여러분이 여기서 선택한 이름을 넣으면 된다.*
 
-Next we have the code responsible for sending a broadcast to connect to the remote.
+다음으로 remote에 연결하기 위해서 broadcast를 보내는 역할을 하는 코드를 보자.
 
 ~~~java
 Intent aoaIntent = getIntent();
@@ -279,7 +280,7 @@ if(aoaIntent != null) {
 }
 ~~~
 
-This code first gets the action of the intent that brought us here. This allows us to check if the app is being opened, or if the device the app is on has just been plugged into a DJI remote. If so, we send a broadcast to set up the connection between the app and the DJI remote.
+먼저 이 코드는 여기로 오게 만든 intent의 action을 얻는다. 이를 통해 app이 열렸는지 확인할 수 있고, app이 실행되는 장치가 DJI remote에 연결되었는지 확인할 수 있다. 만약 그렇다면, app과 DJI remote 사이에 연결을 설정하는 broadcast를 보낸다.
 
 ~~~java
 if (action==UsbManager.ACTION_USB_ACCESSORY_ATTACHED || action == Intent.ACTION_MAIN){
