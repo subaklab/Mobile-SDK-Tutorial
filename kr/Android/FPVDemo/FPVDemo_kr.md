@@ -26,24 +26,24 @@
 
 ### Android Studio
 
-(1) Start a new Android Studio Project. Give the application any name you like. Hit 'next' until you reach the 'Customize the Activity' page, where you should name your activity 'FPVActivity'. The layout name should automatically fill out with 'activity_fpv'. Press 'Finish'.
+(1) 새로 Android Studio 프로젝트 시작하기. 원하는 application 이름을 입력한다. 'Customize the Activity' 페이지가 나올때까지 next'를 클릭한다. activity 이름은 'FPVActivity'으로 정해야 한다. layout 이름은 자동으로 'activity_fpv'가 들어간다. 'Finish'를 누른다.
 
-(2) Unzip the SDK package downloaded from the DJI website. Go to File -> New -> Import Module. In the 'Source Directory' field, find the DJI-SDK-LIB folder location (Android Studio\DJI-SDK-Android-V2.1.0\Lib\DJI-SDK-LIB). Press Finish.
+(2) DJI 웹사이트에서 다운받은 SDK 패키지 압축을 푼다. 메뉴에서 File -> New -> Import Module로 이동한다. 'Source Directory'필드에 DJI-SDK-LIB 폴더를 찾는다.(Android Studio\DJI-SDK-Android-V2.1.0\Lib\DJI-SDK-LIB). 'Finish'를 누른다.
 
-*Note: The folder 'Android Studio' is found in the SDK package downloaded from the DJI website. The library used in the demo project code is from the 'Eclipse' folder in the same SDK package, so if you are working in Android Studio make sure that you are using the correct library, found in the 'Android Studio' folder. For your convenience the SDK package download link is reproduced here <http://dev.dji.com/cn/products/sdk/mobile-sdk/downloads>*
+*주의: DJI 웹사이트에서 다운받은 SDK 패키지내에 'Android Studio' 폴더가 있다. 데모 프로젝트에서 사용하는 라이브러리는 동일한 SDK 패키지내에 'Eclipse' 폴더에 있다. 만약 Android Studio에서 작업하고 있다면, 올바른 라이브러리('Android Stduio' 폴더)를 사용하고 있는지 확인해야 한다. 편의를 위해 SDK 패키지 다운로드 링크를 여기서 다시 기록해 두겠다. <http://dev.dji.com/cn/products/sdk/mobile-sdk/downloads>*
 
 ![importModule](../../images/Android/FPVDemo/importModuleScreenshot.png)
 
-Next, right click on the 'app' module in the file directory to the left, and click 'Open Module Settings". Navigate to the 'Dependencies' tab. Press the green plus sign, click 'Module Dependency', and select ':DJI-SDK-LIB'. Press 'OK' to confirm. After Gradle finishes rebuilding, you're environment will be ready!
+다음으로 왼쪽에 있는 파일 디렉토리에 'app' 모둘에서 오른쪽 클릭을 하고 'Open Module Settings'을 클릭한다. 'Dependencies' 탭으로 이동한다. 녹색 + 표시를 누르고 'Module Dependency'를 클릭해서 ':DJI-SDK-LIB'를 선택한다. 확인을 위해 'OK'를 누른다. Gradle이 재구성을 마치면, 환경준비를 마치게 된다.
 
 ![addDependency](../../images/Android/FPVDemo/addDependencyScreenshot.png)
 
 
-## Activating your App
+## App 활성화
 
-(1) Register for an account at <http://dev.dji.com>. Once registered, click on your name in the upper right corner. Click on 'Mobile SDK', then 'Create APP' and fill out the creation form. Type in your project's package name in the 'Identification Code' field.
+(1) <http://dev.dji.com>에서 계정 등록한다. 일단 등록하면 오른쪽 상단 모서리에 여러분의 이름을 클릭한다. 'Mobile SDK'을 클릭하고 'Crate App'에서 생성폼을 채운다. 'Identification Code'에는 프로젝트의 패키지 이름을 입력한다.
 
-(2) Copy both the **<uses-permission ... >** lines of code and the highlighted meta-data element into your **AndroidManifest.xml** file for activation, as shown below.  
+(2) 코드의 **<uses-permission ... >** 모두를 복사해서 **AndroidManifest.xml** 파일 내부에 meta-data element를 하이라이트시킨다. 아래와 같다.  
 
 ![appKeyMetaData](../../images/Android/FPVDemo/1_appKeyMetaData2.png)
 
@@ -51,15 +51,15 @@ Fill in the **android:value** field with the APP KEY that you have applied for f
 
 ![appKey](../../images/Android/FPVDemo/1_appKey.png)
 
-In your FPVActivity.java file, add the following variable in the FPVActivity class.
+FPVActivity.java file 파일에서 FPVActivity 클래스에 다음 변수를 추가한다.
 
 ~~~java
 private static final String TAG = "MyApp";
 ~~~
 
-We'll be using this string to identify log errors that are relevant to our activation.
+활성화와 관련된 log error를 식별하기 위해서 이 string 값을 이용할 것이다.
 
-In your onCreate method, add the following code. It looks like a lot, but the bulk of it is a single method called **DJIDrone.checkPermission()**. This method will verify your app by checking the information we just added to our **AndroidManifest.xml** file against DJI's servers. If this if your first time running your app, and the verification comes through, the app will also be activated.
+onCreate 메소드에서 다음 코드를 추가하자. 많아 보이지만 이 코드들은 **DJIDrone.checkPermission()**라 불리는 단일 함수이다. 이 메소드는 DJI의 서버에 대해서 **AndroidManifest.xml**에 추가했던 정보를 체크함으로써 app의 유효성을 확인할 수 있다. 처음으로 여러분의 app을 실행한다면, 유효성을 확인하고 나면 app이 활성화 될것이다.
 
 ~~~java
 	new Thread(){
@@ -89,9 +89,9 @@ In your onCreate method, add the following code. It looks like a lot, but the bu
 	}.start();
 ~~~
 
-Let's break this chunk of code down. You'll notice that we place all our code inside of a thread. The reason for this is because **checkPermission()** performs network operations, and such processes must be handled in a thread, lest the whole app freezes up while waiting for the network operation to complete.
+이 코드들을 나눠보자. 모든 코드를 thread내부에 두었다는 것을 명심하자. 이렇게 하는 이유는 **checkPermission()**이 네트워크에서 실행되기 때문이고 이런 절차는 반드시 thread에서 처리해야만 한다. 네트워크 연산이 완료되기를 기다리는 동안 전체 app이 멈추지 않게 하기 위해서다.
 
-**checkPermission()** takes in two parameters: a context, and a **DJIGerneralListener()** object. **DJIGerneralListener()** is an interface containing one method: **onGetPermissionResult()**, which acts as a callback function that handles what to do when **checkPermission()** receives a response. 
+**checkPermission()**는 2개의 인자를 가진다: context와 **DJIGerneralListener()**. **DJIGerneralListener()**는 **onGetPermissionResult()**라는 1개 메소드를 가지는 인터페이스다: 이는 callback함수처럼 동작해서 **checkPermission()**가 응답을 받을 때 해야하는 것을 정의한다.
 
 ~~~java
 @Override
@@ -110,11 +110,11 @@ public void onGetPermissionResult(int result){
 }
 ~~~
 
-**onGetPermissionResult()** takes in an integer **result**. **result** is an error code returned to your app. If the error code is 0 the app has been successfully verified. If not, **onGetPermissionResult()** prints out the appropriate error message using the Log. When developing your own apps, you can decide whether this is how you'd like to handle the error code.
+**onGetPermissionResult()**는 **result**라는 하나의 정수를 인자로 갖는다. **result**는 app에다가 에러 코드를 반환한다. 만약 error 코드가 0이면 app은 성공적으로 유효성을 검증한 것이다. 만약 그렇지 않다면 **onGetPermissionResult()**는 Log를 이용해서 적절한 error 메시지를 출력한다. 여러분의 app을 개발할 때, error 코드를 처리하는게 좋을지 말지를 결정해야 한다.
 
-(3) Run your project code on an Android device or Android emulator to complete the activation procedure. Instructions for running your code can be found here: <http://developer.android.com/intl/zh-TW/tools/building/building-eclipse.html>
+(3) 활성화 절차를 완료하기 위해서 Android 장치나 Android emulator에서 여러분의 프로젝트를 실행하자. 여러분의 코드를 실행에 관련된 내용은 아래에서 찾을 수 있다: <http://developer.android.com/intl/zh-TW/tools/building/building-eclipse.html>
 
-Check the 'LogCat' panel at the bottom of your coding environment window for a return message. You will be able to identify the return message by its 'Tag' field, where it should say "MyApp".
+반환 메시지를 보기 위해서는 개발 환경 창의 밑에 있는'LogCat' 패널을 확인하라. "MyApp"을 표시하는 'Tag' 필드로 반환 메시지를 식별할 수 있다.
 
 ![logcat](../../images/Android/FPVDemo/logcatScreenshot.png)
 
@@ -155,11 +155,11 @@ Error Code  	  | Description
 
 ## Android Open Accessory (AOA) 지원 추가하기
 
-The latest firmware on DJI's newest remote controllers connect to external devices using USB Accessory, rather than USB Debugging older models do. This requires Android Open Accessory (AOA) support. In the future, when you go on to create your own apps to use with DJI drones, you will need to add AOA support as shown below. This set up is also backwards compatible with older remotes.
+DJI의 최신 리모트 컨트롤러의 최신 펌웨어는 USB Accessory를 이용해서 외부 장치에 연결한다. USB Debugging 예전 모델이 했던 것과 비슷하다. 이를 위해서 AOA 지원이 필요하다. 미래에는 DJI 드론을 이용해서 여러분의 app을 만들려고 할 때, 아래 보이는 바와 같이 AOA 지원이 필요할 것이다. 이 설정은 이전 리모트 장치와 하위 호환성을 가진다. 
 
-(1) Modify **AndroidManifest.xml** to set **.DJIAoaActivity** as the main activity, so that it will act as the entry point when your app starts up. To do this, find the **<activity ... >** element, and change the **android:name** value from **.FPVActivity** to **.DJIAoaActivity**.
+(1) **AndroidManifest.xml**를 수정해서 **.DJIAoaActivity**가 main activity가 되도록 한다. 따라서 여러분의 app이 시작될 때 entry 포인트가 되도록 수정한 것이다. 이를 위해서 **<activity ... >** 엘리먼트를 찾아서 **android:name** 값을 **.FPVActivity**에서 **.DJIAoaActivity**로 바꾼다.
 
-Under the 'manifest' element in your **AndroidManifest.xml** file, add the following lines of code:
+여러분의 **AndroidManifest.xml** 파일내에 'manifest' 엘리먼트 아래에 다음 code를 추가한다:
 ~~~xml
 <uses-feature android:name="android.hardware.usb.accessory" android:required="false" />
 <uses-feature android:name="android.hardware.usb.host" android:required="false" />
