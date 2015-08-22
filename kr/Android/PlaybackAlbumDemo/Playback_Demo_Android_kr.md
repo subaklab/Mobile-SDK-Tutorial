@@ -1060,10 +1060,10 @@ In summary, developers should follow the following steps to allow users to downl
 
 6. The app has successfully downloaded the files. `finishDownloadAllSelectedFiles` should be invoked while the ack comes to ensure camera returns to playback mode.
 
-## Summary
+## 정리
 
-Over the course of this tutorial, you have learned how to switch and get the current camera mode, download and delete media files, implement gesture control, and much more to create a Photo and Video Album application for the Inspire 1, Phantom 3 Professional and M100!
+이 튜토리얼의 전체 과정에서 카메라 모드를 전환하고 설정하는 것, 미디어 파일을 다운로드 받고 삭제하는 것, gesture 제어 구현, 사진/비디오 앨범 app 만드는 방법을 배웠다.(Inspire 1, Phantom 3 Professional, M100에 해당)
 
-In the next tutorial, we will be implementing the album app for Phantom 3 Advanced. 
+다음 튜토리얼에서는 Phantom 3 Advanced를 위한 앨범 앱을 구현할 것이다.
 
 
