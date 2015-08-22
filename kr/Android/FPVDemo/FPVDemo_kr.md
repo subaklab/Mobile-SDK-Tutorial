@@ -2,14 +2,13 @@
 
 <!-- toc -->
 
-이 튜토리얼의 최종 프로젝트를 다운 받을 수 있다: <https://github.com/DJI-Mobile-SDK/Android-FPVDemo-Part2.git>. 
-
+이 튜토리얼의 최종 프로젝트를 다운 받을 수 있다: <https://github.com/DJI-Mobile-SDK/Android-FPVDemo.git>. 
 최종 프로젝트 코드를 다운받기를 추천하며 이 튜토리얼을 참조할 수 있도록 열어놨다.
 
 ## 준비하기
 
 (1) Mobile SDK for Android를 아래 링크에서 다운받기 : 
-<http://dev.dji.com/cn/products/sdk/mobile-sdk/downloads>
+<https://developer.dji.com/mobile-sdk/downloads/>
 
 (2) 비행장치(Phantom 3 Professional, Phantom 3 Advanced or Inspire 1) 펌웨어 업데이트 하기: <https://developer.dji.com/mobile-sdk/downloads/>(
 *"비행장치 펌웨어 업데이트" 참조: <http://download.dji-innovations.com/downloads/phantom_3/en/How_to_Update_Firmware_en.pdf> 펌웨어 업데이트를 위한 설명서*)
