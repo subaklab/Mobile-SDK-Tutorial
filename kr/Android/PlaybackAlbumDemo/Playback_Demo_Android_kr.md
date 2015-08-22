@@ -152,18 +152,18 @@ Developers can use this enum to notify users of deletion progress.</td>
 
 ### 1. 다중 프리뷰 재생 모드를 위한 GridView
 
-In our official drone companion app, DJI Pilot, you can see that there are eight thumbnails in the app view while the camera is in the multiple playback mode (if you don't yet have DJI Pilot installed on your Android device [click here to install it now](https://play.google.com/store/apps/details?id=dji.pilot&hl=en)). To achieve a comfortable user experience, we will provide a similar UI component for developers to include in their apps. The first thing we will implement is the Gridview (for further information on GridView from the official Android tutorial [click here](http://developer.android.com/reference/android/widget/GridView.html)).
+공식 app인 DJI Pilot에서 카메라가 다중 재생 모드인 경우 app view에서 8개 썸네일이 있다. 아직 DJI Pilot가 [설치하기 위해 여기를 클릭하자](https://play.google.com/store/apps/details?id=dji.pilot&hl=en). 편안한 UX를 달성하기 위해서 개발자가 app에 포함할 수 있는 비슷한 UI 컴포넌트를 제공한다. 첫번째로 구현할  Gridview가 그것이다.(추가 정보는 Android 튜토리얼의 GridView로 [여기를 클릭하자](http://developer.android.com/reference/android/widget/GridView.html))
 
-Below is a rough outline for the multiple preview UI. Each of these eight picture previews is a button. We implement these buttons through GridView. 
+아래는 다중 미리보기 UI를 위한 대략적인 아웃라인이다. 이 8개 사진 미리보기의 각각은 button이다. 이 button을 GridView로 구현해보자.
 
 ![Multiple playback view](../../images/Android/PlaybackAlbumDemo/gridview.jpg)
 
-There are two features of the grid view we should be aware of before we start:
+grid view의 2가지 특징이 있는데 여기서부터 시작해 보자 :
 
-- The grid view is scrollable.
-- The object in each block can be designed by the user.
+- gird view는 스크롤이 가능하다.
+- 각 블록에 있는 객체는 사용자가 디자인할 수 있다.
 
-We override the base Gridview to satisfy our requirements (an unscrollable gridview with 8 transparent buttons). The following code block shows how we override GridView. Since it's quite basic, feel free to add more features in your own future apps.
+기본 GridView를 override해서 요구사항을 만족시키자(스크롤이 되지 않는 8개 button으로 된 gridview). 다음 코드에서는 어떻게 GridView를 override해야할지 보여준다. 아주 기본적인 것이라 여러분의 향후 app에는 더 많은 기능을 추가할 것이기 때문에 가벼운 마음으로 보도록 하자.
 
 ~~~java
 	public class PlaybackGridView extends GridView {
@@ -189,7 +189,7 @@ We override the base Gridview to satisfy our requirements (an unscrollable gridv
 	}
 ~~~
 
-The method `dispatchTouchEvent(MotionEvent ev)` sets up the unscrollable property of the gridview. To use this to override GridView, developers should use the full path as the item tag. Take our file `activity_playback_protocol.xml` from our demo project as example:
+`dispatchTouchEvent(MotionEvent ev)` 메소드는 gridview의 스크롤할 수 없는 속성을 설정한다. GridView를 override 위해서 이것을 사용하려면 개발자는 item tag로 전체 패스를 사용해야만 한다. 데모 프로젝트에 있는 `activity_playback_protocol.xml` 파일을 에제로 보면 :
 
 ~~~xml
 	<?xml version="1.0" encoding="utf-8"?>
@@ -213,7 +213,7 @@ The method `dispatchTouchEvent(MotionEvent ev)` sets up the unscrollable propert
 	</RelativeLayout>
 ~~~
 
-Now we have a basic gridview for the album application. The next file, 'button_gridview_item.xml' defines each element of the gridview and provides the block layout.
+이제 앨범 app를 위해 기본 gridview를 갖게 되었다. 다음으로 'button_gridview_item.xml'는 gridview의 각 엘리먼트를 정의하고 block layout을 제공한다.
 
 ~~~xml
 	<?xml version="1.0" encoding="utf-8"?>
@@ -234,7 +234,7 @@ Now we have a basic gridview for the album application. The next file, 'button_g
 	</LinearLayout>
 ~~~
 
-Congratulations! You have now collected all the components required to build a multiple playback preview album. The upcoming code will help you to combine them into a good looking UI.
+축하한다! 이제 다중 재생 미리보기 앨범을 만드는데 있어서 모든 컴포넌트의 요구사항을 만족한다. 앞으로의 코드는 UI가 좋아 보이도록 이것들을 조합하는 것을 볼 것이다.
 
 ~~~java
 	public class PlaybackProtocolActivity extends Activity implements OnClickListener {
@@ -321,11 +321,11 @@ Congratulations! You have now collected all the components required to build a m
 	}
 ~~~
 
-We've just finished the framework of our application! Now set `PlaybackProtocolActivity` as the main activity in your `AndroidManifest.xml` file. Run your project to enjoy the fruits of your labor!
+이제 막 우리 app의 framework를 마쳤다. 이제는 `PlaybackProtocolActivity`를 main activity로 설정하기 위해서 `AndroidManifest.xml`에 설정하자. 우리가 한 작업의 결과를 얻기 위해 프로젝트를 실행해보자.
 
 ### 2. Camera mode UI 
 
-Before we get started with this subsection, we've got to first make some adjustments:
+이 단원을 시작하기 전에, 먼저 약간의 조정이 필요하다:
 
 1. Follow the [Creating a Camera Application](../../Android/FPVDemo/FPVDemo_en.md) to set up Android Open Accessory (AOA) support
 2. Change your main activity from `PlaybackProtocolActivity` to `DJIAoaActivity`
