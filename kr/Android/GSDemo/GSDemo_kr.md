@@ -22,6 +22,8 @@ DJI PC Simulator 설치파일 및 WIN 드라이버 다운받기 : <http://dev.dj
 - DJI PC Simulator Installer & User Manual V1.0
 - WIN Driver Installer
 
+simulator를 설치하기 전에 WIN driver를 설치해야만 한다. Mac 사용자에 대해서는, simulator를 가상환경에서 simulator를 실행하는 것을 추천한다.(VMWare나 Parallels Desktop) 
+
 You must install the WIN driver before installing the simulator. For Mac users, it is recommended to run the simulator in a virtual environment(e.g. VMWare or Parallels Desktop). Double click the DJI_WIN_Driver_Installer.exe  to install the windows driver. If the window prompts the following message **"Please power on MC and connect it to PC via USB!"** , ignore it and click "YES" to follow the on-screen instruction and complete the installation.
 
 Finally, double click the **DJISimulator-Installer.exe** file and follow the on-screen instruction to complete the installation. 
