@@ -28,7 +28,7 @@ Android Studio를 열고 **Open an existing Android Studio project**를 선택�
 ## Eclipse 버전 import하기
 
 ### 1. DJI Android SDK 다운받기
-DJI Android SDK 다운받기: <dev.dji.com/en/products/sdk/mobile-sdk/downloads>
+DJI Android SDK 다운받기: <https://developer.dji.com/mobile-sdk/downloads/>
 
 다운 받은 패키지의 압축을 푼다. "./V2.1.0/Eclipse" 아래 **Eclipse**  폴더를 찾는다.
 
