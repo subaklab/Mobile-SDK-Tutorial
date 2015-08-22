@@ -8,7 +8,7 @@ DJI SDK Demo 라이브러리를 Android Studio로 import하는 방법에는 2가
 ## Android Studio 버전 Import하기
 
 ### 1. DJI Android SDK 다운받기
-DJI Android SDK 다운받기 : <http://dev.dji.com/en/products/sdk/mobile-sdk/downloads>
+DJI Android SDK 다운받기 : <https://developer.dji.com/mobile-sdk/downloads/>
 
 다운 받은 패키지의 압축을 푼다. "./V2.1.0/Android Studio" 아래 **Android Studio** 폴더를 찾는다.
 

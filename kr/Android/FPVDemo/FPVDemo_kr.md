@@ -289,11 +289,11 @@ if (action==UsbManager.ACTION_USB_ACCESSORY_ATTACHED || action == Intent.ACTION_
 ~~~ 
 
 
-(3) Additionally, we will need to pause the AOA data connection service when the app paused (when it is partially visible), and resume the data connection when the app is resumed (when it is once again fully visible). 
+(3) 추가로 app이 멈추게 되면 AOA 데이터 연결 서비스도 멈춰야 하고(부분적으로 가시적 상태) app이 다시 재개되면 데이터 연결도 재개되어야 한다.(다시 완전히 가시적인 상태)
 
-Create a new Android Activity Page called **DemoBaseActivity**, and add the following code. This code allows you to pause or resume the AOA data connection service when the **onPause()** or **onResume()** lifecycle callbacks are called.
+새로운 Android Activity Page로 **DemoBaseActivity**를 생성한다. 그리고 다음 코드를 추가한다. 이 코드는 **onPause()** 혹은 **onResume()** 라이프사이클 callback이 호출될 때, AOA data 연결 서비스를 멈추거나 재개할 수 있다.
 
-This will be our project's base activity. Change your **FPVActivity** class header so that it now extends **DemoBaseActivity**, rather than **Activity**.
+이것은 우리 프로젝트의 기본 activity가 될 것이다. **FPVActivity** 클래스 헤더를 바꿔서 **Activity**보다는 **DemoBaseActivity**를 확장하도록 한다.
 
 ~~~java
 	...
@@ -310,7 +310,7 @@ This will be our project's base activity. Change your **FPVActivity** class head
 	}
 ~~~	
 	
-## Implementing the First Person View
+## FPV(First Person View) 구현하기
 
 We're almost there! We've activated our app and set up a verification mechanism, as well as established a data connection between our app and the DJI remote controller. All that's left to do is create a live video feed of the Drone's camera to be viewed through the app.
 
