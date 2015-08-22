@@ -11,7 +11,7 @@
 (1) Mobile SDK for Android를 아래 링크에서 다운받기 : 
 <http://dev.dji.com/cn/products/sdk/mobile-sdk/downloads>
 
-(2) 비행장치(Phantom 3 Professional, Phantom 3 Advanced or Inspire 1) 펌웨어 업데이트 하기: <http://dev.dji.com/cn/products/sdk/mobile-sdk/downloads>(
+(2) 비행장치(Phantom 3 Professional, Phantom 3 Advanced or Inspire 1) 펌웨어 업데이트 하기: <https://developer.dji.com/mobile-sdk/downloads/>(
 *"비행장치 펌웨어 업데이트" 참조: <http://download.dji-innovations.com/downloads/phantom_3/en/How_to_Update_Firmware_en.pdf> 펌웨어 업데이트를 위한 설명서*)
 
 (3) 안드로이드 개발 환경 설정(아직 설정하지 않은 경우). 이 튜토리얼에서 Eclipse 4.2.2를 사용한다. 아래 링크에서 다운받을 수 있다: <https://eclipse.org/downloads/packages/eclipse-classic-422/junosr2>. 일단 Eclipse가 설치하고나면, Eclipse Android 개발 툴 Plug-In을 설치해야만 한다. 방법은 아래 링크에서 찾을 수 있다: http://developer.android.com/intl/zh-TW/sdk/installing/installing-adt.html
