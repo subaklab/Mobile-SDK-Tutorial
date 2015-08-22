@@ -13,11 +13,12 @@
 
 ## Camera Mode
 
-Before developing the album app, we should briefly cover the capabilities the SDK has in each camera mode. For the Inspire 1, Phantom 3 Professional and M100, there are four camera modes, **Capture Mode, Record Mode, Playback Mode** and **Download Mode**. In **Capture Mode**, users are allowed to use capture functions, such as taking photos and setting up parameters for the camera. In the **Record Mode**, these capture functions are blocked and users can only start and stop recording video. **Playback Mode** allows the user to preview the media files in the SD card. **Download Mode** lets the user download media files, but must be set up correctly beforehand.
+앨범 app을 개발하기 전에, 각 camera mode에서 SDK가 지원하는 범위를 간략히 알아보도록 하자. Inspire 1, Phantom 3 Professional 그리고 M100에는 4개 camera mode가 있다. (**Capture Mode, Record Mode, Playback Mode**, **Download Mode**). **Capture Mode**에는 사진을 찍고 카메라에 파라미터를 설정과 같이 사용자가 캡쳐 기능을 사용할 수 있다. **Record Mode**에서는 이런 캡쳐 기능이 막혀있고 사용자는 비디오 녹화 시작/정지만 가능하다. **Playback Mode**는 SD카드에 있는 미디어 파일 미리보기 기능을 사용가능하다. **Download Mode**는 미디어 파일을 다운로드 받을 수 있다. 사용하기 전에 올바르게 설정해야 한다.
 
-**However, the Phantom 3 Advanced is different in that it has only three camera modes: Capture Mode, Record Mode and Download Mode. This will be discussed in a later tutorial.**
 
-In Mobile Android SDK, developers can invoke the method `setCameraMode` to switch between camera modes, and the method  `getCameraMode` to get the camera mode. (Please note that the Phantom 2 Series is unique in that it only has two modes: `CameraMode.Camera_Camera_Mode` and `Camera.Camera_USB_Mode`, which are not supported by other more recent drones.)
+** 하지만 Phantom 3 Advanced는 3개 camera mode만 제공한다 : Capture Mode, Record Mode, Download Mode. 추후 튜토리얼에서 다룬다.**
+
+Mobile Android SDK에서 개발자는 `setCameraMode`를 호출해서 가능한 camera mode를 설정하고 `getCameraMode`를 통해 camera mode를 얻어올 수 있다.(Phantom 2 시리즈는 2개 모드만 제공한다 : `CameraMode.Camera_Camera_Mode` 와 `Camera.Camera_USB_Mode`이며 최근 다른 드론에서는 지원하지 않는다.)
 
 ~~~java
 	//Set up the Camera Mode. 
@@ -27,9 +28,9 @@ In Mobile Android SDK, developers can invoke the method `setCameraMode` to switc
 	DJIDrone.getDjiCamera().getCameraMode(DJICameraModeCallBack)
 ~~~
 
-## Distinguishing the Camera's Playback Status
+## 카메라 재생상태 구별하기
 
-As the introduced above, there are four or three camera modes (depending on the drone you are using). How to correctly recognize the mode you are in is key to developing a good Photo Album application. In the mobile android SDK, there is a callback function that returns  current status of the camera's playback status. Developers can set up a callback function that executes when the status has been changed. This callback will be invoked 10 times per second.
+위에서 소개한 바와 같이 3개 혹은 4개 camera mode가 있다.(여러분이 사용하는 드론에 따라) 설정한 mode가 올바로 인지하는 방법은 포토 앨범 app을 개발하는 핵심이다. mobile android SDK에서 camera 재생 상태의 현재 상태를 반환하는 callback 함수가 있다. 개발자는 상태가 변경되었을 때 실행할 callback 함수를 설정할 수 있다. 이 callback은 초당 10번 호출된다.
 
 ~~~java
 	DJIDrone.getDjiCamera().setDJICameraPlayBackStateCallBack(new DJICameraPlayBackStateCallBack() {
@@ -44,7 +45,7 @@ As the introduced above, there are four or three camera modes (depending on the 
 	});
 ~~~
 
-Whenever the SDK receives the playback status information, it will package the information and create a `DJICameraPlaybackState` object to transfer the information from the SDK to the app. In order to further understand the status notifications, we've briefly explained `DJICameraPlaybackState`'s attributes in the table below.
+SDK가 재생 상태 정보를 받을 때마다, 정보를 패키지화해서 `DJICameraPlaybackState`객체를 생성해서 SDK에서 app으로 전송한다. 상태 통보(status notifications)에 대해서 좀더 이해하기 위해 아래 테이블에 `DJICameraPlaybackState` 속성을 간략히 설명한다.
 
 <table>
 <tbody>
