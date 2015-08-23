@@ -442,7 +442,7 @@ app에서 라이브 비디오 스트림을 볼 수 있다면 성공이다!. 조�
 ~~~
  Here we add two UIAlertViews to get a warning when the user set CameraWorkMode failed.
  
-### 2. Add Record Action
+### 2. 녹화 동작 추가하기
 
   Firstly, we need a BOOL variable to save the status of the record action and a UILabel to show the current record time. So let's go to **Main.storyboard** and drag a UILabel on top of the screen, set up the Autolayout for it and create an IBOutlet named "**currentRecordTimeLabel**" to the **DJICameraViewController.m** file. Moreover, create an IBOutlet called "**recordBtn**" for the Record Button.
   
@@ -477,7 +477,7 @@ app에서 라이브 비디오 스트림을 볼 수 있다면 성공이다!. 조�
    
 ~~~
    
-   Because the value of **currentRecordingTime** is counted in seconds, so we need to convert it to "mm:ss" format like this:
+   **currentRecordingTime** 값이 초단위로 카운트되기 때문에 "mm:ss" 포맷으로 변환하자 :
    
 ~~~objc
 - (NSString *)formattingSeconds:(int)seconds
@@ -492,7 +492,7 @@ app에서 라이브 비디오 스트림을 볼 수 있다면 성공이다!. 조�
 }
 ~~~
    
-   Next, add the following codes to the **recordAction** IBAction method as follows:
+   다음으로 **recordAction** IBAction 메소드에 다음 코드를 추가하자 :
    
 ~~~objc
 - (IBAction)recordAction:(id)sender {
@@ -524,13 +524,13 @@ app에서 라이브 비디오 스트림을 볼 수 있다면 성공이다!. 조�
 }  
 ~~~
 
-   In the code above, we implement the **startRecord** and **stopRecord** methods of the **DJICamera** class based on the **isRecording** property value. And show an alertView when an error occurs.
+   위에 코드에서 **isRecording** 프로퍼티 값을 기반으로 **DJICamera** 클래스의 **startRecord** 와 **stopRecord** 메소드를 구현했다. error가 발생하면 alertView를 볼 수 있다.
    
-   Now, we can build and run the project and check the functions. You can try to play with the **Record** and **Switch Camera WorkMode** functions, if everything is going well, you should see the screenshot like this:
+   이제 프로젝트를 빌드 및 실행이 가능하며 기능을 확인하자. **Record** 와 **Switch Camera WorkMode** 기능을 동작시켜보고 잘 동작한다면 아래와 같은 화면을 볼 수 있다:
    
    ![Screenshot](../../images/iOS/FPVDemo/record_screenshot.jpg)
    
-   Congratulations! Your Aerial FPV iOS app is complete, you can now use this app to control the camera of your Inspire 1. 
+   축하한다! 여러분의 FPV iOS app이 완성되었다. Inspire 1 카메라 제어하는 app으로 사용할 수 있다.
 
 ## 정리
    
