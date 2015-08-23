@@ -330,27 +330,26 @@ app에서 라이브 비디오 스트림을 볼 수 있다면 성공이다!. 조�
 };
 ~~~
   
-  These enum values give you mutiple ways to capture photos, **CameraSingleCapture** is easy to use because you do not need to set any param before calling **startTakePhoto** method, unlike the other modes. For **CameraMultiCapture**, you need to use the
-  **-(void) setMultiCaptureCount:(CameraMultiCaptureCount)count withResultBlock:(DJIExecuteResultBlock)block;** method in **DJICamera.h** header file to set the **captureCount** param and check if the take photo action succeed in the block before calling **startTakePhoto** method.
-  
-  For more infos, you can check **DJICamera.h** and **DJICameraSettingsDef.h** files.
+  enum 값으로 사진을 캡쳐하는 다양한 방법을 제공한다. 다른 모드와 달리, **startTakePhoto** 메소드를 호출하기 전에 어떤 인자도 설정할 필요가 없어서 **CameraSingleCapture**은 사용하기 쉽다. **CameraMultiCapture**를 위해 **DJICamera.h** 헤더 파일에 있는 **-(void) setMultiCaptureCount:(CameraMultiCaptureCount)count withResultBlock:(DJIExecuteResultBlock)block;**를 사용해서 **captureCount** 인자를 설정하고 **startTakePhoto** 메소드를 호출하기 전에 사진찍기 동작이 성공하였는지 확인한다.
+   
+  더 상세한 정보는 **DJICamera.h** 와 **DJICameraSettingsDef.h**를 참고하자.
     
 ---
-##### Note: Since DJICamera has several subclasses: DJIInspireCamera, DJIPhantom3AdvancedCamera, DJIPhantomCamera, etc, you should find the corresponding methods when you want to set the params. For example, CameraAEBCapture mode is supported in Inspire 1, so you should find the AEB setting method in DJIInspireCamera.h file rather than in DJICamera.h file.
+##### 주의: DJICamera는 여러 서브클래스가 있다 : DJIInspireCamera, DJIPhantom3AdvancedCamera, DJIPhantomCamera 등. 인자를 설정하고자 한다면 이에 대응하는 메소드를 찾아야만 한다. 예를 들어, CameraAEBCapture 모드는 Inspire 1에서 지원되고 AEB 설정 메소드는 DJICamera.h 파일이 아니라 DJIInspireCamera.h에 있다.
 
 ---
 
-  Here we set the capture mode to **CameraSingleCapture**. You can check the capture result from the **DJIError** instance in the block.
+  여기서 **CameraSingleCapture**에 캡쳐 모드 설정한다. **DJIError** 인스턴스에서 캡쳐 결과를 확인한다.
   
-  Build and run your project and then try the capture function. If the screen flash after your press the **capture** button, your capture fuction should be working.
+  프로젝트를 빌드 및 실행하고 나서, 캡쳐 기능을 시도해 보자. 만약 **capture** 버튼을 누른 후에 화면이 반짝이면, 캡쳐 기능이 동작하는 것이다.
   
   
-## Implement the Record function
+## 녹화 기능 구현
   
-### 1. Switching Camera Mode
-   Before we implementing the record function, we need to switch the camera work mode firstly.
+### 1. 카메라 모드 전환
+   녹화 기능을 구현하기 전에, 먼저 카메라 모드를 전환해야 한다.
    
-   Let's check the **DJICameraSettingsDef.h** file.
+   **DJICameraSettingsDef.h** 파일을 보자.
    
 ~~~objc
    /**
@@ -379,7 +378,7 @@ app에서 라이브 비디오 스트림을 볼 수 있다면 성공이다!. 조�
     CameraWorkModeUnknown                   = 0xFF
 };
 ~~~
-   You can see above that there are 5 types of **CameraWorkMode**. Since we are using the Inspire 1 as an example, **CameraWorkModeCapture** and **CameraWorkModeRecord** are used as follows:
+   위에서 보는 바와 같이 **CameraWorkMode**의 5개 타입이 있다. Inspire1을 사용한다고 가정하면 **CameraWorkModeCapture** 와 **CameraWorkModeRecord**는 다음과 같다 :
    
    -(void) setCameraWorkMode:(CameraWorkMode)mode withResult:(DJIExecuteResultBlock)block; method inside **DJIInspireCamera.h** file to switch camera work mode.
    
@@ -387,7 +386,7 @@ app에서 라이브 비디오 스트림을 볼 수 있다면 성공이다!. 조�
    
    -(void) camera:(DJICamera*)camera didUpdateSystemState:(DJICameraSystemState*)systemState;
    
-   We can update the state of the segmented control when switching between **CameraWorkModeCapture** and **CameraWorkModeRecord** using the above delegate method.
+   위의 delegate 메소드를 사용해서 **CameraWorkModeCapture** 와 **CameraWorkModeRecord** 사이에서 스위치할 때, 세분화된 제어의 상태를 업데이트 해야한다.
    
 ~~~objc
 -(void) camera:(DJICamera*)camera didUpdateSystemState:(DJICameraSystemState*)systemState
@@ -404,7 +403,7 @@ app에서 라이브 비디오 스트림을 볼 수 있다면 성공이다!. 조�
 }
 
 ~~~
- Now we can implement the **changeWorkModeAction** method as follows:
+ 이제 **changeWorkModeAction** 메소드를 구현하자 :
  
 ~~~objc
 - (IBAction)changeWorkModeAction:(id)sender {
@@ -440,13 +439,13 @@ app에서 라이브 비디오 스트림을 볼 수 있다면 성공이다!. 조�
 }
 
 ~~~
- Here we add two UIAlertViews to get a warning when the user set CameraWorkMode failed.
+ 사용자가 CameraWorkMode를 실패로 설정할 때, 경고를 위해서 2개 UIAlertViews를 추가한다.
  
 ### 2. 녹화 동작 추가하기
 
-  Firstly, we need a BOOL variable to save the status of the record action and a UILabel to show the current record time. So let's go to **Main.storyboard** and drag a UILabel on top of the screen, set up the Autolayout for it and create an IBOutlet named "**currentRecordTimeLabel**" to the **DJICameraViewController.m** file. Moreover, create an IBOutlet called "**recordBtn**" for the Record Button.
+  먼저 녹화 동작의 상태를 저장하기 위해서 BOOL 변수가 필요하고 현재 녹화 시간을 보여주기 위해서 UILabel이 필요하다. **Main.storyboard**로 가서 화면 상단의 UILabel를 드래그 한다. Autolayout를 설정하고 IBOutlet을 생성해서 **DJICameraViewController.m** 파일에 "**currentRecordTimeLabel**"라고 이름 붙인다. 녹화 버튼을 위해서는 IBOutlet을 생성해서 "**recordBtn**"라고 이름 붙인다.
   
-  Then add a BOOL variable **isRecording** in the class extension of **DJICameraViewController**. Be sure to hide **currentRecordTimeLabel** in the **viewDidLoad** method. We can update the text values for **isRecording** and **currentRecordTimeLabel**'s text value in the following delegate method.
+  다음으로 **DJICameraViewController**의 클래스 확장에서 **isRecording** BOOL 변수를 추가한다.  **viewDidLoad**에서 **currentRecordTimeLabel**를 숨긴다. **isRecording**와 **currentRecordTimeLabel**의 text 값을 다음과 같은 delegate 메소드를 이용해서 업데이트할 수 있다.
    
 ~~~objc
 -(void) camera:(DJICamera*)camera didUpdateSystemState:(DJICameraSystemState*)systemState
