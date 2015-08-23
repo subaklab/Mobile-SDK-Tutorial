@@ -20,42 +20,42 @@
 
 최소 요구: iOS 6.1 이상
 
-## Import the SDK framework
+## SDK 프레임워크 Import하기
 
-**1**. Copy the framework **DJISDK.framework** from the **Lib** folder and copy the file to your Xcode project folder, then drag the framework to the Frameworks folder in Xcode’s project navigator as shown below:
+**1**. **Lib** 폴더에서 **DJISDK.framework** 복사한다. 그리고 여러분의 Xcode 프로젝트 폴더로 복사한다. 아래와 같이 Xcode 프로젝트 네비게이터내에서 해당 프레임워크를 Framework 폴더로 drag한다 :
 
    ![ImportSDK](../../images/iOS/FPVDemo/importSDK.png)
    
-**2**. Select the project target, in this case **FPVDemo**, and go to **Build Phases -> Link Binary With Libraries**. Click the "+" button at the bottom and add two libraries to your project: libstdc++.6.0.9.dylib and libz.dylib. These two libraries are necessay to compile the SDK framework.
+**2**. project target을 선택한다. **FPVDemo**의 경우 **Build Phases -> Link Binary With Libraries**로 이동한다. 밑에 있는 "+" 버튼을 클릭하고 2개 라이브러리를 여러분의 프로젝트에 추가한다 : (libstdc++.6.0.9.dylib 와 libz.dylib) 이 2개 라이브러리는 SDK 프레임워크를 컴파일 하는데 필요하다.
 
-**3**. Since some of the code in the SDK framework uses C++, you need to change the extension of one of the project's implementation files to "**.mm**". We use "**AppDelegate.m**" file as an example and change its name to "**AppDelegate.mm**".
+**3**. SDK 프레임워크 내부 일부 코드는 C++을 사용하므로 프로젝트의 구현파일의 확장자를 "**.mm**"로 변경해야한다. 예제로 "**AppDelegate.m**" 파일을 사용하며 이름을 "**AppDelegate.mm**"로 바꾼다.
 
-**4**. **Important**: If you want to develop apps for Inspire 1 or Phantom 3 series using the SDK, MFI communications support is required.
+**4**. **중요**: 만약 Inspire 1이나 Phantom 3 시리즈용 앱을 개발한다면 MFI communications support가 필요하다.
 
-   Let's go the project's plist file in Supporting Files folder, add the MFI protocol names as shown below:
+   프로젝트의 Supporting Files 폴더내에 plist 파일로 가서 MFI 프로토콜 이름을 추가하자. 아래와 같다 :
   
    ![MFI](../../images/iOS/FPVDemo/MFIProtocol.png)
 
-## Implement the First Person View
-  **1**. We use the FFMPEG decoding library (found at http://ffmpeg.org) to decode the video stream. You can find the **VideoPreviewer** folder in the downloaded SDK. Copy the entire **VideoPreviewer** folder to your Xcode project's folder and then add it to the Xcode project navigator, as shown below:
+## FPV 구현하기
+  **1**. FFMPEG decoding 라이브러리(http://ffmpeg.org)를 사용해서 비디오 스트림을 디코딩한다. 다운받은 SDK내부에 **VideoPreviewer** 폴더를 볼 수 있다. 전체 **VideoPreviewer** 폴더를 Xcode 프로젝트의 폴더로 복사하고 난 뒤, Xcode 프로젝트 네비게이터에 이것을 추가한다. 아래와 같다 :
   
  ![AppKey](../../images/iOS/FPVDemo/ffmpegImport.png)
  
- **2**. Go to **XCode -> Project -> Build Phases -> Link Binary With Libraries** and add the **libiconv.dylib** library. Then, set the **Header Search Paths** in **Build Settings** to the path for the **~/include** folder in the **FFMPEG** folder. Then, set the **Library Search Paths** to the path for the **~/lib** folder in the **FFMPEG** folder, as shown below:
+ **2**. **XCode -> Project -> Build Phases -> Link Binary With Libraries**로 이동해서 **libiconv.dylib** 라이브러리를 추가한다. 다음으로 **FFMPEG** 폴더내에 **~/include** 경로를 설정하기 위해 **Build Settings**내에 **Header Search Paths**를 설정한다. 다음은 **Library Search Paths**를 **FFMPEG** 폴더 내부에서 **~/lib**에 대한 경로를 설정한다. 아래와 같다 :
  
   ![HeaderSearchPath](../../images/iOS/FPVDemo/headerSearchPath.png)
   
   ![LibrarySearchPath](../../images/iOS/FPVDemo/librarySearchPath.png)
   
-  **3**. In **Main.storyboard**, add a new View Controller and call it **DJICameraViewController**. Set **DJICameraViewController** as the root View Controller for the new View Controller you just added in **Main.storyboard**:
+  **3**. **Main.storyboard**내에서 새로운 View Controller를 추가하고 **DJICameraViewController**라고 이름 붙이자. **DJICameraViewController**를 root View Controller로 설정한다. 이는 **Main.storyboard** 내부에 막 추가한 새로운 View Controller를 위해서다 :
   
   ![rootController](../../images/iOS/FPVDemo/rootController.png)
   
-Add a UIView inside the View Controller and set it as an IBOutlet called "**fpvPreviewView**". Then, add two UIButtons and one UISegmentedControl at the bottom of the View Control and set their IBOutlets and IBActions, as shown below:
+View Controller내부에 새로운 UIView를 추가하고 이를 IBOutlet로 설정하고 "**fpvPreviewView**"라고 이름 붙이자. 다음으로 2개 UIButton과 View Control 밑에 있는 UISegmentedControl을 추가한다. IBOutlets와 IBActions를 설정한다. 아래와 같다 :
   
   ![Storyboard](../../images/iOS/FPVDemo/Storyboard.png)
   
-  Go to **DJICameraViewController.m** file and import the **DJISDK** and **VideoPreviewer** header files. Then create **DJIDrone** and **DJICamera** instance variables and implement their delegate protocols as below:
+  **DJICameraViewController.m** 파일로 가서 **DJISDK**와 **VideoPreviewer** 헤더 파일을 import한다. 다음으로 **DJIDrone**과 **DJICamera** 인스턴스 변수를 생성하고 delegate 프로토콜을 아래와 같이 구현한다 :
   
 ~~~objc
 #import <DJISDK/DJISDK.h>
@@ -68,7 +68,7 @@ Add a UIView inside the View Controller and set it as an IBOutlet called "**fpvP
 }
 
 ~~~
-**4**. Initialize the **DJIDrone** instance and set its type as **DJIDrone_Inspire** (you can change this type based on the UAV you have). Set the **_drone** and **_camera** instances' delegate to **self** as shown below:
+**4**. **DJIDrone** 인스턴스를 추기화하고 이 타입을 **DJIDrone_Inspire**로 설정한다.(여러분이 가지고 있는 UAV을 기반해서 타입을 변경할 수 있다.) **_drone**과 **_camera** 인스턴스의 delegate를 **self**로 설정한다. 아래와 같다 :
   
 ~~~objc
 - (void)viewDidLoad {
@@ -82,7 +82,7 @@ Add a UIView inside the View Controller and set it as an IBOutlet called "**fpvP
 }
 ~~~
   
- Moreover, in the **viewWillAppear** method, set **fpvPreviewView** instance as a View of **VideoPreviewer** to show the Video Stream and reset it to nil in the **viewWillDisappear** method:
+ **viewWillAppear** 메소드 내부에서 **fpvPreviewView** 인스턴스를 **VideoPreviewer**의 View로 설정하여 비디오 스트림을 볼 수 있고 **viewWillDisappear** 메소드 내부에서 이를 nil로 리셋한다 :
  
 ~~~objc
 - (void)viewWillAppear:(BOOL)animated
@@ -104,7 +104,7 @@ Add a UIView inside the View Controller and set it as an IBOutlet called "**fpvP
 }
 ~~~
   
-  Lastly, implement the **DJICameraDelegate** methods, as shown below:
+  마지막으로, **DJICameraDelegate** 메소드를 구현하는데 아래와 같다 :
   
 ~~~objc
 #pragma mark - DJICameraDelegate
@@ -153,9 +153,9 @@ Add a UIView inside the View Controller and set it as an IBOutlet called "**fpvP
    
    -(void) droneOnConnectionStatusChanged:(DJIConnectionStatus)status method is used to check the drone's connection.
  
-## Activate the SDK
+## SDK 활성화
 
-**1**. Implement the **DJIAppManagerDelegate** protocol method in the DJICameraViewController.m file's extension part:
+**1**. DJICameraViewController.m 파일을 확장하여 **DJIAppManagerDelegate** 프로토콜 메소드를 구현한다 :
 
 ~~~objc
 @interface DJICameraViewController ()<DJICameraDelegate, DJIDroneDelegate,DJIAppManagerDelegate>
@@ -165,7 +165,7 @@ Add a UIView inside the View Controller and set it as an IBOutlet called "**fpvP
 }
 ~~~
 
-Then create a new method named **registerApp** and invoke it in the viewDidLoad method as shown below:
+**registerApp**라는 새로운 메소드를 생성하고 viewDidLoad 메소드 내부에서 아래와 같이 호출한다 :
 
 ~~~objc
 - (void)registerApp
@@ -186,19 +186,19 @@ Then create a new method named **registerApp** and invoke it in the viewDidLoad 
 }
 ~~~
 ---
-**Note**: In the code above, you will need to obtain an App Key from the DJI Developer website **(<https://dev.dji.com/en/user/mobile-sdk>)** and enter it where it says **Enter Your App Key**. You receive an App Key by clicking **Create APP** and filling out the necessary information. Please note that **Identification Code** stands for **Bundle Identifier**. Once you do that, an App Key is generated for you. The **App Key** we generate for you is associated with the Xcode project **Bundle Identifier**, so you will not be able to use the same App Key in a different Xcode project. Each project must be submiteed individually and will receive a unique App Key. This is what you should see once you submit the information:
+**주의**: 위에 코드에서, DJI개발자 사이트에서 App Key를 얻어와야 한다. **Enter Your App Key**라는 항목에 이 키를 입력한다.  **Create APP**를 클릭하면 App Key를 받을 수 있다. **Identification Code**는 **Bundle Identifier**이다. 일단 이것을 하면 App Key가 생성된다. 우리가 생성한 **App Key**는 Xcode 프로젝트의 **Bundle Identifier**와 관련이 있다. 따라서 다른 Xcode 프로젝트에서 동일한 App Key를 사용할 수 없다. 각 프로젝트는 반드시 개별적으로 개별적으로 App Key를 받아서 사용해야 한다. 아래는 정보를 전송하면 보게 되는 화면이다 :
 
 ![AppKey](../../images/iOS/FPVDemo/AppKey.png)
 
 ---
 
-If you register app failed, you can check the **error** variable's value in the following delegate method to figure out the problem:
+만약에 등록이 실패하면, **error** 변수의 값을 검사해서 delegate 메소드에서 문제가 무엇인지 확인한다 :
 
 ~~~objc
 -(void)appManagerDidRegisterWithError:(int)error;
 ~~~
 
- The error code for the APP KEY activation is shown as below:
+ APP KEY 활성화를 위한 error 코드 정보는 아래와 같다 :
  
  result  	  | Description 
 ------------- | -------------
@@ -223,7 +223,7 @@ If you register app failed, you can check the **error** variable's value in the 
 -18 | Empty app key
 -1000 | Server error 
 
-**2**. Next, let's implement the DJIAppManagerDelegate method as shown below:
+**2**. 다음으로, DJIAppManagerDelegate 메소드는 아래와 같다 :
 
 ~~~objc
 #pragma mark DJIAppManagerDelegate Method
@@ -245,50 +245,50 @@ If you register app failed, you can check the **error** variable's value in the 
 }
 ~~~
 
-In the code above, we call the **connectToDrone** method of DJIDrone to start connection with the drone, and invoke the **startCameraSystemStateUpdates** method of DJICamera to update the camera system state. Moreover we call the **start** method of **VideoPreviewer**'s instance when register app success to start the video decode. Finally, we create a UIAlertView to inform the register app state to the user.
+ 위 코드에서, DJIDrone의 **connectToDrone** 메소드를 호출하는 이유는 drone과 연결을 시작하기 위해서다.  DJICamera의 **startCameraSystemStateUpdates** 메소드는 camera system state를 업데이트 하기 위해서 호출한다. 등록한 app이 video decode 시작에 성공했을 때, **VideoPreviewer** 인스턴스의 **start** 메소드를 호출한다.
 
-**3**. Build and Run the project in Xcode. If everything is OK, you will see a "Register App Successed!" alert once the application loads. Also, if you see the following screenshot as below, then you can start connect to your aircraft and enjoy the video stream from its camera!
+**3**. Xcode에서 Build and Run을 실행한다. 만약 모든 것이 정상이라면 app이 로드될 때, "Register App Successed!"라는 문구를 볼 수 있다. 또 아래와 같은 스크린 샷을 보게 되면, 여러분의 비행체에 연결을 시작할 수 있고 카메라로부터 비디오 스트림을 즐길 수 있다.
   
   ![Screenshot](../../images/iOS/FPVDemo/Screenshot.jpg)
 
-## Connect the Aircraft
-After you finish the steps above, you can now connect your mobile device to your DJI Aircraft to use the application, like checking the FPV View. Here are the guidelines:
+## 비행체 연결
+위에 절차를 완료한 후에, 여러분의 모바일 장치를 DJI 비행체와 연결해서 app을 사용할 수 있다. 몇 가지 가이드 사항이 있다 :
 
-* In order to connect to a DJI Inspire 1, Phantom 3 Professional or Phantom 3 Advanced:
+* DJI Inspire 1, Phantom 3 Professional 혹은 Phantom 3 Advanced에 연결을 위해 :
 
-  **1**. First, turn on your remote controller.
+  **1**. 맨 먼저 remote controller를 켠다.
   
-  **2**. Then, turn on the power of the DJI aircraft.
+  **2**. DJI 비행체의 전원을 켠다.
   
-  **3**. Connect your iOS device to the remote controller using the lightning cable.
+  **3**. 라이트링 케이블을 이용해서 iOS 장치를 remote controller에 연결한다.
   
-  **4**. Trust the device if an alert asking “Do you trust this device” comes up.
+  **4**. “Do you trust this device”가 알람이 뜨면 해당 장치를 신뢰를 선택한다.
   
-  **5**. Now you will be able to view the live video stream from your aircraft's camera based on what we've finished of the application so far!
+  **5**. 이제 여러분의 비행체 카메라에서 라이브 비디오 스트림을 볼 수 있다!
 
-* In order to connect to a DJI Phantom 2 Vision+ or Phantom 2 Vision:
+* DJI Phantom 2 Vision+ 나 Phantom 2 Vision에 연결하기 위해서
 
-  **1**. First, turn on your remote controller.
+  **1**. 맨 먼저 remote controller를 켠다.
   
-  **2**. Then, turn on the power of the DJI aircraft.
+  **2**. DJI 비행체의 전원을 켠다.
   
-  **3**. Turn on the Wi-Fi range extender.
+  **3**. Wi-Fi 영역 확장기를 켠다.
   
-  **4**. Turn on the Wi-Fi on your mobile device and connect to the network named Phantom-xxxxxx (where xxxxxx is your range extender’s SSID number).
+  **4**. 모바일 장치의 Wi-Fi를 켜고 Phantom-xxxxxx 이름의 네트워크에 연결한다. (xxxxxx는 영역 확장기의 SSID 숫자이다.)
   
-  **5**. Now, you will able to view the live video stream from your aircraft's camera based on what we've finished of the application so far!
+  **5**. 이제 여러분의 비행체 카메라에서 라이브 비디오 스트림을 볼 수 있다!
   
   
-## Enjoy the First Person View
+## FPV 즐기기
 
-If you can see the live video stream in the application, congratulations! Let's move forward.
+app에서 라이브 비디오 스트림을 볼 수 있다면 성공이다!. 조금더 진도를 나가보자.
 
   ![fpv](../../images/iOS/FPVDemo/fpv.jpg)
 
 
-## Implement the Capture function
+## 캡쳐 기능 구현하기
 
-Add the following codes to the **captureAction** IBAction method:
+**captureAction** IBAction 메소드에 다음 코드를 추가하자 :
 
 ~~~objc
 - (IBAction)captureAction:(id)sender {
@@ -300,11 +300,11 @@ Add the following codes to the **captureAction** IBAction method:
     }];
 }
 ~~~
-   Just call the following method of **DJICamera**:
+   **DJICamera**의 다음 메소드만 호출해 주자 :
    
    -(void) startTakePhoto:(CameraCaptureMode)captureMode withResult:(DJIExecuteResultBlock)block;
    
-  There are 4 types of **CameraCaptureMode**: 
+  **CameraCaptureMode**의 4개 타입이 있다 :
   
 ~~~objc
   /**
@@ -532,9 +532,8 @@ Add the following codes to the **captureAction** IBAction method:
    
    Congratulations! Your Aerial FPV iOS app is complete, you can now use this app to control the camera of your Inspire 1. 
 
-## Summary
+## 정리
    
-   You’ve come a long way in this tutorial: you’ve learned how to use DJI Mobile SDK to show the FPV View from the aircraft's camera and control the camera of DJI's Aircraft. These are the most basic and common features in a typical drone mobile app: **Capture** and **Record**. However, if you want to create a drone app that is more fancy, you still have a long way to go. More advanced features would include previewing the photo and video in the SD Card, showing the OSD data of the aircraft and so on. Hope you enjoy this tutorial, and stay tuned for our next one!
-   
+   이 긴 튜토리얼을 따라왔다 : DJI Mobile SDK 사용법을 배우고 DJI 비행체의 카메라를 제어하는 방법을 배웠따. 이는 전형적인 drone app이 가지는 가장 기본이며 일반적인 기능이다.(**Capture**과 **Record**) 그러나 좀더 멋진 drone app을 만들고자 한다면 가야할 길이 멀다. 더 향상된 기능으로 SD카드에 있는 사진이나 비디오 미리보기와 비행체의 OSD 데이터 보기를 추가할 수 있다. 이 튜토리얼을 도움이 되기를 바라며 다음 것도 참고하기 바란다.
    
    
