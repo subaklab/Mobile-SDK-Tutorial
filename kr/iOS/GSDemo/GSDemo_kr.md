@@ -31,94 +31,94 @@ simulator를 실행하기 전에 driver 설치해야만 한다. simulator는 윈
 
 ### 3. DJI PC Simulator 사용하는 방법
 
-**1**. The **Simulator Config** window will appear once you launch the DJI PC Simulator. Set the **Latitude** and **Longitude** values based on your preference. The **SN** represents the connected aircraft's SN number. If you do not see the **SN**, your aircraft is not connected properly to the PC or there is an issues with your firmware.
+**1**. DJI PC Simulator를 실행하면 **Simulator Config** 창이 한 번 나타난다. 원하는 값으로 **Latitude** 와 **Longitude** 값을 설정한다. **SN**은 연결한 비행체의 시리얼 넘버를 뜻한다. **SN**을 찾지 못했다면, 여러분의 비행체가 PC에 제대로 연결이 안되었거나 펌웨어와 문제가 있을 수 있다.
 
  ![Config](../../images/iOS/GSDemo/simulator_config.png)
 
 ---
-**Note**: 
+**주의**: 
 
-- The aircraft will not take off if the latitude and longitude values are near a [No Fly Zone](http://flysafe.dji.com/no-fly).
+- 비행금지 구역([No Fly Zone](http://flysafe.dji.com/no-fly))에 가까운 값으로 비행체의 고도와 위도를 설정하면 이륙하지 않는다.
 
-- Select **show log window** under the Log Settings tab to display the log window, as seen below:
+- Log Settings 탭 아래 **show log window**를 선택하여 log 창을 볼 수 있다 :
 
  ![showLog](../../images/iOS/GSDemo/showLog.png)
 
 ---
 
-**2**. Connect the aircraft to your PC via the Micro USB cable, turn on the remote controller and finally turn on the aircraft. Click **Display Simulator**, and you will see the screenshot below(it will show whatever aircraft you are using). In this case you see the Inspire 1:
+**2**. 마이크로 USB 케이블을 통해 비행체를 PC로 연결하고 리모트 컨트롤러을 켜고 마지막으로 비행체를 켠다. **Display Simulator**를 클릭하고 스크린샷이 보인다.(사용하고 있는 비행체에 관계 없이 보인다) 아래 경우는 Inspire 1인 경우 :
 
  ![display](../../images/iOS/GSDemo/display.png)
 
 ---
-**Note**: 
+**주의**: 
 
-- Do **NOT** launch the DJI Pilot app when the DJI PC Simulator is running.
+- DJI PC Simulator가 실행되고 있을 때, DJI Pilot app을 실행하지 마라.
 
-- Do **NOT** mount the propellers on the aircraft when the DJI PC Simulator is running, in case the motors start by accident. That would be extremely dangerous.
+- DJI PC Simulator가 실행 중일 때, 비행체에 프로펠러를 붙착하지 말라. 사고로 모터가 동작할 수 있기 때문이다. 이는 매우 위험할 수 있다.
 
 ---
 
-**3**. Start the simulation by clicking **Start Simulation**. You can use the remote controller to change the course of the aircraft by swithing the control mode to **P** or bring it back home with the **Return-to-Home** button on the remote controller.
+**3**. **Start Simulation**를 클릭하면 시뮬레이션이 시작된다. control mode를 **P**로 변경하면 리모트 컨트롤러를 이용해서 비행체의 경로를 변경할 수 있다. 혹은 리모트 컨트롤러의 **Return-to-Home** 버튼을 누르면 되돌아오게 할 수 있다.
 
-Please check the data on the left down corner of view, World X, Y, Z represents the North-South, East- West, and Up-Down axes (take the North, East and Up directions as positive). 
+왼쪽 아래 모서리에 있는 데이터를 확인하라. X, Y, Z는 북남(North-South), 동서(East-West), 위아래(Up-Down)축을 뜻한다.(북, 동, 위 방향이 양수 값이다.)
 
-**4**. In order to change the view angle, left-click and drag, and to scroll, zoom in and zoom out.
+**4**. view angle을 변경하기 위해서 왼쪽 클릭과 드래, 스크롤을 위해 zoom in/out
 
  ![zoomIn](../../images/iOS/GSDemo/zoomIn.png)
  
  ![zoomOut](../../images/iOS/GSDemo/zoomout.png)
 
-**5**. Click **Stop Simulation** to stop the simulation. Close the simulator, and turn off the aircraft, and turn off the remote controller after use. 
+**5**. 시뮬레이션을 중지할려면 **Stop Simulation**을 클릭한다. simulator를 듣고 비행체 전원을 끈다. 사용이 끝났으면 리모트 컨트롤러의 전원을 내린다.
 
-**Important**: If you want to stop midway through a GroundStation Waypoint Mission, you should click **Stop Simulation** and stop the mission on the device you are running it from, otherwise the simulator may run the previous groundstation mission when you start it again.
+**중요**: GroundStation Waypoint Mission을 통해 midway를 멈추고자 한다면, **Stop Simulation**을 클릭하고 실행하고 있는 장치의 mission을 중지시킨다. 이렇게 하지 않으면 simulator를 다시 시작할 때, 이전 groundstation mission을 실행할 수도 있다. 
 
-For more info about DJI PC Simulator, please check the **DJI PC Simulator user manual.pdf** file, which is included in the download along with the simulator.
+DJI PC Simulator에 대한 추가 정보는 **DJI PC Simulator user manual.pdf** 파일을 참고하라. 이 파일은 다운받은 simulator에 포함되어 있다.
 
-## Upgrade Your Aircraft's Firmware
+## 비행체 펌웨어 업그레이드
 
-It's important to make sure your aircraft's firmware supports the DJI Mobile SDK before going through the following steps. Please download the beta version firmware from here based on the aircraft you have: <http://dev.dji.com/en/products/sdk/onboard-sdk/downloads> :
+다음 단계를 진행하기 전에, 여러분의 비행체의 펌웨어가 DJI Mobile SDK를 지원하는지 확인해야만 한다. 여러분의 가지고 있는 비행체에 맞는 베타 버전 펌웨어를 다운받도록 하자: <http://dev.dji.com/en/products/sdk/onboard-sdk/downloads> :
 
 - Phantom 3 Professional Firmware
 - Phantom 3 Advanced Firmware
 - Inspire 1 Firmware
 
-It's not necessary to upgrade the Remote Controller's firmware, just put the downloaded **bin** file in the SD Card, insert it to your aircraft's camera, and restart it to upgrade. It may take 10 ~ 30 minutes to finish the upgrade.
+리모트 컨트롤러의 펌웨어를 업그레이드할 필요는 없다. SD카드에 다운받은 **bin** 파일을 넣은 후에 비행체 카메라에 삽입하고 다시시작하면 업그레이드 된다. 업그레이드를 마치는데 10 ~ 30분 가량 소요된다.
 
-For the Inspire 1, you can check the upgrade status of the firmware by identifying the sound pattern from the aircraft:
+Inspire 1의 경우 비행체의 소리 패턴에 따라 펌웨어의 업그레이드 상태를 검사할 수 있다:
 
 - Upgrading: D D D D ... (fast) 
 - Upgrade Success: D DD ...
 - Upgrade Failed or Error: long beep sound
 
-For the Phantom 3, you can check upgrade status of the firmware by looking at the camera status indicator: 
+Phantom 3의 경우 카메라 상태 표시등을 보면 펌웨어 업그레이드의 상태를 검사할 수 있다:
 
-- Upgrading: camera status indicator will blink green and red
-- Upgrade Success: camera sattus indicator will stop blinking 
-- Upgrade Failed or Error: camera status indicator will show solid red
+- Upgrading: 카메라 상태 표시등이 녹색/빨간색으로 깜빡거린다.
+- Upgrade Success: 카메라 상태 표시등이 깜빡거림을 멈춘다.
+- Upgrade Failed or Error: 카메라 상태 표시등이 강한 빨간색을 표시한다.
 
-Regardless of what aircraft you are using, you can check whether or not the firmware was upgraded by checking the **txt** file generated during the upgrade process. For the Phantom 3 Professional, the txt file is named **"P3X_FW_RESULT_AB.txt"**, and for the Inspire 1, it's named **"WM610_FW_RESULT_AB.txt"**. Here are example contents of the **txt** file:
+비행체와 무관하게 펌웨어 업그레이드를 검사하는 방법은 업그레이드 과정에서 생성하는 **txt** 파일을 통해서 가능하다. Phantom 3 Professional의 경우 txt 파일 이름은 **"P3X_FW_RESULT_AB.txt"**이고 Inspire 1은 **"WM610_FW_RESULT_AB.txt"** 이다. **txt** 파일 내부 내용은 아래와 같다 :
 
   ![upgradeP3XSuccess](../../images/iOS/GSDemo/upgradeP3XSuccess.png)
   
   ![upgradeInspire1Success](../../images/iOS/GSDemo/upgradeInspire1Success.png)
 
-## Setup The Map View
+## Map View 설정
 
-### 1. Import The Framework and Libraries
+### 1. 프레임워크와 라이브러리 Import하기
 
-Now that you've finished the steps above, we can start working on the application. In our previous tutorial [**Creating a Camera Application**](../../iOS/FPVDemo/FPVDemo_en.md), you learned how to import and activate the DJI Mobile SDK into your Xcode project. If you haven't read that previously, please take a look at it. Once you've done that, we will set up the map view. 
+위에 과정을 마치고 나면, application을 시작할 수 있다. 이전 튜토리얼([**Creating a Camera Application**](../../iOS/FPVDemo/FPVDemo_en.md))에서 DJI Mobile SDK를 Xcode 프로젝트로 import하고 활성화 시키는지 배웠다. 이전 자료를 보지 못했다면, 한 번 살펴보도록 하자. 이런 과정을 다 수행했다면 map view를 설정을 진행한다. 
 
-**1**. Create a new project in Xcode and name it "**GSDemo**", copy the **DJISDK.framework** to your Xcode project's folder. Then, select the project target and go to Build Phases -> Link Binary With Libraries. Click the "+" button at the bottom and add two libraries to your project: libstdc++.6.0.9.dylib and libz.dylib. Take a look at the screenshot below:
+**1**.  Xcode에 새로운 프로젝트를 생성하고 "**GSDemo**"라고 이름 붙인다. **DJISDK.framework**를 Xcode 프로젝트 폴더에 복사한다. 다음으로 project target을 선택하고 Build Phases -> Link Binary With Libraries로 이동한다. 밑에 있는 "+" 버튼을 클릭하고 2개 라이브러리를 프로젝트에 추가한다.(libstdc++.6.0.9.dylib 과 libz.dylib) 스크린샷은 아래와 같다:
 
   ![framework](../../images/iOS/GSDemo/framework.png)
 
-### 2. Create The Map View
-Now, let's delete the **ViewController.h** and **ViewController.m** files, which were created by Xcode when you created the project. Then, create a viewController named "**DJIRootViewController**" and set it as the **Root View Controller** in Main.storyboard. Moreover, drag a **MKMapView** from Object Library to **DJIRootViewController**, setup its AutoLayout constraints, and set its delegate to **DJIRootViewController**, as seen below:
+### 2. Map View 생성
+**ViewController.h**와 **ViewController.m** 파일을 삭제하자. 프로젝트를 생성할 때, Xcode에서 자동으로 생성한 것이다. "**DJIRootViewController**"라는 viewController를 생성하고 Main.storyboard에 **Root View Controller**로 설정한다. Object Library에서 **MKMapView**를 **DJIRootViewController**로 드래그한다. 여기서 AutoLayout constraints를 설정하고 delegate로 **DJIRootViewController**를 지정한다. 아래와 같다:
    
 ![mkMapView](../../images/iOS/GSDemo/mkMapView.png)
 
-After that, open the **DJIRootViewController.h** file, create an IBOutlet for the MKMapView, name it "**mapView**" and link it to the MKMapView in **Main.storyboard**. Import the following header files and implement MKMapView's delegate method:
+이후, **DJIRootViewController.h** 파일을 열고 MKMapView을 위해 IBOutlet를 생성하고 "**mapView**"라고 이름 붙이고 **Main.storyboard**내부에 MKMapView에 링크를 걸어준다. 아래 header 파일을 import하고 MKMapView의 delegate 메소드를 구현한다:
 
 ~~~objc
 #import <DJISDK/DJISDK.h>
@@ -131,13 +131,13 @@ After that, open the **DJIRootViewController.h** file, create an IBOutlet for th
 @end
 ~~~
 
-Now, let's build and run the project. If everything is as it should be, you should see the following screenshot:
+자 이제, 프로젝트를 빌드하고 실행해보자. 만약 제대로 잘 따라왔다면 아래와 같은 화면을 보게 된다:
 
 ![mapView](../../images/iOS/GSDemo/mapView.png)
 
-### 3. Add Annotations to The MapView
+### 3. MapView에 Annotation 추가하기
 
-Currently, the map view is simple. Let's add something interesting to it. Create a new **NSObject** file named **DJIMapController**, which will be used to deal with the MKAnnotations(or for our purposes, Waypoints) logic on the map. Open the **DJIMapController.h** file and add the following code to it:
+현재까지 map view는 단순했다. 재밌는 것을 추가해 보도록 하자. **DJIMapController**이라는 새로운 **NSObject** 파일을 만들자. 이것으로 지도 상에서 logic을 MKAnnotation으로 처리하는데 사용된다. **DJIMapController.h** 파일을 열고 다음과 같은 코드를 추가한다 :
 
 ~~~objc
 #import <UIKit/UIKit.h>
@@ -167,9 +167,9 @@ Currently, the map view is simple. Let's add something interesting to it. Create
 @end
 ~~~
 
-Here, we create an NSMutableArray called **editPoints** to store waypoint objects and add two methods to implement **Add** and **Remove** waypoints. The last method will be used to return the current waypoint objects on the map in an array.
+여기서 waypoint 객체를 저장하기 위해서 **editPoints**라는 NSMutableArray를 생성한다. **Add** 와 **Remove** waypoints를 구현하기 위해서 2개 메소드를 추가한다. 마지막 메소드는 array내에서 지도상에 있는 현재 waypoint 객체를 반환하는데 사용할 것이다.
 
-Let's go to the **DJIMapController.m** file and replace the original code with the following:
+**DJIMapController.m** 파일로 가서 원래 코드를 다음 코드로 교체하자:
 
 ~~~objc
 #import "DJIMapController.h"
@@ -211,9 +211,9 @@ Let's go to the **DJIMapController.m** file and replace the original code with t
 
 @end
 ~~~
-First, we initialize the **editPoints** array in the **init** method, then create **MKPointAnnotation** objects from **CGPoint** and add them to our **mapView**, and finally implement the **cleanAllPointsWithMapView** method to clean up the **eidtPoints** array and the annotations on the mapView.
+먼저, **init** 메소드에서 **editPoints** array를 초기화한다.그런 다음 **CGPoint**로부터 **MKPointAnnotation** 객체를 생성하고 **mapView**에 추가한다. 마지막으로 **cleanAllPointsWithMapView**을 구현해서 **eidtPoints** array와 mapview에 있는 annotation을 정리(cleanup)한다.
 
-Go back to the **DJIRootViewController.h** file, import the DJIMapController.h header file, and create a **DJIMapController** property named **mapController**. Since we want to add annotation pins by tapping on the map, we also need to create a **UITapGestureRecognizer** named as "**tapGesture**". Lastly, add a **UIButton** to the **DJIRootViewController** scene in **Main.storyboard**, set its IBOutlet name as "**editBtn**", and add an IBAction method named "**editBtnAction**" for it, as shown below:
+**DJIRootViewController.h** 파일로 돌아가서, DJIMapController.h 헤더 파일을 import하고 **mapController**이름의 **DJIMapController** property를 생성한다.map을 두드려서 annotation 핀을 추가하려고 하므로 "**tapGesture**"라는 이름의 **UITapGestureRecognizer**를 생성한다. 마지막으로 **UIButton**를 **Main.storyboard**내부에 있는 **DJIRootViewController** scene에 추가한다. "**editBtn**"라는 이름으로 IBOutlet을 설정한다. "**editBtnAction**" 이름의 IBAction 메소드를 추가한다. 아래와 같다:
 
 ~~~objc
 @property (nonatomic, strong) DJIMapController *mapController;
@@ -225,7 +225,7 @@ Go back to the **DJIRootViewController.h** file, import the DJIMapController.h h
 
 ![editButton](../../images/iOS/GSDemo/editButton.png)
 
-Once that is complete, open the **DJIMapController.m** file, initialize the **mapController** and **tapGesture** variables, and add the **tapGesture** to mapView to add waypoints. Furthermore, we need a boolean variable named "**isEditingPoints**" to store the edit waypoint state, which will also change the title of **editBtn** accordingly. Lastly, implement tapGesture's action method **addWayPoints**, as shown below:
+일단 완료하면, **DJIMapController.m** 파일을 열고  **mapController** 와 **tapGesture** 변수를 초기화한다. **tapGesture**를 mapView에 추가해서 waypoint를 추가할 수 있다. 추가로 "**isEditingPoints**"라는 boolean 변수가 필요하다. 수정한 waypoint 상태를 저장하는 용도이며, **editBtn**의 타이틀을 변경할 것이다. 마지막으로 tapGesture의 action 메소드 **addWayPoints**를 구현한다. 아래와 같다 :
 
 ~~~objc
 #import "DJIRootViewController.h"
@@ -293,12 +293,12 @@ Once that is complete, open the **DJIMapController.m** file, initialize the **ma
 
 ~~~
 
-In the above code, we also added an NSNotification observer to check the DJI Mobile SDK's state, to make sure it was sucessfully registered. At the same time, we implement the **addWaypoints** gesture action by calling DJIMapController's 
+위 코드에서 NSNotification observer를 추가해서 DJI Mobile SDK 상태를 검사해서 성공적으로 등록되었는지 확인한다. 동시에 DJIMapController를 호출해서 **addWaypoints** gesture action을 구현한다. 
 
      - (void)addPoint:(CGPoint)point withMapView:(MKMapView *)mapView
-method to add waypoints to the map. Next, we implement the IBAction method **editBtn**, which will update the button's title and clean up waypoints based on the value of **isEditingPoints**. Finally, we implement MKMapViewDelegate's method to change the pin color to purple.
+map에 waypoint를 추가하는 메소드. 다음으로 IBAction 메소인 **editBtn**를 구현하여 button의 title을 업데이트하고 **isEditingPoints** 기반으로 waypoint를 지운다. 마지막으로 pin색상을 보라색으로 바꾸기 위해서 MKMapViewDelegate의 메소드를 구현한다.
 
-When you are done with all the steps above, build and run your project and try to add waypoints on the map. If everything is fine, you will see the following animation:
+위에 있는 모든 단계를 마쳤으면 프로젝트를 빌드하고 실행해서 waypoint를 map에 추가해 보자. 모든 것이 정상이라면 다음과 같이 보일 것이다 :
 
 ![addWaypoint](../../images/iOS/GSDemo/addWaypoint.gif)
 
