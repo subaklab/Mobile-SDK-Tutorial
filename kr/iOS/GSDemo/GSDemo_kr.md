@@ -1,35 +1,35 @@
-# Creating a MapView and Waypoint Application
+# MapView와 Waypoint App 만들기
 
 <!-- toc -->
 
-*Note: The code in this tutorial has been written to be run on the iPad. Please make sure you run this code on an iPad or an iPad simulator.*
+*주의: 이 튜토리얼의 코드는 iPad에서 실행되도록 작성하였다. 따라서 iPad나 iPad simulator에서 이 코드를 실행하시오.*
 
-In this tutorial, you will learn how to setup the DJI PC Simulator, upgrade your Inspire 1, Phantom 3 Professional and Phantom 3 Advanced's firmware to the beta version, and how to test the GroundStation API with DJI PC Simulator. Also, you will get comfortable with the basic process of using DJI GroundStation's Waypoint feature. So let's get started!
+이 튜토리얼엣어 DJI PC Simulator를 설정하는 방법을 배우고 베타 버전으로 Inspire 1, Phantom 3 Professional과 Phantom 3 Advanced 펌웨어를 업그레이드해서 DJI PC Simulator와 GroundStation API를 테스트하는 방법을 배워보자. DJI GroundStation Waypoint 기능을 이용하는 것에 익숙해 질 것이다. 자 이제 시작해보자!
 
-   You can download the demo project for this tutorial from here: <https://github.com/DJI-Mobile-SDK/iOS-GSDemo.git>
+   이 튜토리얼의 전체 프로젝트를 다운받을 수 있다 : <https://github.com/DJI-Mobile-SDK/iOS-GSDemo.git>
 
-## Using The DJI PC Simulator
+## DJI PC Simulator 사용하기
 
-### 1. Introduction
+### 1. 소개
 
-The DJI PC Simulator is a flight simulator designed for SDK developers. The simulator creates a virtual 3D environment and provides data analysis from flight data transmitted to the PC via the UDP protocol.
+DJI PC Simulator는 SDK 개발자를 위해 설계된 비행 simulator이다. simulator는 가상 3D 환경을 만들고 UDP 프로토콜을 통해 PC로 전달된 비행 데이터를 분석을 제공한다.
 
-**Supported Operating Systems**: Windows 7, Windows 8, and Windows 8.1
+**지원하는 운영체제**: Windows 7, Windows 8 그리고 Windows 8.1
 
-**Supported DJI Platforms**: Matrice 100, Inspire 1, Phantom 3 Professional, and Phantom 3 Advanced
+**지원하는 DJI 플랫폼**: Matrice 100, Inspire 1, Phantom 3 Professional, 그리고 Phantom 3 Advanced
 
-### 2. Install and setup the DJI PC Simulator
+### 2. DJI PC Simulator 설치 및 설정
 
-First, you should download the DJI PC Simulator and WIN Driver from here: <http://dev.dji.com/en/products/sdk/onboard-sdk/downloads> :
+먼저 DJI PC Simulator와 WIN Driver 다운받는다 : <http://dev.dji.com/en/products/sdk/onboard-sdk/downloads> :
 
 - DJI PC Simulator Installer & User Manual V1.0
 - WIN Driver Installer
 
-You must install the driver before running the simulator. Since the simulator only supports Windows, you should find a PC or install a Virtual Manchine(Like VMWare or Parallels Desktop) to run Windows on your Mac. Now, double click the **DJI_WIN_Driver_Installer.exe** file to install it. If a dialog box saying **"Please power on MC and connect it to PC via USB!"** pops up, just ignore it, click **"YES"**, and follow the rest of the instructions to install the driver. 
+simulator를 실행하기 전에 driver 설치해야만 한다. simulator는 윈도우만 지원하기 때문에 Mac에서 윈도우를 실행할려면 가상 머신(VMWare나 Parallels Desktop)을 설치해야 한다. **DJI_WIN_Driver_Installer.exe** 을 설치하기 위해서 더블 클릭한다. 다이얼로그 박스에 **"Please power on MC and connect it to PC via USB!"** 나오면 무시하고 그냥 **"YES"**를 클릭한다. 다음으로 driver를 설치하기 위해 다음과 같은 절차를 따른다.
 
-Then, double click the **DJISimulator-Installer.exe** file and follow the instructions to install the program. 
+다음으로 **DJISimulator-Installer.exe**를 더블 클릭해서 설치하고 설치를 위해 다음 절차를 따른다.
 
-### 3. How to use the DJI PC Simulator
+### 3. DJI PC Simulator 사용하는 방법
 
 **1**. The **Simulator Config** window will appear once you launch the DJI PC Simulator. Set the **Latitude** and **Longitude** values based on your preference. The **SN** represents the connected aircraft's SN number. If you do not see the **SN**, your aircraft is not connected properly to the PC or there is an issues with your firmware.
 
