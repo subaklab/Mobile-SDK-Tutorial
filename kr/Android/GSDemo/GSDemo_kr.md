@@ -22,39 +22,36 @@ DJI PC Simulator 설치파일 및 WIN 드라이버 다운받기 : <http://dev.dj
 - DJI PC Simulator Installer & User Manual V1.0
 - WIN Driver Installer
 
-simulator를 설치하기 전에 WIN driver를 설치해야만 한다. Mac 사용자에 대해서는, simulator를 가상환경에서 simulator를 실행하는 것을 추천한다.(VMWare나 Parallels Desktop) 
+simulator를 설치하기 전에 WIN driver를 설치해야만 한다. Mac 사용자에 대해서는, simulator를 가상환경에서 simulator를 실행하는 것을 추천한다.(VMWare나 Parallels Desktop) DJI_WIN_Driver_Install.exe를 더블클릭해서 windows 드라이버를 설치하자. 화면에 **"Please power on MC and connect it to PC via USB!"** 메시지가 나오면 무시하고 "YES"를 클릭하고 화면의 지시에 따라 설치를 마치자.  
 
-You must install the WIN driver before installing the simulator. For Mac users, it is recommended to run the simulator in a virtual environment(e.g. VMWare or Parallels Desktop). Double click the DJI_WIN_Driver_Installer.exe  to install the windows driver. If the window prompts the following message **"Please power on MC and connect it to PC via USB!"** , ignore it and click "YES" to follow the on-screen instruction and complete the installation.
+마지막으로 **DJISimulator-Installer.exe** 파일을 더블클릭하고 화면 명령을 따라 설치를 마치자.
 
-Finally, double click the **DJISimulator-Installer.exe** file and follow the on-screen instruction to complete the installation. 
-
-### 3. How to use DJI PC Simulator
-**1.** The Simulator Config window will display upon the launching of the DJI PC Simulator. Set appropriate  Latitude and Longitude values as the home point. The "SN" denotes the connected aircraft's serial number.
+### 3. DJI PC Simulator 사용하는 방법
+**1.** DJI PC Simulator를 실행하면 Simulator Config 화면이 나타난다. 적당한 위경도 값을 home point로 설정한다. "SN"은 비행체의 시리얼 번호를 뜻한다.
 
 ![Config](../../images/Android/GSDemo/simulator_config.png)
 
 ---
-**Note**: 
+**주의**: 
 
-- Ensure the home point is set outside of the No Fly Zone.
+- home point가 No Fly Zone 바깥지점이여야 한다.
 
-- Select "Show Log Window" under the "Log Settings" tag to show the flight lot as shown below:
+- "Log Settings" 태그아래 "Show Log Window"를 선택하면 비행 지점이 보인다.:
 
  ![showLog](../../images/Android/GSDemo/showLog.png)
 
 ---
 
-**2**. Connect the aircraft to your PC via a Micro USB cable, and then power on the aircraft and the
-remote controller. Click Display Simulator. You can see the screenshot as below:
+**2**. Micro USB 케이블로 비행체를 PC에 연결하고 비행체와 리모트 컨트롤에 전원을 넣는다. Display Simulator를 클릭한다. 아래와 같은 화면이 볼 수 있다:
 
  ![display](../../images/Android/GSDemo/display.png)
 
 ---
-**Note**: 
+**주의**: 
 
-- DO NOT launch the DJI Pilot app when the DJI PC Simulator is running.
+- DJI PC Simulator가 실행 중일 때는 DJI Pilot app을 실행하지 말라.
 
-- Remove the propeller from the aircraft when using the DJI PC Simulator. 
+- DJI PC Simulator를 사용할 때는 프로펠러를 제거한다.
 
 ---
 
