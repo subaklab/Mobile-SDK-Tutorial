@@ -799,20 +799,20 @@ Now the app will automatically detect whether the camera is in video single prev
 
 ![Pause the video](../../images/Android/PlaybackAlbumDemo/pausebutton.jpg)
 
-You have successfuly implemented all the UI features that this tutorial has to offer! Give your app another go.
+여러분은 이 튜토리얼에서 제공하는 모든 UI 기능을 성공적으로 구현했다!
 
-## Downloading and Deleting Media files
+## 미디어 파일 다운로드 및 삭제
 
-### 1. Finishing the Download feature
+### 1. 다운로드 기능 마무리 하기
 
-In previous sections, we discussed and implemented three out of four camera modes. In this section we will cover the final camera mode, **Download Mode**.
+이전 섹션에서 4개 camera mode에서 3개를 구현했다. 이 섹션에서는 마지막 camera mode인 **Download Mode**에 대해서 다룬다.
 
-Please note that **DNG images and 4k video cannot be downloaded through playback mode**. In addition, the two methods below are not supported by the Inspire 1, Phantom 3 Professional or the M100:
+**PNG 이미지와 4k 비디오는 playback mode**를 통해 다운받을 수 없다. 추가로 아래 2개 메소드는 Inspire 1, Phantom 3 Professional이나 M100을 지원하지 않는다.
 
 - `fetchMediaData(DJIMedia, DJIExecuteResultCallback)`
 - `fetchMediaThumbnail(DJIMedia, DJIExecuteResultCallback)`
 
-As we've already implemented all the necessary UI features, the only thing we have left to do is add some logic to our existing buttons. Add the following code into `onClick(View v)`:
+이미 필요한 모든 UI 기능을 구현했으므로, 이제 나은 일은 버튼에 대해서 로직을 추가하는 것이다. 다음과 같은 코드를 `onClick(View v)`에 추가하자 :
 
 ~~~java
 	@Override
