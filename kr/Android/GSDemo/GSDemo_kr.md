@@ -55,20 +55,20 @@ simulator를 설치하기 전에 WIN driver를 설치해야만 한다. Mac 사�
 
 ---
 
-**3**. Start using the simulator by clicking Start Simulation button. You can use the remote controller to change the course of the aircraft or bring it back with the Return-to-Home function. Enable API Control to allow control from a mobile or onboard device. World X, Y, Z represents the North-South, East- West, and Up-Down axes (take the North, East and Up directions as positive). 
+**3**. Start Simulator 버튼을 누르면 simulator 사용을 시작한다. 비행체의 코스를 변경하기 위해서 리모트 컨트롤러를 사용할 수 있다. 혹은 Return-to-Home 기능을 이용하면 돌아오게 할 수도 있다. 모바일이나 onboard 장치에서 제어하기 위해서 API Control를 사용할 수 있다. X, Y, Z는 북-남, 동-성, 위-아래 축을 뜻한다.(북, 동, 위 방향이 양의 방향이다)
 
-**4**. Left-click, hold on and drag to change the view angle. Scroll to zoom in and zoom out.
+**4**. 시야각을 변경하기 위해서 왼쪽 클릭을 누르면서 드래그한다. 줌인/아웃을 위해 스크롤한다.
 
  ![zoomIn](../../images/Android/GSDemo/zoomIn.png)
  
  ![zoomOut](../../images/Android/GSDemo/zoomout.png)
 
-**5**. Click Stop Simulation to stop the simulation. Close the simulator, and power off the aircraft and the remote controller after use. 
+**5**. simulation을 멈추기 위해서 Stop Simulation을 클릭한다. 사용 후에는 simulator를 닫고 비행체와 리모트 컨트롤의 전원을 내린다.
 
-**Important**: If you want to stop midway through the GroundStation Waypoint Mission, you should click **Stop Simulation** firstly, otherwise the simulator may run the previous groundstation mission when you start it again, it may be confused.
+**중요**: GroundStation Waypoint Mission에서 중간에 멈추기를 원한다면, 우선 **Stop Simulation** 을 눌러야 한다. 그렇지 않으면 다시 시작할 때, simulator는 이전 groundstation mission을 실행할지도 모른다. 혼란을 줄 수 있다.
 
-For more info about DJI PC Simulator, please check the **DJI PC Simulator user manual.pdf** file, which you download along with the simulator.---
-**Note**: 
+DJI PC Simulator에 관한 추가 정보는 simulator와 함께 다운받은 **DJI PC Simulator user manual.pdf** 파일을 확인하자.---
+**주의**: 
 
 ## Upgrade the Aircraft's Firmware
 
