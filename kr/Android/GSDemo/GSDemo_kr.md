@@ -42,7 +42,7 @@ simulator를 설치하기 전에 WIN driver를 설치해야만 한다. Mac 사�
 
 ---
 
-**2**. Micro USB 케이블로 비행체를 PC에 연결하고 비행체와 리모트 컨트롤에 전원을 넣는다. Display Simulator를 클릭한다. 아래와 같은 화면이 볼 수 있다:
+**2**. Micro USB 케이블로 비행체를 PC에 연결하고 비행체와 리모트 컨트롤에 전원을 넣는다. Display Simulator를 클릭한다. 아래와 같은 화면을 볼 수 있다:
 
  ![display](../../images/Android/GSDemo/display.png)
 
@@ -70,16 +70,16 @@ simulator를 설치하기 전에 WIN driver를 설치해야만 한다. Mac 사�
 DJI PC Simulator에 관한 추가 정보는 simulator와 함께 다운받은 **DJI PC Simulator user manual.pdf** 파일을 확인하자.---
 **주의**: 
 
-## Upgrade the Aircraft's Firmware
+## 비행체 펌웨어 업그레이드
 
-Download and update the aircraft's firmware to its beta version before attempting to use the DJI Mobile SDK API.
+DJI Mobile SDK API 사용하기 전에, 비행체의 베타 버전으로 펌웨어를 다운받고 업그레이드한다.
 
-Choose and download one of the following firmware from : <http://dev.dji.com/en/products/sdk/onboard-sdk/downloads> :
+다음 펌웨어 사이트에서 골라서 다운받도록 하자 : <http://dev.dji.com/en/products/sdk/onboard-sdk/downloads> :
 
 - Phantom 3 Professional Firmware (P3X_FW_V01.01.1003.bin)
 - Inspire 1 Firmware (WM610_FW_V01.02.01.02.bin)
 
-It is not required to update Remote Controller's firmware. Place the **bin** file in the SD card and insert it to the Micro USB port on the camera, and restart the aircraft and then the update process will start automatically. It may take 10 ~ 30 minutes to finish.
+리모트 컨트롤러의 펌웨어를 업데이트할 필요는 없다. SD카드에 **bin** 파일을 넣고 카메라에 있는 Micro USB 포트 삽입한다. 이어서 비행체를 재시작하면 업데이트 절차가 자동으로 시작된다. 마치는데 10 ~ 30분 정도 소요된다.
 
 Verify the result via the beeping pattern from the gimbals or the blinking pattern of the camera status indicator. Refer to the table below for the beeping pattern:
 
