@@ -542,7 +542,7 @@ UI를 조정하는 것 외에, app에서 drone으로 camera mode를 바꾸라는
     }
 ~~~
 
-The parameter `status` tells this method which mode to switch the camera to. We use the following constants as input parameters.
+`status` 인자는 이 메소드에게 어떤 mode로 전환되어야 하는지 알려준다. 다음과 같은 constant를 입력 인자로 사용한다.
 
 ~~~java
 	private final static int CAPTURE = 2;
@@ -551,7 +551,7 @@ The parameter `status` tells this method which mode to switch the camera to. We 
     private final static int MULTIPLEPLAYBACK = 5;
 ~~~
 
-The constants start from '2' because the value of `Camera_Capture_Mode` in the enum `CameraMode` is 2. We edit our `onClick()` function so that `onPressStatusBtn(final int status)` is invoked when the appropriate buttons are pressed, and adjust which constant we pass in depending on which button is pressed:
+constant가 `2`부터 시작하는 이유는 `CameraMode` enum 내에서 `Camera_Capture_Mode`의 갑이 2이기 때문이다. 적절한 버튼이 눌러지면 `onPressStatusBtn(final int status)`이 호출되도록 `onClick()`을 수정한다. 각 버튼이 눌러지느냐에 따라서 어느 constant를 전달할지 정한다 :
 
 ~~~java
 	public void onClick(View v) {
@@ -584,7 +584,7 @@ The constants start from '2' because the value of `Camera_Capture_Mode` in the e
 	}
 ~~~
 
-To keep the UI logic consistent, we also detect the current status of the camera in the `onCreate()` function. In our demo, we do this after `checkPermission(Context, DJIGeneralListener)` gets the SDK level.
+UI logic을 일정하게 유지하기 위해서, `onCreate()` 함수에서 camera의 현재 상태를 알아낸다. 우리 데모에서 `checkPermission(Context, DJIGeneralListener)`가 SDK level을 얻은 후에 수행한다.
 
 ~~~java
 	 new Thread(){
@@ -619,10 +619,9 @@ To keep the UI logic consistent, we also detect the current status of the camera
             }
         }.start();
 ~~~
+Inspire 1, Phantom 3 Professional와 M100의 리모크 컨트롤은 capture, recording 그리고 playback 모드에 들입하는 버튼이 있다. 일단 이런 버튼이 눌러지면 camera 상태는 바로 변경된다. 만약 우리가 만든 app에서 리모트 컨트롤에서 버튼이 눌려졌는지 알 수 있고 UI가 변경된다면 멋질 것이다.
 
-The Inspire 1, Phantom 3 Professional and M100's remote controllers have buttons for capturing, recording and entering the playback mode. Once these buttons have been pressed, the camera status will be changed directly. Would be great if our application could listen to the buttons at the remote controller and automatically adjust the UI?
-
-To listen to the remote controller, we set up `DJIRemoteControllerUpdateAttitudeCallBack`. Add the code below to the onCreate() function, but make sure to declare the variable `mRemoteControllerUpdateAttitudeCallBack` first.
+리모트 컨트롤의 상태를 감시하기 위해서 `DJIRemoteControllerUpdateAttitudeCallBack`을 설정한다. onCreate() 에 아래 코드를 추가하는데 `mRemoteControllerUpdateAttitudeCallBack` 변수가 선언했는지를 먼저 확인한다.
 
 ~~~java
 	        mRemoteControllerUpdateAttitudeCallBack = new DJIRemoteControllerUpdateAttitudeCallBack() {
@@ -648,9 +647,9 @@ To listen to the remote controller, we set up `DJIRemoteControllerUpdateAttitude
         DJIDrone.getDjiRemoteController().setRemoteControllerUpdateAttitudeCallBack(mRemoteControllerUpdateAttitudeCallBack);
 ~~~
 
-`attitude.playbackStatus`, `attitude.recordStatus` and `attitude.shutterStatus` reflect the status of the corresponding buttons on the remote controller. Once the user clicks the corresponding button on the remote controller, these attributes will become `true`.
+`attitude.playbackStatus`, `attitude.recordStatus` 와 `attitude.shutterStatus`는 리모트 컨트롤에 있는 대응 버튼의 상태를 반영한다. 일단 사용자가 리모느 컨트롤러에서 대응 버튼을 클릭하면 이 속성은 `true`가 된다.
 
-You have finished implementing the adaptive UI. Build and run your app, and enjoy!
+이제 UI 구현을 마쳤다. app을 빌드 및 실행하고 즐기자!
 
 ### 3. 앨범 gesture 제어
 
