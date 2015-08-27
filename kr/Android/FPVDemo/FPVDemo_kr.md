@@ -201,8 +201,7 @@ uses-library android:name="com.android.future.usb.accessory"
 		</activity>
 ~~~
 
-(2) 새로운 Android Activity 페이지를 생성하고 **DJIAoaActivity**를 activity 이름으로 사용하라. ()
-Create a new Android Activity Page, using **DJIAoaActivity** as the activity name. (package에서 오른쪽 클릭을 해서 New -> Other -> Android -> Android Activity) 새로 생성한 **DJIAoaActivity.java** 파일에서 **onCreate()** 메소드에서 AOA 지원이 가능하도록 다음 코드로 교체하자.
+(2) 새로운 Android Activity 페이지를 생성하고 activity이름으로 **DJIAoaActivity**를 사용한다.(package에서 오른쪽 클릭을 해서 New -> Other -> Android -> Android Activity) 새로 생성한 **DJIAoaActivity.java** 파일에서 **onCreate()** 메소드에서 AOA 지원이 가능하도록 다음 코드로 교체하자.
 
 ~~~java
 	private static boolean isStarted = false;
