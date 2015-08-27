@@ -327,13 +327,13 @@ grid view의 2가지 특징이 있는데 여기서부터 시작해 보자 :
 
 이 단원을 시작하기 전에, 먼저 약간의 조정이 필요하다:
 
-1. Follow the [Creating a Camera Application](../../Android/FPVDemo/FPVDemo_en.md) to set up Android Open Accessory (AOA) support
-2. Change your main activity from `PlaybackProtocolActivity` to `DJIAoaActivity`
-3. Add a DjiGLSurfaceView element to show the first personal view (steps 2 and 3 are also covered in the "Creating a Camera Application" tutorial)
-4. Add item feature `android:visibility="Gone"` to our gridview in `activity_playback_protocol.xml`
-5. Adjust the button color by replacing `android:background="@android:color/yellow"` with `android:background="@android:color/transparent"` in `button_gridview_item.xml`.
+1. AOA(Android Open Accessory) 지원하도록 설정하기 위해 [Camera App 생성하기](../../Android/FPVDemo/FPVDemo_en.md)를 따라하자.
+2. main activity인 `PlaybackProtocolActivity`를 `DJIAoaActivity`로 변경한다.
+3. FPV(first personal view)를 보여주기 위해 DjiGLSurfaceView element를 추가한다.(단계 2와 3은 "Camera App 생성하기" 튜토리얼에서 다루고 있다.)
+4. `activity_playback_protocol.xml`에 gridview에 `android:visibility="Gone"`을 추가하자.
+5. `button_gridview_item.xml`내에 `android:background="@android:color/yellow"`를 `android:background="@android:color/transparent"`로 대체하여 버튼 색상을 조절한다.
 
-Now we can continue. As we know from section 1, there are four camera modes and each of them allows or prevents certain functions to be invoked. To increase clarity for users, developers should adjust the UI components based on the current camera status. Let's add some buttons in `activity_playback_protocol.xml`.
+이제 계속 진행해 보자. 섹션 1에서 알아본 바와 같이 4개 camera mode가 있고 이 각각에 따라 기능이 달라진다. 개발자는 현재 camera 상태를 기반으로 UI 컴포넌트를 조정해야만 사용자에게 명확하다. `activity_playback_protocol.xml`에 버튼을 추가해 보자.
 
 ~~~xml
 	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -449,7 +449,7 @@ Now we can continue. As we know from section 1, there are four camera modes and 
 	</RelativeLayout>
 ~~~
 
-The **Capture**, **Record** and **Playback** buttons, which allow the user to navigate between these three modes, will always be present. Within the **Playback** mode, however, there are three submodes **Single Preview**, **Multiple Preview** and **Multiple Edition**. Entering **Playback** mode places the user in **Single Preview** mode. In **Multiple Preview** mode, users can press any image to enter **Single Preview** mode. **Multiple Edition** playback mode is different from **Multiple Preview** in that it allows users to select, download and delete files. Take a look below for screenshots outlining which specific buttons and features should be included in each mode, as well as a state switch diagram outlining the relationship between modes:
+**Capture**, **Record** 와 **Playback** 버튼은 항상 나타나야하며 사용자가 이 3개 모드를 전환할 수 있게 한다. 하지만 **Playback** mode는 **Single Preview**, **Multiple Preview** 와 **Multiple Edition** 같은 3개 서브 모드가 있다. **Playback** mode에 들어가면 사용자가 **Single Preview** mode가 된다. **Multiple Preview** mode에서는 이미지를 누르면 **Single Preview** mode에 들어가게 된다. **Multiple Edition** playback mode는 **Multiple Preview**와 달라서 사용자가 파일을 선택, 다운받기, 삭제가 가능하다. 아래 스크린샷을 통해서 각 모드에 들어가는 버튼과 기능에 대해서 대략 살펴볼 수 있다. 상태 다이어그램을 통해서 각 모드 사이의 관계에 대해서 알 수 있다:
 
 ![Capture Mode](../../images/Android/PlaybackAlbumDemo/capturemode.jpg)
 
@@ -461,7 +461,7 @@ The **Capture**, **Record** and **Playback** buttons, which allow the user to na
 
 ![State switch figure](../../images/Android/PlaybackAlbumDemo/statuschange.jpg)
 
-Now the gridview `onItemClick` logic needs to be adjusted based on the current playback status using the following code:
+이제 gridview `onItemClick` 로직은 현재 playback 상태를 기반으로 수정하자. 코드는 다음과 같다 :
 
 ~~~java
 	private void onStatusChange(final int status) {
@@ -525,9 +525,9 @@ Now the gridview `onItemClick` logic needs to be adjusted based on the current p
     }
 ~~~
 
-This method classifies the UI status into four parts (capture, record, playback and multipleplayback). When camera mode changes, this routine will adjust the visibility of the individual UI components.
+이 메소드는 UI 상태를 4개 부분(capture, record, playback과 multipleplayback)으로 분류한다. camera mode가 변경될 때, 이 루틴은 개별 UI 컴포넌트의 visibility를 조정할 수 있다.
 
-Besides adjusting the UI, we should also send a request from our app to the drone to change the camera mode. Remember the method `setCameraMode(CameraMode mode)` in Section 1? Now we put it to use:
+UI를 조정하는 것 외에, app에서 drone으로 camera mode를 바꾸라는 요청을 보낼 수 있다. 섹션 1에서 `setCameraMode(CameraMode mode)` 메소드가 있었다. 이것을 사용해 보자 :
 
 ~~~java
 	private void onPressStatusBtn(final int status) {
