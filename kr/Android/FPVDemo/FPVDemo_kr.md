@@ -58,7 +58,7 @@ private static final String TAG = "MyApp";
 
 활성화와 관련된 log error를 식별하기 위해서 이 string 값을 이용할 것이다.
 
-onCreate 메소드에서 다음 코드를 추가하자. 많아 보이지만 이 코드들은 **DJIDrone.checkPermission()**라 불리는 단일 함수이다. 이 메소드는 DJI의 서버에 대해서 **AndroidManifest.xml**에 추가했던 정보를 체크함으로써 app의 유효성을 확인할 수 있다. 처음으로 여러분의 app을 실행한다면, 유효성을 확인하고 나면 app이 활성화 될것이다.
+onCreate 메소드에서 다음 코드를 추가하자. 많아 보이지만 이 코드들은 **DJIDrone.checkPermission()**라 불리는 단일 함수이다. 이 메소드는 DJI의 서버에 대해서 **AndroidManifest.xml**에 추가했던 정보를 체크함으로써 app의 유효성을 확인할 수 있다. 처음 여러분의 app을 실행한다면, 유효성을 확인하고 나면 app이 활성화 될것이다.
 
 ~~~java
 	new Thread(){
@@ -90,7 +90,7 @@ onCreate 메소드에서 다음 코드를 추가하자. 많아 보이지만 이 
 
 이 코드들을 나눠보자. 모든 코드를 thread내부에 두었다는 것을 명심하자. 이렇게 하는 이유는 **checkPermission()**이 네트워크에서 실행되기 때문이고 이런 절차는 반드시 thread에서 처리해야만 한다. 네트워크 연산이 완료되기를 기다리는 동안 전체 app이 멈추지 않게 하기 위해서다.
 
-**checkPermission()**는 2개의 인자를 가진다: context와 **DJIGerneralListener()**. **DJIGerneralListener()**는 **onGetPermissionResult()**라는 1개 메소드를 가지는 인터페이스다: 이는 callback함수처럼 동작해서 **checkPermission()**가 응답을 받을 때 해야하는 것을 정의한다.
+**checkPermission()**는 인자 2개를 가진다: context와 **DJIGerneralListener()**이다. **DJIGerneralListener()**는 **onGetPermissionResult()** 메소드를 가지는 인터페이스다: 이는 callback함수처럼 동작해서 **checkPermission()**이 응답하는 것을 정의한다.
 
 ~~~java
 @Override
@@ -310,11 +310,11 @@ if (action==UsbManager.ACTION_USB_ACCESSORY_ATTACHED || action == Intent.ACTION_
 	
 ## FPV(First Person View) 구현하기
 
-We're almost there! We've activated our app and set up a verification mechanism, as well as established a data connection between our app and the DJI remote controller. All that's left to do is create a live video feed of the Drone's camera to be viewed through the app.
+이제 거의 완성되어 간다. app과 DJI 리모트 컨트롤러 사이에 데이터 연결이 가능하도록 하는 것 뿐만 아니라 app을 활성화시키고 인증 매커니즘을 만들어야 한다. 남은 일은 드론의 카메라에서 라이브 비디오를 생성해서 app을 보는 일이다.
 
-(1) Before we start using the SDK API, we have to initiate it according to the type of the aircraft we are using. Unfortunately, as of now, there exists no way to automatically detect what type of aircraft the app is connected to. This means that we must either hardcode in which type of drone we are using, or have some sort of user input. For the purposes of this tutorial, we will be hardcoding in that we are using the Inspire 1. However, our method includes a **switch()** statement that allows us to change a simple variable **DroneCode** in our code if other drones are to be used.
+(1) SDK API를 사용하기 전에, 우리가 사용하고 있는 비행체의 타입에 따라서 초기화 해야만 한다. 안타깝지만 지금은 app이 연결한 비행체의 타입이 무엇인지 자동으로 검출하는 방법은 없다. 따라서 우리가 사용할 드론의 타입이 무엇인지 직접 입력해야한다. 아니면 어떤식으로든 사용자 입력을 받아야 한다. 이 튜토리얼의 목적을 위해 우리가 사용할 Inspire 1을 직접 입력하도록 하겠다. 하지만 메소드는 **switch()** 구문을 포함하여 다른 드론을 사용하는 경우 **DroneCode** 변수를 변경하도록 해놨다.
 
-In 'FPVActivity.java', in the FPVActivity class, add the variable below.
+'FPVActivity.java'의 FPVActivity 클래스에 아래 변수를 추가한다.
 
 ~~~java
 private int DroneCode;
@@ -326,7 +326,7 @@ Import the following package.
 import dji.sdk.api.DJIDroneTypeDef.DJIDroneType;
 ~~~
 
-Add two lines of code in the 'onCreate' method as shown below. Additionally, within the 'FPVActivity' class, copy the 'onInitSDK' method shown below.
+아래 'onCreate' 메소드에 2줄 코드를 추가한다. 추가로 'FPVActivity' 클래스 내부에 'onInitSDK' 메소드를 아래와 같이 추가한다.
 
 ~~~java
 	@Override
@@ -369,13 +369,13 @@ Add two lines of code in the 'onCreate' method as shown below. Additionally, wit
 	...
 ~~~
 
-(2) After initiating the SDK API, we have to connect to the drone. In the 'onCreate' method, use the following line of code to connect to the aircraft. Make sure to call this method only after the code that activates your APP key.
+(2) SDK API를 초기화 한 후에, 드론을 연결해야만 한다. 'onCreate' 메소드에서 비행체에 연결하기 위해 다음 코드들을 사용한다. 이 메소드는 여러분의 APP key가 활성화시키는 코드 뒤에 호출되어야 한다.
 
 ~~~java
 	DJIDrone.connectToDrone(); // Connect to the drone
 ~~~	
 
-(3) Now that the API has been initiated and we have connected to the drone, we can connect a video feed. If these two processes are not carried out first, calling API functions will have no result. Locate the **activity_fpv.xml** file (res/layout/activity_fpv.xml) and add the following **DjiGLSurfaceView** element code in the **activity_fpv.xml** file.
+(3) API는 초기화되고 드론에 연결된다. 이제 비디오에 연결할 수 있다. 만약 이 2가지 절차가 먼저 수행되지 않으면 API 함수 호출은 어떤 동작도 하지 않는다. **activity_fpv.xml** 파일(res/layout/activity_fpv.xml)에 **DjiGLSurfaceView** element 코드를 추가한다.
 
 ~~~xml
 	<dji.sdk.widget.DjiGLSurfaceView
@@ -384,16 +384,16 @@ Add two lines of code in the 'onCreate' method as shown below. Additionally, wit
 		android:layout_height="fill_parent" />
 ~~~	
 
-This view is responsible for displaying the video stream from the DJI drone.
+이 view는 DJI drone으로부터 video stream을 보여주는 역할을 한다.
 
-In your 'FPVActivity.java' file, in the FPVActivity class, add the objects as shown below.
+'FPVActivity.java' 파일의 FPVActivity 클래스 내부에 아래와 같이 object를 추가한다.
 
 ~~~java
 private DJIReceivedVideoDataCallBack mReceivedVideoDataCallBack = null;
 private DjiGLSurfaceView mDjiGLSurfaceView;
 ~~~
 
-Add the following code in the 'onCreate' method, making sure to insert it after where you call the connectToDrone() method.
+'onCreate' 메소드에 다음과 같은 코드를 추가하고, connectToDrone() 메소드 호출하는 곳 이후에 호출되도록 추가되었는지 확인한다. 
 
 ~~~java
 	@Override
@@ -416,16 +416,16 @@ Add the following code in the 'onCreate' method, making sure to insert it after 
 	}
 ~~~	
 
-Let's work our way through this chunk of code.
+이 코드가 어떻게 동작하는지 알아보자.
 
-Firstly, we associate our object **mDjiGLSurfaceView** with the **DjiSurfaceView_02** element we created in our **activity_fpv.xml** file just before.
+먼저 **activity_fpv.xml**에서 생성한 **DjiSurfaceView_02** element가 객체 **mDjiGLSurfaceView**와 연결시킨다.
 
 ~~~java
 mDjiGLSurfaceView = (DjiGLSurfaceView)findViewById(R.id.DjiSurfaceView_02);
 mDjiGLSurfaceView.start();
 ~~~
 
-We then set our callback function **mReceivedVideoDataCallBack** that we just declared above.
+다음으로 위에서 금방 선언한 callback 함수인 **mReceivedVideoDataCallBack**를 설정한다.
 
 ~~~java
 mReceivedVideoDataCallBack = new DJIReceivedVideoDataCallBack(){
@@ -436,15 +436,15 @@ public void onResult(byte[] videoBuffer, int size){
 };
 ~~~
 
-**mReceivedVideoDataCallBack** will now take the raw video data (raw H264 format) from the Drone's camera and feed it to our **DjiGLSurfaceView** element to handle, where a decoder provided by DJI will decode the raw data, upon which the **DjiGLSurfaceView** element will display it in our app window!
+**mReceivedVideoDataCallBack**는 드론의 카메라에서 raw video 데이터(raw H264 포맷)을 가져오고 이를 **DjiGLSurfaceView** element로 줘서 처리하게 한다. DJI가 제공하는 디코더는 raw data를 디코딩하고 **DjiGLSurfaceView** element는 여러분의 app 윈도우에서 나타나게 된다!
 
-Finally, we set this callback function to be called when we receive data from the Drone's camera.
+마지막으로 드론의 카메라에서 데이터를 받으면 이 callback 함수가 호출되도록 하자.
 
 ~~~java
 DJIDrone.getDjiCamera().setReceivedVideoDataCallBack(mReceivedVideoDataCallBack);
 ~~~
 
-(4) Finally, when the app is closed, we must terminate the data decoding process, then destroy our **DjiGLSurfaceView** element. If an **onDestroy()** method does not already exist, create the method using the code below. Otherwise, copy the code below into your existing **onDestroy()** method.
+(4) 마지막으로 app이 닫히면, 데이터 디코딩 프로세스를 종료시켜야만 한다. 따라서 **DjiGLSurfaceView** element를 제거한다. **onDestroy()** 메소드가 기존에 없다면 아래 코드를 이용해서 메소드를 생성한다. 반면에 **onDestroy()** 메소드가 있다면 아래 코드를 복사해서 넣자.
 
 ~~~java
 	...
@@ -460,46 +460,46 @@ DJIDrone.getDjiCamera().setReceivedVideoDataCallBack(mReceivedVideoDataCallBack)
 	}
 ~~~
 
-It is extremely important that in the **onDestroy()** method, you first terminate the video data processing operation by setting the callback function to **null** before you destroy the **DjiGLSurfaceView** object, as shown above. If you destroy the surface view first, the callback function will continue to send data to an object that does not exist, which could crash your app.
+**onDestroy()** 메소드는 아주 중요하다. 위에서 본 것처럼**DjiGLSurfaceView** 객체를 제거하기 전에, 먼저 callback 함수를 **null**로 설정하는 방식으로 video data processing을 종료한다. surface view를 먼저 삭제하면, callback 함수는 데이터를 더이상 존재하지 않는 객체에게 계속해서 보낼 수 있으면 이렇게 되면 app이 문제를 일으킨다. 
 
-Conversely, in your **onCreate()** method, you must start the **DjiGLSurfaceView** object before assigning the callback function, for the same reason (refer to the beginning of step (3) where we modify the **onCreate()** method for an example of where we have already done this).
+반대로 **onCreate()** 메소드에서 callback 함수를 할당하기 전에 **DjiGLSurfaceView** 객체를 시작해야만 한다. 이는 위와 같은 이유에서다.(단계 (3)의 처음부분을 보면 이미 우리가 이것을 수행했다는 예제를 위해 **onCreate()** 메소드를 수정하는 부분이다.)
 
-## Connecting to your Aircraft
+## 비행체에 연결하기
 
-After you have built and run the project successfully, you can now connect your mobile device to an aircraft to check the FPV. Follow the appropriate instructions for your specific aircraft model:
+여러분이 성공적으로 프로젝트를 빌드하고 실행한 후에, 모바일 장치를 비행체와 연결해서 FPV를 확인할 수 있다. 비행체 모델에 따른 적합한 절차를 따른다 :
 
-### 1. Connecting to a DJI Inspire 1 or Phantom 3 Professional/Advanced:
+### 1. DJI Inspire 1 나 Phantom 3 Professional/Advanced에 연결하기:
 
-1. Turn on your remote controller, then turn on your aircraft
+1. 리모트 컨트롤러 켜고 비행체 켜기
 
-2. Connect your mobile device to the remote controller using a USB cable. Tap your own app and a message window "Choose an app for the USB device" will prompt.
+2. USB 케이블을 이용해서 모바일 장치를 리모트 컨트롤러에 연결하기. app을 시행켜면 "Choose an app for the USB device"라는 팝업 창이 뜬다.
 
-3. Tap "OK" when the message window prompts "Allow the app to access the USB accessory".
+3. "Allow the app to access the USB accessory"라는 메시지 팝업이 나오면 "OK"를 누른다.
 
-4. Tap "OK" when the activation alert displays.
+4. 활성화 경고가 표시되면 "OK"를 누른다.
 
-5. You are ready to use the FPV View app. 
+5. 이제 FPV View app을 사용할 준비가 되었다.
 
-### 2. Connecting to a DJI Phantom 2 Vision+ or Phantom 2 Vision:
+### 2. DJI Phantom 2 Vision+ 혹은 Phantom 2 Vision에 연결하기:
 	
-1. Turn on your remote controller, then turn on your aircraft.
+1. 리모트 컨트롤러 켜고 비행체 전원 켜기
 
-2. Ensure that the mobile device has access to the Internet. Tap the app to activate and select "OK" when the activation is done.
+2. 모바일 장치가 인터넷에 연결되었는지 확인한다. app을 실행시켜 활성화 시키고 활성화가 되면 "OK"를 선택한다.
 
-3. Turn on the Wi-Fi range extender
+3. Wi-Fi 범위 확장기를 켠다.
 
-4. Turn on the Wi-Fi on your mobile device and connect to the Wi-Fi network of Phantom-xxxxxx (where xxxxxx is your range extender’s SSID number)
+4. 모바일 장치의 Wi-Fi를 켜고 Phantom-xxxxxx(xxxxxx는 범위 확장기의 SSID 숫자이다) 의 Wi-Fi 네트워크에 연결한다.
 
-5. You are ready to use the FPV View app.
+5. FPV View app을 사용할 준비가 되었다.
 
-## Checking your results
-If you can see the live video stream in the app, congratulations! You've succesfully implemented a First Person View!
+## 결과 검사하기
+live video stream을 app에서 볼 수 있다면 성공한 것이다! FPV 구현을 성공적으로 해냈다.
 
 ![runAppScreenShot](../../images/Android/FPVDemo/runAppScreenShot.png)
 
-## Creating a Handler
+## Handler 생성하기
 
-We will be using a handler to display error and confirmation messages. Set up this handler by copying the code below into your FPVActivity class:
+error나 확인 메시지를 보여주기 위해서 handler를 사용한다. 아래 콛르 FPVActivity 클래스에 복사하여 handler를 구성한다:
 
 ~~~java
 private Handler handler = new Handler(new Handler.Callback() {
@@ -538,9 +538,9 @@ private Handler handler = new Handler(new Handler.Callback() {
     };
 ~~~
 
-## Implementing the Capture Function
+## Capture 기능 구현하기
 
-The **private void captureAction()** function is used to take photos. In our source code, we implement a "Capture" button which calls this function whenever pressed.
+**private void captureAction()** 함수는 사진을 찍는다. 소스코드에서 "Capture" 버튼을 구현하여 언제든 누르면 동작하도록 한다.
 
 ~~~java
 	 // function for taking photo
@@ -585,20 +585,20 @@ The **private void captureAction()** function is used to take photos. In our sou
     }
 ~~~
 
-That was a lot of code we just threw at you, so let's break it down.
+지금까지 많은 코드를 보여줬다. 나눠서 살펴보도록 하자.
 
-The first thing we need to do is define a CameraMode enum, which we will use to set the mode of the camera onboard our DJI Drone.
+첫번째로 할 일은 CameraMode enum을 정의하여 DJI Drone에 있는 camera의 모드를 설정하는데 사용한다.
 
 ~~~java
 CameraMode cameraMode = CameraMode.Camera_Capture_Mode;
 ~~~
 
-The reason we defined this enum 'cameraMode' was so that we could pass it as a parameter for the **setCameraMode()** function that we are about to call. **setCameraMode()** sets the mode of the DJI drone's camera (Capture Mode, Playback Mode, Record Mode etc.). **setCameraMode()** takes in two parameters:
+ enum 'cameraMode'를 정의한 이유는 **setCameraMode()** 함수의 인자로 넘기려는 것이다. **setCameraMode()**는 DJI 드론의 카메라 모드(Capture Mode, Playback Mode, Record Mode)를 설정한다. **setCameraMode()**는 2개 인자를 갖는다 :
 
 **setCameraMode(DJICameraSettingsTypeDef.CameraMode mode, DJIExecuteResultCallback mCall)**
 
-The first parameter, a CameraMode enum, tells the function what mode to set the camera to. In this case, we tell it to set the camera to Capture Mode.
-The second parameter is a callback function, which is run after **setCameraMode()** attempts to set the camera mode. The callback function is reproduced, in brief, below.
+첫번째 인자는 CameraMode enum으로 카메라가 설정해야할 모드를 함수에게 알려준다. 이 경우 카메라에게 Capture Mode를 설정하게 한다.
+두번째 인자는 callback 함수이다. **setCameraMode()**가 camera mode를 설정하고나서 실행된다. callback 함수는 아래와 같이 간략하게 다시 만든다.
 
 ~~~java
 new DJIExecuteResultCallback(){
