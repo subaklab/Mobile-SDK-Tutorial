@@ -652,9 +652,9 @@ To listen to the remote controller, we set up `DJIRemoteControllerUpdateAttitude
 
 You have finished implementing the adaptive UI. Build and run your app, and enjoy!
 
-### 3. Album gesture control
+### 3. 앨범 gesture 제어
 
-For a better user experience, we will be adding gestures to our application. In **Multiple Preview** mode, if the user swipes up or down, the view will display the previous or next page of images. In **Single Preview** mode, if the user swipes left or right, the view will display the previous or next media file. We use GestureDetector to implement this function.
+보다 나은 UX를 위해서 gesture를 app에 추가할 예정이다. **Multiple Preview**에서 사용자가 위/아래로 스위핑을 하면, 이전 혹은 다음 이미지가 화면에 나타난다. **Single Preview** 모드에서 사용자가 왼쪽/오른쪽으로 스위핑하면 이전/이후 미디어 파일을 표시한다. 이 기능을 구현하기 위해서 GestureDetector를 사용한다.
 
 *For a further understanding of the GestureDetector class, follow this link: <http://developer.android.com/reference/android/view/GestureDetector.html>*
 
@@ -689,7 +689,7 @@ For a better user experience, we will be adding gestures to our application. In 
 	});
 ~~~
 
-If you run your application and try to test this method, you may find that nothing happens. The reason for this is that both the gridview and the gesture detectors will try to handle the user's actions. Both of them try to handle an action at the same time, causing failures. To avoid this situation, we need to override the function `dispatchTouchEvent`
+app을 실행하고 메소드를 테스트를 시도하는데, 아무런 일도 발생하지 않았다는 것을 알수 있다. 이유는 gridview와 gesture 검출기는 사용자의 동작을 처리하려고 한다. 두 가지 모두 동시에 하나의 동작을 처리하려고 한 것이 실패 원인이다. 이런 상황을 피하기 위해서는 `dispatchTouchEvent` 메소드를 override해야 한다.
 
 ~~~java
 	@Override
@@ -701,15 +701,15 @@ If you run your application and try to test this method, you may find that nothi
     }
 ~~~
 
-Nice! Some predefined gestures have been added to your app and have made your app more user friendly.
+좋다! 일부 미리 정의한 gesture를 app에 추가했고 이제 app이 사용자가 사용하기 쉽게 되었다.
 
 ![Single swipee gesture](../../images/Android/PlaybackAlbumDemo/singleslide.png)
 
 ![Multiple swipe gesture](../../images/Android/PlaybackAlbumDemo/multipleslide.jpg)
 
-### 4. Playing Video
+### 4. video 재생
 
-DJI Camera provides a video preview function for users to enjoy their recorded videos. In the current state of our app, users can enter the single preview playback mode and navigate to their video file by swiping left and right. We would also like for them to be able to click a play or pause button to control video playback when previewing a video file. To implement this, first add two buttons to your `activity.xml` file.
+DJI Camera는 사용자가 녹화한 video를 즐기게 하기 위해 video preview 기능을 제공한다.현재 app의 상태는 사용자가 single preview playback mode에 진입할 수 있고 왼쪽/오른쪽 스위핑을 통해 video 파일을 탐색할 수 있다. video 파일을 미리보기 하는 동안에 play나 pause 버튼을 통해 video 재생을 제어할 수 있게 만들고 싶다. 이를 구현하기 위해서 먼저 2개 버튼을 `activity.xml`파일에 추가한다.
 
 ~~~xml
 	 <RelativeLayout 
@@ -743,14 +743,14 @@ DJI Camera provides a video preview function for users to enjoy their recorded v
     </RelativeLayout>
 ~~~
 
-The image resources for these buttons need to be copied into the `drawable-mdpi` folder, and two elements need to be added into the .xml file `drawable`.
+이 버튼을 위한 이미지 리소스는 `drawable-mdpi`에 복사하고, `drawable` xml 파일내부에 2개 element를 추가한다.
 
 ~~~xml
 	<item android:drawable="drawable/play_video" android:state_pressed="false"></item>
 	<item android:drawable="drawable/pause_video" adnroid:state_pressed="false"></item>
 ~~~
 
-However, there are two types of media files the user can preview while in single preview playback mode, image files and video files. If the play button or the pause button were to appear while the user were previewing a picture, it would be unnecessary and annoying. To combat this we set up a listener in `onCreate()` to detect which type of file the user is currently previewing.
+하지만 여기에는 single preview playback mode에서 사용자가 미리보기 가능한 2가지 미디어 파일 종류가 있다. image와 video 파일이다. 만약 play 버튼이나 pause 버튼이 사용자가 사진을 미리보기 하는 동안 나타나면, 사용자에게 불필요하며 귀찮게 만든다. 사용자가 현재 미리보기 하는 파일의 종류를 알아내기 위해서 `onCreate()`에서 listener를 설정한다.
 
 ~~~java
 	  mCameraPlaybackStateCallBack = new DJICameraPlayBackStateCallBack(){
@@ -793,7 +793,7 @@ However, there are two types of media files the user can preview while in single
     }
 ~~~
 
-Now the app will automatically detect whether the camera is in video single preview playback mode, and remove the play and pause buttons if not.
+이제 app은 자동으로 camera가 video single preview playback mode에 있는지 검출하고 만약 모드가 아니라면 play와 pause 버튼을 제거한다.
 
 ![Play the video](../../images/Android/PlaybackAlbumDemo/playbutton.jpg)
 
@@ -807,7 +807,7 @@ Now the app will automatically detect whether the camera is in video single prev
 
 이전 섹션에서 4개 camera mode에서 3개를 구현했다. 이 섹션에서는 마지막 camera mode인 **Download Mode**에 대해서 다룬다.
 
-**PNG 이미지와 4k 비디오는 playback mode**를 통해 다운받을 수 없다. 추가로 아래 2개 메소드는 Inspire 1, Phantom 3 Professional이나 M100을 지원하지 않는다.
+**DNG 이미지와 4k 비디오는 playback mode**를 통해 다운받을 수 없다. 추가로 아래 2개 메소드는 Inspire 1, Phantom 3 Professional이나 M100을 지원하지 않는다.
 
 - `fetchMediaData(DJIMedia, DJIExecuteResultCallback)`
 - `fetchMediaThumbnail(DJIMedia, DJIExecuteResultCallback)`
