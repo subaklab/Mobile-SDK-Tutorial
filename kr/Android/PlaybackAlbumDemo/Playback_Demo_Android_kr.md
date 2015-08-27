@@ -856,7 +856,7 @@ As we've already implemented all the necessary UI features, the only thing we ha
 	}
 ~~~
 
-We create a `DJIFileDownloadCallBack` object to be added in the `onCreate()` function, as shown below. `DJIFileDownloadCallBack` includes a handler. You can find the handler declaration in our demo code.
+`onCreate()`에 추가할 `DJIFileDownloadCallBack` 객체를 생성한다. `DJIFileDownloadCallBack` 는 handler를 포함한다. 데모코드에 handler 선언부를 찾을 수 있다.
 
 ~~~java
 	mFileDownloadCallBack = new DJIFileDownloadCallBack() {
@@ -920,7 +920,7 @@ We create a `DJIFileDownloadCallBack` object to be added in the `onCreate()` fun
         };
 ~~~
 
-For multiple preview downloads, developers should first invoke `enterMultipleEditMode(DJIExecuteResultCallback)` to enter the multiple edition playback mode so that the users can select the media files they want to delete or download. To support selecting media files and entering single preview playback status, the following code should be added in the `getView(int position, View convertView, ViewGroup parent)` function of `ButtonAdapter`.
+multiple preview 내려받기를 위해서 개발자는 먼저 `enterMultipleEditMode(DJIExecuteResultCallback)`를 호출해서 multiple edition playback 모드로 들어가야 한다. 사용자가 자신이 지우거나 다운받길 원하는 미디어 파일을 선택할 수 있다. 미디어 파일을 선택하고 single preview playback 상태로 지원하기 위해서 `ButtonAdapter`의 `getView(int position, View convertView, ViewGroup parent)` 함수에 아래 코드를 추가해야 한다.
 
 ~~~java
 	mBtn.setOnClickListener(new OnClickListener() {
@@ -950,17 +950,17 @@ For multiple preview downloads, developers should first invoke `enterMultipleEdi
 	});
 ~~~
 
-Now try selecting some media files and downloading them!
+이제 미디어 파일을 선택해보고 다운로드 해보자!
 
 ![Multiple Select](../../images/Android/PlaybackAlbumDemo/multipleselect.jpg)
 
 ![Downloading](../../images/Android/PlaybackAlbumDemo/download.jpg)
 
-### 2. Automatically downloading media files
+### 2. 자동으로 미디어 파일 다운받기
 
-Some developers might want to download the media files from their drone automatically. This subsection will introduce exactly how to do this. First of all, developers should understand that **all the methods involved with downloading are asynchronous, which means some routines should wait for the ack from the drone to continue its execution.**
+어떤 개발자는 drone에서 자동으로 미디어 파일을 내려받기 가능하게 구현하기 원할 것이다. 이 서브섹션은 이것을 하는 방법을 다룬다. 우선 개발자는 ** 내려받기와 함께 호출되는 모든 메소드는 비동기방식이며, 이 말은 일부 루틴은 drone에서 ack를 받을 때까지 대기해야한다는 뜻이다.**
 
-Here's the code to implement automatic downloading, the developer could use `handler` to execute the `ENTERPLAYBACK` function, then the process will be executed automatically:
+여기 자동 내려받기를 구현하는 코드가 있다. 개발자는 `ENTERPLAYBACK` 기능을 구현하기 위해서 `handler`를 사용해야만 한다. process가 자동으로 실행될 것이다 :
 
 ~~~java
 	private Handler handler = new Handler(new Handler.Callback() {
