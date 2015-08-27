@@ -1044,21 +1044,21 @@ Here's the code to implement automatic downloading, the developer could use `han
     });
 ~~~
 
-You can invoke `handler.sendEmptyMessage(STARTAUTODOWNLOAD)` to automatically download the media files. 
+`handler.sendEmptyMessage(STARTAUTODOWNLOAD)`를 호출해서 자동으로 미디어 파일을 다운받을 수 있다.
 
-In summary, developers should follow the following steps to allow users to download multiple files:
+요약하자면, 개발자는 다음과 같은 단계를 통해서 사용자가 여러 파일을 다운받을 수 있게 한다:
 
-1. `setCameraMode` to switch the camera status into the playback mode.
+1. `setCameraMode`는 camera 상태를 playback mode로 전환시킨다.
 
-2. `enterMultiplePreviewMode` to prepare for downloading multiple media files.
+2. `enterMultiplePreviewMode`는 여러 미디어 파일을 다운받을 준비를 한다.
 
-3. `enterMultipleEditMode` to enter the multiple edition playback status so that the users can browse through images they may want to download.
+3. `enterMultipleEditMode`는 다양한 에디션 playback 상태에 들어가서 사용자가 다운받기를 원하는 이미지를 살펴볼 수 있다.
+ 
+4. 일단 `enterMultipleEditMode`이 성공하고 ack를 반환한다. 사용자 입력을 기반으로 파일을 선택하기 위해서 `selectFileAtIndex`, `selectAllFiles` 과 `selectAllFilesInPage` 함수를 사용한다.
 
-4. Once the `enterMultipleEditMode` succeeds and return an ack, use the `selectFileAtIndex`, `selectAllFiles` and `selectAllFilesInPage` functions to select files based on user input.
+5. 일단 선택 모드가 성공하고 ack를 반환하면 `downloadAllSelectedFiles`를 호출한다.
 
-5. Once the selection methods succeed and return an ack, invoke `downloadAllSelectedFiles`.
-
-6. The app has successfully downloaded the files. `finishDownloadAllSelectedFiles` should be invoked while the ack comes to ensure camera returns to playback mode.
+6. App에서 파일을 성공적으로 다운받았다. `finishDownloadAllSelectedFiles`는 camera가 playback mode로 돌아오도록 하는 ack가 오는 동안 호출되어야 한다.
 
 ## 정리
 
