@@ -806,11 +806,11 @@ DJI Mobile SDK에서 Ground Station, Hotpoint와 죠이스틱 기능을 사용�
 ![freeform](../../images/iOS/GSDemo/freeform.png)
 ![changeSize](../../images/iOS/GSDemo/changeSize.png)
 
-Next, drag six UIButtons to the view and change their names to **Edit**, **Back**, **Clear**, **Focus Map**, **Start** and **Stop**. **Edit** will sit on top of **Back**, and **Focus Map** will sit on top of **Clear**. Make sure to hide the **Back**, **Clear**, **Start** and **Stop** buttons.
+다음으로 6개 UIButton을 view로 드래그하고 각각 이름을 **Edit**, **Back**, **Clear**, **Focus Map**, **Start**, **Stop**으로 정한다. **Edit**은 **Back**위에 두고 **Focus Map**은 **Clear** 위에 둔다. **Back**과 **Clear**, **Start**, **Stop** 버튼은 숨긴다.
 
 ![gsButtons](../../images/iOS/GSDemo/gsButtons.png)
 
- Then add IBOutlets and IBActions for each of the six buttons in the **DJIGSButtonViewController.h** file. Also, we will add an Enum named **DJIGSViewMode** with the two different modes the application could be in. Next, we add serveral delegate methods to be implemented by the delegate viewcontroller when IBAction methods for the buttons are trigger. Lastly, add the method **- (void)switchToMode:(DJIGSViewMode)mode inGSButtonVC:(DJIGSButtonViewController *)GSBtnVC;** to update the state of the buttons when the **DJIGSViewMode** changed. Take a look at the code below:
+ **DJIGSButtonViewController.h** 파일에 6개 버튼 각각에 대해서 IBOutlets와 IBActions를 추가한다. app이 할 수 있는 2가지 다른 모드로 **DJIGSViewMode** 이름의 Enum을 추가한다. 다음으로 버튼에 대해서 IBAction 메소드가 트리거될 때, delegate viewcontroller로 구현할 여러 delegate 메소드를 추가한다. 마지막으로 **- (void)switchToMode:(DJIGSViewMode)mode inGSButtonVC:(DJIGSButtonViewController *)GSBtnVC;** 메소드를 추가해서 **DJIGSViewMode**가 변경될 때, 버튼의 상태가 업데이트 되도록 한다. 아래 코드와 같다:
  
  ~~~objc
  #import <UIKit/UIKit.h>
@@ -854,7 +854,7 @@ Next, drag six UIButtons to the view and change their names to **Edit**, **Back*
 @end
  ~~~
  
- Once you've taken care of that, open the **DJIGSButtonViewController.m** file to replace all the code in the file with the following code:
+ **DJIGSButtonViewController.m** 파일을 열어서 아래 코드로 파일에 내에 모든 코드를 대체한다:
  
  ~~~objc
  #import "DJIGSButtonViewController.h"
@@ -930,13 +930,13 @@ Next, drag six UIButtons to the view and change their names to **Edit**, **Back*
 @end
  ~~~
  
- With those changes, the code structure will look cleaner and more robust, which will help in its maintainence later on.
- 
- Now, let's go to the **DJIRootViewController.h** file and delete the **editButton** IBOutlet, the **resetPointsAction** method, and the **focusMapAction** method. After making those deletions, create an UIView IBOutlet named "topBarView" and link it to the **Main.storyboard**'s RootViewController's  view, as seen below:
+ 위와 같이 변경해서 코드 구조는 더 깔끔해졌다. 나중에 유지보수를 하는데 유리하다.
+
+ 이제 **DJIRootViewController.h** 파일로가서 **editButton** IBOutlet, **resetPointsAction** 메소드, **focusMapAction** 메소드를 삭제한다. 삭제 후에, **Main.storyboard**의 RootViewController에 링크를 건다:
  
  ![topBarView](../../images/iOS/GSDemo/topBarView.png)
  
- Then, open the **DJIRootViewController.m** file, import the **DJIGSButtonViewController.h** header file. Create a property of type **DJIGSButtonViewController** named **gsButtonVC** and implement **DJIGSButtonViewController**'s **DJIGSButtonViewControllerDelegate** protocol within the class, as shown below:
+ **DJIRootViewController.m** 파일을 열고 **DJIGSButtonViewController.h** 파일을 import한다.  **gsButtonVC**라는 이름의 **DJIGSButtonViewController** 타입의 속성을 생성하고 **DJIGSButtonViewController**의 **DJIGSButtonViewControllerDelegate** protocol을 구현한다. 아래와 같다 :
  
 ~~~objc
 #import "DJIRootViewController.h"
@@ -973,7 +973,7 @@ self.gsButtonVC.delegate = self;
 }
 ~~~
 
-Finally, implement **DJIGSButtonViewController**'s delegate methods, as shown below:
+마지막으로 **DJIGSButtonViewController**의 delegate 메소드를 구현한다. 아래와 같다 :
 
 ~~~objc
 #pragma mark - DJIGSButtonViewController Delegate Methods
@@ -1007,17 +1007,17 @@ Finally, implement **DJIGSButtonViewController**'s delegate methods, as shown be
 }
 ~~~
 
-In the **- (void)switchToMode:(DJIGSViewMode)mode inGSButtonVC:(DJIGSButtonViewController *)GSBtnVC** delegate method, we call the **focusMap** method. By doing this, we can focus the map view to the aircraft's location when the edit button is pressed, making it user friendly by preventing the user from having to zoom in to edit. Moreover, when the application is in edit mode, the  **isEditingPoints** property value is set to **YES**. 
+**- (void)switchToMode:(DJIGSViewMode)mode inGSButtonVC:(DJIGSButtonViewController *)GSBtnVC** delegate 메소드에서 **focusMap** 메소드를 호출한다. 이렇게 함으로써 edit 버튼이 눌러졌을 때 비행체의 위치로 map view를 포커스시킨다. 이렇게 하면 사용자가 edit하기 위해 zoom in하는 동작을 막을 수 있다. app이 edit 모드인 경우에 **isEditingPoints** 속성 값이 **YES**로 설정된다. 
 
-Now, let's build and run the project and try to press the **Edit** and **Back** Buttons. Here are the animation when you press them:
+이제 프로젝트를 빌드하고 실행하자. 그리고 **Edit**와 **Back** 버튼을 눌러보자. 누를 때 애니메이션은 아래와 같다:
 
 ![pressEditBtn](../../images/iOS/GSDemo/pressEditBtn.gif)
 
-## Configure the Navigation Task
+## 네비게이션 태스크 설정
 
 ### 1. DJIGroundStationWaypoint
 
-Let's go to **DJIGroundStationWaypoint.h** file and check it out. For example, you can use: 
+**DJIGroundStationWaypoint.h** 파일로 가서 확인해보자. 예제로 사용할 수 있다 :
 
 ~~~objc
 -(id) initWithCoordinate:(CLLocationCoordinate2D)coordinate;
@@ -1028,24 +1028,24 @@ to create a waypoint object with a specific coordinate. Once you create a waypoi
 -(BOOL) addWaypointAction:(DJIWaypointAction*)action;
 ~~~
 
-Moreover, with waypoints, you have the ability to set the coordinate, altitude, heading, horizontalVelocity and much more. For more details, please check the **DJIGroundStationWaypoint.h** header file.
+waypoint를 가지고 좌표, 고도, heading, 수평속도 등을 설정할 수 있다. 자세한 내용은 **DJIGroundStationWaypoint.h** 헤더 파일을 참조하자.
 
 ### 2. DJIGroundStationTask
 
-A **DJIGroundStationTask** is used when you want to start a GroundStation Waypoint task. You can call its class method **+(id) newTask;** directly to create a new task. Once you create the task, you can add waypoints of type **DJIGroundStationWaypoint** using the method: 
+**DJIGroundStationTask**는 GroundStation Waypoint 태스크를 사용하기 원할 때 이용한다. 새로운 태스크를 생성하기 위해서 클래스 메소드인 **+(id) newTask;**을 직접 호출할 수 있다. 태스크를 생성하면 아래 메소드를 이용해서 **DJIGroundStationWaypoint** 타입의 waypoint을 추가할 수 있다:
 
 ~~~objc
 -(void) addWaypoint:(DJIGroundStationWaypoint*)waypoint;
 ~~~
 
-On the contrary, you can also delete waypoints from a task by using the method: 
+반대로 아래 메소드를 이용해서 태스크에서 waypoint를 삭제할 수 있다:
 
 ~~~objc
 -(void) removeWaypoint:(DJIGroundStationWaypoint*)waypoint;
 ~~~
  method.
  
- Moreover, you can set the **isLoop** property of a **DJIGroundStationTask** to decide whether to execute the task looply. Also, you can set the **finishedAction** property which is of **DJIGSTaskFinishedAction** enum type to configure what the aircraft does when the task is finished. Finally, you can set the **headingMode** property which is a **DJIGSHeadingMode** enum type to configure what the aircraft's heading is while executing a task. Below, you can find some parts of the header file:
+ **DJIGroundStationTask**의 **isLoop** 속성을 설정하는데 이는 태크크 루프를 실행할지 여부를 결정한다. 또 태스크를 마쳤을 때 비행체가 하는 것을 설정하기 위해서 **DJIGSTaskFinishedAction** enum 타입의 **finishedAction**를 설정할 수 있다. 마지막으로 태스크를 실행하는 동안 비행체의 헤딩을 설정하는 **DJIGSHeadingMode** enum 타입의 **headingMode** 속성을 설정할 수 있다. 아래에서 헤더파일의 일부를 볼 수 있다 :
  
 ~~~objc
 /**
@@ -1128,22 +1128,22 @@ typedef NS_ENUM(NSUInteger, DJIGSHeadingMode){
 -(void) removeWaypoint:(DJIGroundStationWaypoint*)waypoint;
 
 ~~~
- 
-For more details, please check the **DJIGroundStationTask.h** header file in the DJI Mobile SDK.
 
-### 3. Create The DJIWaypointConfigViewController
+좀더 상세한 내용은 DJI Mobile SDK내에 있는 **DJIGroundStationTask.h** 헤더 파일을 참고하자.
 
-For this demo, we will assume that the parameters of each waypoint being added to the map view are the same. 
+### 3. DJIWaypointConfigViewController 생성
 
-Now, let's create a new ViewController that will let the user to set the parameters of waypoints. Go to Xcode’s project navigator, right click on the **GSDemo** folder, select **New File...**, set its subclass to **UIViewController**, named it **DJIWaypointConfigViewController**, and make sure "Also create XIB file" is selected. Next, open the **DJIWaypointConfigViewController.xib** file and implement the UI, as you see it below:
+이 데모에서 map view에 추가한 각 waypoint의 인자는 동일하다.
+
+사용자가 waypoint의 인자를 설정하기 위해서 새로운 ViewController를 생성하자. Xcode의 프로젝트 네비게이터로 이동해서 **GSDemo** 폴더에서 오른쪽 클릭하고 **New File...**를 선택하고 **UIViewController**를 서브클래스를 설정한다. **DJIWaypointConfigViewController**라고 이름 붙이고 "Also create XIB file"가 선택되었는지 확인한다. 다음으로  **DJIWaypointConfigViewController.xib** 파일을 열고 UI를 구현한다. 아래와 같다:
 
 ![wayPointConfig](../../images/iOS/GSDemo/wayPointConfig.png)
 
-In the Waypoint Configuration ViewController, we use a UITextField to let the user set the **altitude** property of a **DJIGroundStationWaypoint** object. Then, there is a UISwitcher to configure the **isLoop** property of a **DJIGroundStationTask** object, which will let you turn on/off whether the task repeats. Next, there are three UISegmentedControls to configure the **horizontalVelocity** property of a **DJIGroundStationWaypoint** object, the **finishedAction** property of a **DJIGroundStationTask** object, and the **headingMode** property of a **DJIGroundStationTask** object. 
+Waypoint Configuration ViewController에서 UITextField를 사용해서 사용자가 **DJIGroundStationWaypoint** 객체의 **altitude** 속성을 설정하게 한다. **DJIGroundStationTask** 객체의 **isLoop** 속성을 설정하는 UISwitcher이 있다. 이것을 통해 태스크가 반복되는 것을 켜고/끄기가 가능하다. **DJIGroundStationWaypoint**의 **horizontalVelocity**,  **DJIGroundStationTask**의 **finishedAction** 속성, **DJIGroundStationTask**의 **headingMode**속성을 구성하기 위한 3개 UISegmentedControls가 있다.
 
-At the bottom, we add two UIButtons for the **Cancel** and **Finish** actions. For more details about the settings, such as frame's position, frame's size, and background color of each UI element, please check the **DJIWaypointConfigViewController.xib** file in the downloaded project source code.
+밑에 **Cancel**과 **Finish** 동작을 위해서 UIButtons을 추가한다. 설정(프레임의 위치, 크기, UI element의 배경색상 등)에 관한 상세한 내용은 다운받은 프로젝트 소스코드에서 **DJIWaypointConfigViewController.xib** 파일을 살펴보자.
 
-Now, let's create IBOutlets and IBActions for each of the UI elements in the **DJIWaypointConfigViewController.h** file, as shown below:
+**DJIWaypointConfigViewController.h** 파일 내부에서 UI element 각각의 IBOutlets 와 IBActions를 생성하자. 아래와 같다 :
 
 ~~~objc
 #import <UIKit/UIKit.h>
@@ -1173,9 +1173,9 @@ Now, let's create IBOutlets and IBActions for each of the UI elements in the **D
 @end
 ~~~
 
-Here, we also create two **DJIWaypointConfigViewControllerDelegate** delegate methods that are called when **Cancel** and **Finish** buttons are pressed.
+여기서 **Cancel**과 **Finish** 버튼이 눌러질 때 호출되는 **DJIWaypointConfigViewControllerDelegate** delegate 메소드를 생성했다.
 
-Next, let's replace the code in the ** DJIWaypointConfigViewController.m** file with the following code:
+** DJIWaypointConfigViewController.m** 파일에 있는 코드를 아래 코드로 대체하자:
 
 ~~~objc
 #import "DJIWaypointConfigViewController.h"
@@ -1224,12 +1224,13 @@ Next, let's replace the code in the ** DJIWaypointConfigViewController.m** file 
 @end
 ~~~
 
-In the code above, we create an **initUI** method, which is called in the **viewDidload** method, to initialize the UI controls with some default data. For example, we set the default text for the **altitudeTextField** to **50**, so there is no need for the user to type in a custom altitude value in the textField when the application is first opened. They will be able to press the **Finish** button right away instead of having to change the settings before they start.
+위 코드에서 **initUI** 메소드를 만들고 이것은  **viewDidload**에서 호출되어 기본 데이터 값으로 UI control을 초기화한다. 예를 들자면, **altitudeTextField**가 **50**으로 기본 값을 가지도록 해서, 사용자가 app이 처음 실행될 때, textField에 있는 고도값을 입력할 필요가 없도록 한다. 시작하기 전에 설정을 변경하는 대신에 바로 **Finishi** 버튼을 누를 수 있다.
 
-## Setup The GroundStation Task
+## GroundStation 태스크 설정
 
-### 1. Add The DJIWaypointConfigViewController to DJIRootViewController
-Now,let's go to **DJIRootViewController.m** file, add the **DJIWaypointConfigViewController.h** header file at the top, and create a property of type **DJIWaypointConfigViewController** with the name **waypointConfigVC**. Then, implement the **DJIWaypointConfigViewControllerDelegate** protocol, as shown below:
+### 1. DJIWaypointConfigViewController를 DJIRootViewController에 추가하기
+
+이제 **DJIRootViewController.m** 파일로 가보자. 맨 위에 **DJIWaypointConfigViewController.h** 헤더 파일을 추가하고 **waypointConfigVC** 이름으로 **DJIWaypointConfigViewController** 타입의 속성을 생성한다. 다음으로 **DJIWaypointConfigViewControllerDelegate** protocol를 구현한다. 아래와 같다:
 
 ~~~objc
 #import "DJIRootViewController.h"
@@ -1245,7 +1246,7 @@ Now,let's go to **DJIRootViewController.m** file, add the **DJIWaypointConfigVie
 @end
 ~~~
 
-Next, let's add some code to initialize the **waypointConfigVC** instance variable and set its delegate as **DJIRootViewController** at the bottom of the **initUI** method:
+**waypointConfigVC** 인스턴스 변수를 초기화하는 코드를 추가해보고 **initUI** 밑에 **DJIRootViewController**를 delegate로 설정하자:
 
 ~~~objc
 -(void) initUI
@@ -1270,9 +1271,9 @@ Next, let's add some code to initialize the **waypointConfigVC** instance variab
 }
 ~~~
 
-In the code above, we set the **alpha** property of the **waypointConfigVC**'s view to 0 to initially hide the view. Then, center its location to the center of **DJIRootViewController**'s view.
+위 코드에서 **waypointConfigVC** view의 **alpha** 속성을 0으로 설정해서 처음에 감춰지도록 설정한다. 다음으로 **DJIRootViewController** view의 중간에 위치하도록 한다.
 
-Furthermore, implement the **DJIWaypointConfigViewControllerDelegate** methods, as shown below:
+**DJIWaypointConfigViewControllerDelegate** 메소드를 구현하면 아래와 같다:
 
 ~~~objc
 #pragma mark - DJIWaypointConfigViewControllerDelegate Methods
@@ -1297,15 +1298,15 @@ Furthermore, implement the **DJIWaypointConfigViewControllerDelegate** methods, 
 }
 ~~~
 
-In the first delegate method, we use a class method from UIView to animate the changing **alpha** value of **waypointConfigVC**'s view:
+처음 delegate 메소드에서 UIView에서 클래스 메소드를 사용해서 **waypointConfigVC**의 **alpha** 값을 변경하여 움직이도록 한다.:
 
 ~~~objc
 + (void)animateWithDuration:(NSTimeInterval)duration animations:(void (^)(void))animations NS_AVAILABLE_IOS(4_0);
 ~~~
 
-In the second delegate method, we do the same thing as we did in the first delegate method.
+2번째 delegate 메소드에서 첫번째 delegate 메소드에서 했던 것과 동일한 것을 한다.
 
-Lastly, replace the code in the
+마지막으로 코드를 교체하자
 
 ~~~objc
 - (void)startBtnActionInGSButtonVC:(DJIGSButtonViewController *)GSBtnVC;
@@ -1324,13 +1325,13 @@ method with the following code to show the **waypointConfigVC**'s view when the 
 }
 ~~~
 
-Once that's done, let's build and run the project. Try to show the **waypointConfigVC**'s view by pressing the **Edit** button and **Start** button:
+완성하면, 프로젝트를 빌드하고 실행하자. **Edit**버튼과 **Start**버튼을 눌러서 **waypointConfigVC**의 view를 보여준다:
 
 ![waypointConfigView](../../images/iOS/GSDemo/waypointConfigView.png)
 
-### 2. Handle The GroundStation Task
+### 2. GroundStation 태스크 처리
 
-Now let's go back to **DJIRootViewController.h** file. First, implement the **GroundStationDelegate** and **DJINavigationDelegate** protocols in the interface. Then, create a property of type **DJIGroundStationTask** and named it as **gsTask**. Also, create a property of type **UIAlertView** and named it **uploadProgressView**. The UIAlertView will be used to show the status of GroundStation task. The complete header file of **DJIRootViewController** will look as shown below:
+**DJIRootViewController.h** 파일로 돌아가보자. 먼저 인터페이스에서 **GroundStationDelegate** 와 **DJINavigationDelegate** protocols를 구현한다. **gsTask**라는 이름의 **DJIGroundStationTask** 타입 속성을 생성한다. **uploadProgressView**라는 이름의 **UIAlertView** 타입의 속성을 생성한다. UIAlertView는 GroundStation 태스크의 상태를 보여주기 위해서 사용한다. **DJIRootViewController**의 헤더파일을 완성하면 아래와 같다:
 
 ~~~objc
 #import <UIKit/UIKit.h>
@@ -1365,7 +1366,7 @@ Now let's go back to **DJIRootViewController.h** file. First, implement the **Gr
 @end
 ~~~
 
-Next, go to **DJIRootViewController.m** file and set **inspireMainController** instance variable's **groundStationDelegate** and **navigationDelegate** to **DJIRootViewController** as shown below:
+다음으로 **DJIRootViewController.m** 파일로 가서 **inspireMainController** 인스턴스 변수의 **groundStationDelegate** 와 **navigationDelegate**를 **DJIRootViewController**로 설정한다. 아래와 같다 :
 
 ~~~objc
 - (void)initDrone
@@ -1379,7 +1380,7 @@ Next, go to **DJIRootViewController.m** file and set **inspireMainController** i
 }
 ~~~
 
-Moreover, add the following code to the bottom of the **startBtnActionInGSButtonVC** delegate method:
+다음 코드를 **startBtnActionInGSButtonVC** delegate 메소드의 밑에 추가한다:
 
 ~~~objc
 - (void)startBtnActionInGSButtonVC:(DJIGSButtonViewController *)GSBtnVC
@@ -1409,23 +1410,23 @@ Moreover, add the following code to the bottom of the **startBtnActionInGSButton
 }
 ~~~
 
-In the code being added above, we create a local **NSArray** variable named **wayPoints** and assign its value as the **mapController**'s **wayPoints** array. Next, check whether or not the array exists or whether or not it's empty. If it is empty or does not exist, show a UIAlertView letting the user know there are no waypoints for the mission. 
+위에서 추가한 코드내에서 **wayPoints**라는 이름의 지역 변수인 **NSArray**를 생성하고 **mapController**의 **wayPoints** 배열을 값으로 할당한다. 다음으로 배열이 있는지 혹은 비었는지를 검사한다. 만약 존재하지 않거나 비어있다면, UIAlertView을 통해서 waypoint가 없다는 것을 사용자에게 알려준다.
 
-**Important**: For safety, it's important to add logic to check the GPS satellite count, which was discussed in Part 1 of this tutorial, before the start of the mission. If the satellite count is less than 6, you should prevent the user from starting the ground station mission and show a warning. Since we are using the DJI PC Simulator here, we are testing the application under a perfect situation, where the GPS satellite count is always 10.
+**중요**: 안전을 위해서, 이 튜토리얼 Part 1에서 논의했던 것과 같이 미션을 시작하기 전에 GPS 위성을 검사하는 로직을 추가하는 것이 중요하다. 만약 위성 카운트가 6보다 작다면 사용자에게 ground station 미션을 시작하지 못하게 해야하고 경고를 보여줘야 한다. DJI PC Simulator를 사용하기 때문에, 항상 위성 카운트가 10인 완벽한 상황에서 app을 테스트하고 있기 때문이다.
 
-Next, we initialize the **gsTask** instance variable by calling the **newTask** class method of **DJIGroundStationTask**. Furthermore, we use a for loop to get the **CLLocation** for each waypoint from the **wayPoints** array and check if its **coordinate** is valid by using the method:
+다음으로 **DJIGroundStationTask**의 클래스 메서도인 **newTask**를호출해서 **gsTask** 인스턴스 변수를 초기화한다. **wayPoints** 배열에서 각 waypoint에 대한 **CLLocation**를 얻기 위해 루프를 사용한다. 그리고 아래 메소드를 이용해서 유효한 **coordinate** 여부를 검사한다:
 
 ~~~objc
 BOOL CLLocationCoordinate2DIsValid(CLLocationCoordinate2D coord);
 ~~~
 
-Finally, if the coordinate is valid, we create a waypoint of type **DJIGroundStationWaypoint** and add it to the **gsTask** by calling the method:
+마지막으로 좌표가 유효하면, **DJIGroundStationWaypoint**의 waypoint를 생성하고 메소드를 호출해서 **gsTask**에 추가한다:
 
 ~~~objc
 -(void) addWaypoint:(DJIGroundStationWaypoint*)waypoint;
 ~~~
 
-Once that is complete, let's go to DJIWaypointConfigViewController's delegate method **finishBtnActionInDJIWaypointConfigViewController** and add the following code related to **gsTask** at the bottom of the method, as shown below:
+완료하면, DJIWaypointConfigViewController의 delegate 메소드인 **finishBtnActionInDJIWaypointConfigViewController**로 가보자. 해당 메소드의 밑에 **gsTask** 와 관련해서 아래 코드를 추가한다:
 
 ~~~objc
 - (void)finishBtnActionInDJIWaypointConfigViewController:(DJIWaypointConfigViewController *)waypointConfigVC
@@ -1450,9 +1451,9 @@ Once that is complete, let's go to DJIWaypointConfigViewController's delegate me
 }
 ~~~
 
-Above, we use a for loop to set the **altitude** and **horizontalVelocity** properties of each **DJIGroundStationWaypoint** in the **gsTask** waypoint array based on the settings that are set in the **DJIWaypointConfigViewController**. After that is complete, we update the **isLoop**, **headingMode** and **finishedAction** properties of **gsTask**. Finally, we call the **uploadGroundStationTask** method of **DJIInspireMainController**(since we are using the Inspire in this tutorial) to upload the groundStation task.
+위에서 각 **DJIGroundStationWaypoint**의 **altitude**와 **hrozontalVelocity* 속성을 설정하기 위해서 루프를 이용한다.**DJIWaypointConfigViewController** 내에 설정된 값을 기반으로 **gsTask** waypoint 배열에 있다. 이것을 완료하고나서 **gsTask**의 **isLoop**, **headingMode**, **finishedAction** 속성을 업데이트한다. 마지막으로 **DJIInspireMainController**(이 예제에서 Inspire을 사용한다고 가정했다)의 **uploadGroundStationTask** 메소드를 호출해서 groundstation 태스크를 업데이트한다.
 
-Furthermore, let's create a new method named **hideProgressView** that will hide the **uploadProgressView** and implement it in the **GroundStationDelegate** methods to update the Mission Status, as shown below:
+ **hideProgressView**라는 새로운 메소드를 생성하고 **uploadProgressView**를 숨기고 Mission Status를 업데이트 하기 위해서 **GroundStationDelegate** 메소드 내에서 구현하자. 아래와 같다 :
 
 ~~~objc
 -(void) hideProgressView
@@ -1491,11 +1492,11 @@ Furthermore, let's create a new method named **hideProgressView** that will hide
 }
 ~~~
 
-Above, the first delegate method is used to get the ground station result when it's executed. We call the **hideProgressView** method to hide the **uploadProgressView** after we check **currentAction** and **executeStatus** in **GroundStationExecuteResult**.
+위와 같이, 처음 delegate 메소드는 ground station 결과를 얻기 위해서 이용한다. **hideProgressView** 메소드를 호출하는 것은 **GroundStationExecuteResult** 내부에서 **currentAction** and **executeStatus**를 검사한 후에 **uploadProgressView**를 숨기기 위해서다.
 
-The second delegate method is used to check the progress of uploading the waypoint mission. Here, we initialize the **uploadProgressView** instance variable and set its **message** property to the **progress** variable of the delegate method. For more details, please check the **DJIGroundStation.h** file.
+2번째 delegate 메소드는 waypoint 미션을 업로드하는 절차를 검사하는데 사용한다. 여기서는 **uploadProgressView** 인스턴스 변수를 초기화하고 **message** 속성을 delegate 메소드의 **progress** 변수로 설정한다. 좀더 상세한 내용은 **DJIGroundStation.h** 파일을 확인하자.
 
-Finally, let's implement the **DJINavigationDelegate** methods as shown below:
+마지막으로 **DJINavigationDelegate** 메소드를 구현한다. 아래와 같다:
 
 ~~~objc
 -(void) onNavigationMissionStatusChanged:(DJINavigationMissionStatus*)missionStatus
@@ -1527,7 +1528,7 @@ Finally, let's implement the **DJINavigationDelegate** methods as shown below:
 }
 ~~~
 
-The first delegate is used to check the mission status. You can check the type of the mission by accessing the **missionStatus** variable's **missionType** property, which is defined in the **DJINavigation.h**, as shown in the enum of type **DJINavigationMissionType**:
+첫번째 delegate는 미션 상태를 검사하는데 사용한다. **missionStatus** 변수의 **missionType** 속성에 접근해서 미션의 타입을 검사할 수 있다. **DJINavigation.h**내에 정의되어 있고 **DJINavigationMissionType** 타입의 enum에서 볼 수 있다:
 
 ~~~objc
 typedef NS_ENUM(uint8_t, DJINavigationMissionType)
@@ -1555,7 +1556,7 @@ typedef NS_ENUM(uint8_t, DJINavigationMissionType)
 };
 ~~~
 
-The second delegate method is used to check the current mission event. You can check the **event** variable's **eventType** property to obtain what event the mission is currently in. The **DJINavigationEventType** is defined in the **DJINavigation.h** header file, as shown below:
+2번째 delegate 메소드는 현재 미션 이벤트를 검사한다. 현재 어떤 이벤트 미션인지를 얻어오기 위해서 **event** 변수의 **eventType** 속성을 검사한다. **DJINavigation.h** 헤더 파일내에 **DJINavigationEventType**가 정의되어 있다. 아래와 같다 :
 
 ~~~objc
 /**
@@ -1576,13 +1577,13 @@ typedef NS_ENUM(uint8_t, DJINavigationEventType){
     NavigationEventWaypointReached,
 };
 ~~~
-In the second delegate method, when the eventType is equal to **NavigationEventMissionUploadFinished**, since **DJINavigationMissionUploadFinishedEvent** is a subclass of **DJINavigationEvent**, we create a **DJINavigationMissionUploadFinishedEvent** variable by casting the method's **event** variable. Then update the **uploadProgressView**'s title with "Mission Upload Finished". After that, if the **finishedEvent**'s **isMissionValid** bool value is false, we set the **message** of **uploadProgressView** to "Mission Invalid!". Otherwise, we set the **message** of **uploadProgressView** to a formatted **NSString** object using the **eatimateTime** property of the **finishedEvent** object. 
+2번째 delegate 메소드에서 eventType이 **NavigationEventMissionUploadFinished**와 동일한 경우에 **DJINavigationMissionUploadFinishedEvent**가 **DJINavigationEvent**의 서브클래스이고 메소드의 **event** 변수를 캐스팅해서 **DJINavigationMissionUploadFinishedEvent** 변수를 생성한다. **uploadProgressView**의 타이틀을 "Mission Upload Finished"로 업데이트한다. 결국  **finishedEvent**의 **isMissionValid** bool 값은 false가 된다면, **uploadProgressView**의 **message**를 "Mission Invalid!"로 설정한다. 그렇지 않으면 **uploadProgressView**의 **message**를 **finishedEvent** 객체의 **eatimateTime** 속성을 이용해서 포맷 **NSString** 객체로 설정한다. 
 
-Next, call the **startGroundStationTask** method of the **inspireMainController** to start the waypoint ground station task! After that, we call the **performSelector** method and pass in **hideProgressView** to hide the progress view after 3 second delay.
+다음으로  waypoint ground station 태스크를 시작하기 위해 **inspireMainController**의 **startGroundStationTask** 메소드를 호출한다. 이렇게 하면 **performSelector** 메소드를 호출하고 3초간 지연 후에 progress view를 감추기 위해서 **hideProgressView**로 들어간다.
 
-When the eventType is equal to **NavigationEventMissionExecuteFinished**, we show an **UIAlertView** to tell the user that the waypoint ground station mission is finished!
+eventType이 **NavigationEventMissionExecuteFinished**와 동일할 때, 사용자에게 waypoint ground station 미션이 종료되었다는 것을 알리기 위해서 **UIAlertView**를 보여준다.
 
-Finally, let's implement the **stopBtnActionInGSButtonVC** method, which is a  **DJIGSButtonViewController** delegate method to stop the ground station task, as shown below:
+마지막으로 **stopBtnActionInGSButtonVC** 메소드를 구현하자. 이것은 ground station 태스크를 멈추기 위한 **DJIGSButtonViewController** delegate 메소드이다. 아래와 같다 :
 
 ~~~objc
 - (void)stopBtnActionInGSButtonVC:(DJIGSButtonViewController *)GSBtnVC
@@ -1591,55 +1592,51 @@ Finally, let's implement the **stopBtnActionInGSButtonVC** method, which is a  *
 }
 ~~~
 
-## Test The Application
+## App 테스트
 
-You've come a long way in this tutorial, and it's time to test the whole application.
+이 튜토리얼에서 따라 많은 진전이 있었다. 이제 전체 app을 테스트할 때다.
 
-**Important**: Make sure the battery level of your aircraft is more than 10%, otherwise the ground station mission may fail!
+**중요**: 비행체의 배터리 레벨이 10% 이상이 되지 않으면 ground station 미션은 동작하지 않는다.
 
-Build and run the project to install the application into your mobile device. After that, please connect the aircraft to your PC or Virtual Machine running Windows via a Micro USB cable. Then, power on the remote controller and the aircraft, in that order. Next, press the **Display Simulator** button in the DJI PC Simulator and feel free to type in your current location's latitude and longitude data into the simulator.
+모바일 장치로 app을 설치하기 위해서 프로젝트를 빌드 및 실행한다. Micro USB 케이블을 이용해서 비행체를 PC나 윈도우가 실행되는 가상머신에 연결한다. 그런 다음, 리모트 컨트롤러와 비행체에 순서대로 전원을 넣는다. 다음으로 DJI PC Simulator내에 **Display Simulator** 버튼을 누르고 현재 위치의 위도/경도 데이터를 simulator에 입력한다.
 
 ![simulatorPreview](../../images/iOS/GSDemo/simulator_preview.png)
 
-Then connect your mobile device to the remote controller using Apple's lighting cable and run the application. You may see the following screenshot:
+Apple의 라이트링 케이블을 이용해서 모바일 장치를 리모트 컨트롤러에 연결하고 app을 실행한다. 다음과 같은 스크린샷을 보게 된다:
 
 ![enterNaviModeFailed](../../images/iOS/GSDemo/enterNaviModeFailed.jpg)
 
-If you encounter this issue, check the solution to this problem in Part 1 of this tutorial. Next, let's come back to the DJI PC Simulator on your PC and press the **Start Simulation** button. A tiny red aircraft will appear on the map in your application, as seen below:
+이런 이슈를 만나면 이 문제를 해결하기 위한 해결책을 튜토리얼의 Part 1을 참고하자. 다음으로 DJI PC Simulator로 돌아와서 **Start Simulation** 버튼을 누른다. 작고 붉은 비행체가 app의 지도상에 나타난다. 아래와 같다:
 
 ![aircraftOnMap1](../../images/iOS/GSDemo/aircraftOnMap1.jpg)
 
-Press the "**Edit**" button, and the map view will zoom in to the region you are in and will center the aircraft:
+"**Edit**" 버튼을 누르고 map view는 여러분이 있는 지역을 줌인하고 비행체를 가운데 위치시킨다:
 
 ![locateAircraft](../../images/iOS/GSDemo/locateAircraft.gif)
 
-Next, test the waypoint feature by tapping wherever you'd like on the map view. Wherever you do tap, a waypoint will be added and a purple pin will appear exactly at the location of the waypoint, as shown below:
+map view 상에서 원하는 위치를 터치하면 waypoint 기능을 테스트할 수 있다. 탭을 할때마다, waypoint가 추가되고 보라색 핀이 waypoint 위치에 정확하게 나타난다. 아래와 같다:
 
 ![addWayPoints](../../images/iOS/GSDemo/addWaypoints_part2.gif)
 
-Once you press the **Start** button, the **Waypoint Configuration** view will appear. After you're satisfied with the changes, press the **Finish** button. The waypoint mission will start to upload and when it finishes, the mission will start to be processed. You will start to see the aircraft move towards the waypoints you set previously on the map view, as shown below:
+**Start** 버튼을 누르면  **Waypoint Configuration** view가 나타난다. 변경된 것에 만족하면 **Finish** 버튼을 누른다. waypoint 미션은 업로드를 시작하며 마칠때가 되면 미션이 처리되기 시작한다. map view에서 설정한 waypoint 방향으로 비행체가 움직이기 시작하는 것을 볼 수 있다:
 
 ![flying](../../images/iOS/GSDemo/flying.gif)
 
-At the same time, you will be able to see the Inspire 1 take off and start to fly automatically in the DJI PC Simulator.
+동시에 Inspire 1이 이륙하고 자동으로 DJI PC Simulator에서 자동으로 날기 시작하는 것을 볼 수 있다.
 
 ![takeOff] (../../images/iOS/GSDemo/takeOff.gif)
 
-When the waypoint mission finishes, an alert view titled **Mission Finished** will appear, and the Inspire 1 will start to go home!
+waypoint 미션이 완료될 때, **Mission Finished**라는 제목의 알림 화면이 나타나며 Inspire 1이 돌아오기 시작한다.
 
 ![missionFinished](../../images/iOS/GSDemo/missionFinished.jpg) 
 
-The remote controller will start beeping, and the **Go Home** button on the remote controller will start to flash a white light. Let's take a look at the DJI PC Simulator now:
+리모트 컨트롤러는 beep음을 내기 시작하고 리모트 컨트롤러에 있는 **Go Home** 버튼은 흰색 빛을 내기 시작할 것이다. 이제 DJI PC Simulator를 살펴보자:
 
 ![landing](../../images/iOS/GSDemo/landing.gif)
  
-The inspire 1 will eventually go home, land, and the beeping from the remote controller will stop. The application will go back to its normal status. If you press the **Clear** button, all the waypoints you previously set will be cleared and another waypoint waypoint mission will be started. During the mission, if you'd ever like to stop the groundStation task, you can do so by pressing the **Stop** button.
+Inspire 1은 돌아와서 착륙하며 리모트 컨트롤러의 beep음은 멈춘다. app은 보통 상태로 돌아간다. 만약 **Clear** 버튼을 누르면, 이전에 설정한 모든 waypoint가 삭제되고 다른 waypoint 미션이 시작된다. 미션 동안 만약에 groundstation 태스크를 멈추고 싶다면, **Stop** 버튼을 누르면 된다.
 
-## Summary
-   
-   In this tutorial, you’ve learned how to setup and use the DJI PC Simulator to test your groundStation application, upgrade your aircraft's firmware to the developer version, use the DJI Mobile SDK to create a simple map view, modify annotations of the map view, show the aircraft on the map view by using GPS data from the DJI PC Simulator. Moreover, you've learned how to configure both **DJIGroundStationWaypoint** and **DJIGroundStationTask**, how to use DJIGroundStationTask to add waypoints, how to use **upload**, **start** and **stop** methods to configure the ground station task, which are the methods from DJIInspireMainController(since we're using an Inspire 1). Lastly, you learned how to use the **DJINavigationDelegate** and **GroundStationDelegate** methods to obtain information from the ground station task.
+## 요약
+   이 튜토리얼에서 groundstation app을 테스트, 비행체 펌웨어 업그레이드, DJI Mobile SDK를 이용해서 간단한 map view 만들기, map view의 annotation 수정하기, DJI PC Simulator에서 GPS 데이터를 이용해서 map view에서 비행체 보여주기 등을 DJI PC Simulator를 사용해서 배웠다. 또 **DJIGroundStationWaypoint** 와 **DJIGroundStationTask** 설정하는 법, DJIGroundStationTask를 waypoint에 추가하기, ground station 태스크를 구성하기 위한 **upload**, **start**, **stop** 사용법 등을 DJIInspireMainController(이 예제에서 Inspire를 사용하고 있다)의 어떤 메소드를 사용해야하는지 배웠다. 마지막으로 ground station 태스크에서 정보를 얻기 위해서 **DJINavigationDelegate** 와 **GroundStationDelegate** 메소드 사용하는 법을 배웠다.
       
-   Congratulations! Now that you've finished the demo project, you can build on what you've learned and start to build your own ground station application. You can improve the way waypoints are added(such as drawing a line on the map and generating waypoints automatically), play around with the properties of a waypoint (such as heading, horizontal speed, etc.), and adding more functionality. In order to make a cool ground station application, you still have a long way to go. Good luck and hope you enjoy this tutorial!
-   
-   
-   
+   축하한다! 이제 데모 프로젝트를 마쳤고 배운 것을 기초로 여러분의 ground station app을 만들 수 있다. waypoint가 추가되는 방법(지도상에서 선을 그려서 waypoint를 자동으로 생성)을 개선하고 waypoint의 속성(heading, 수평 속도 등)을 이용해서 다양한 기능을 추가할 수 있다. 멋진 ground station app을 만들기 위해서 아직 갈 길이 멀다. 행운을 빌며 이 튜토리얼을 즐겼기를 바란다.
