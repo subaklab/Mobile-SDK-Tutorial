@@ -620,9 +620,9 @@ new DJIExecuteResultCallback(){
         });
 ~~~
 
-The callback function takes in a confirmation signal from the drone, in the form of a DJIError object 'mErr'. If the error code given by 'mErr' matches the value DJIError.RESULT_OK, then code to take the photo is carried out. Else, a handler will show an appropriate error message depending on the error code.
+callbakc 함수는 드론으로부터 확인신호를 받는다. DJIError 객체인 'mErr'의 형태다. 만약 'mErr'의 error code가 DJIError.RESULT_OK와 일치하면 사진을 찍는 코드가 실행된 것이다. 이외에 handler는 error code에 따라 적절한 error 메시지를 보여준다.
 
-Within the callback function we have code to tell the drone to take a photo.
+callback 함수 내부에서 drone에게 사진을 찍으라고 지시하는 코드를 넣는다.
 
 ~~~java
 CameraCaptureMode photoMode = CameraCaptureMode.Camera_Single_Capture; 
@@ -641,17 +641,16 @@ DJIDrone.getDjiCamera().startTakePhoto(photoMode, new DJIExecuteResultCallback()
                         // Camera_Capture_Mode
 ~~~
 
-If this code looks familiar, it's because it follows a structure almost identical to the larger function it is a part of! First we create a CameraCaptureMode enum called 'photoMode'. When the drone takes a photo, this enum instructs the drone whether it should take a single photo, a burst of photos, or a continuous stream of photos. For this example we'll be taking a single photo at a time.
+이 코드에 익숙하다면, 큰 함수와 거의 동일한 구조를 따르기 때문이다. 먼저 'photoMode'라는 CameraCaptureMode enum을 생성한다. 드론이 사진을 찍을 때, 이 enum은 한 장 사진찍기인지 여러 사진찍기 인지 아니면 연속 사진찍기 인지 판단한다. 이 예제에서는 한 번에 하나의 사진을 찍는다.
 
-The **startTakePhoto()** method tells the drone's camera to take a photo. Just like the **setCameraMode()** function, it takes in an enum and a callback function. We've just gone over what the enum it takes in is.
-The callback function uses a handler to display a message giving an error code and an error description after the drone's camera attempts to take a photo. If a photo has successfully been taken, this message will confirm it.
+**startTakePhoto()** 메소드는 드론의 카메라에게 사진을 찍으라고 지시한다. **setCameraMode()** 함수와 같이 enum과 callback 함수를 인자로 가진다. enum이 의미하는 것은 앞에서 이미 알아봤다. callback 함수는 드론의 카메라가 사진을 찍으려고 한 이후에 error code와 error description을 주는 메시지를 표시하는 handler를 이용한다. 성공적으로 사진을 찍으면, 확인 메시지가 뜬다.
 
-And that's it! Add a "Capture" button into your app which calls this method, and give it a go!
+잘 진행하고 있다! 이 메소드를 호출하는 app에 "Capture" 버튼을 추가하고 계속 진행한다.
 
 
-## Implement the Recording Function
+## Recording 기능 구현하기
 
-The **recordAction()** method is almost identical to the **captureAction()** method we just implemented, with just a few key differences! Take a quick look at the code below:
+**recordAction()** 메소드는 몇 가지를 제외하고 좀전에 구현한 **captureAction()** 메소드와 거의 동일한다. 아래 코드를 빠르게 살펴보자.
 
 ~~~java
 	 // function for starting recording
@@ -691,17 +690,17 @@ The **recordAction()** method is almost identical to the **captureAction()** met
     }
 ~~~
 
-Notice that the cameraMode enum has been set as **Camera_Record_Mode** because this time we want the camera to record.
+이번에는 녹화 기능을 원하기 때문에, cameraMode enum은 **Camera_Record_Mode**로 설정해야 한다.
 
 ~~~java
 // Set the cameraMode as Camera_Record_Mode.
 CameraMode cameraMode = CameraMode.Camera_Record_Mode;
 ~~~
 
-Additionally, within our callback function, we call **startRecord()** instead of **startTakePhoto()**. **startRecord()** only takes in one parameter, a callback function. It does not take in an enum as **startTakePhoto()** does, as there is only one recording mode.
-## Implement the Stopping Recording Function
+추가로 callback 함수 내부에서 **startTakePhoto()** 대신에 **startRecord()**를 호출한다. **startRecord()**는 1개 인자만 가지면 이는 callback 함수이다. **startTakePhoto()**와 달리 enum을 인자로 갖지 않는다. 왜냐하면 recording mode가 하나이기 때문이다.
+## Recording 정지 기능 구현
 
-Once the camera starts recording, we need some way to tell it to stop! That's where **stopRecord()** comes in. The code below should look quite familiar to you by now:
+일단 camera가 레코딩을 시작하면, 멈추라는 명령도 필요하다. **stopRecord()**에서 구현한다. 아래 코드는 익숙할 것이다:
 
 ~~~java
 	 // function for stopping recording
@@ -723,19 +722,18 @@ Once the camera starts recording, we need some way to tell it to stop! That's wh
 
 ~~~
 
-You can now add a 'Record' and 'Stop Recording' button to your app, and have them call **recordAction()** and **stopRecord()** respectively. Build and run the project, and it should look something like the screenshot below:
+'Record'와 'Stop Recording' 버튼을 app에 추가해서 각각을 **recordAction()**과 **stopRecord()**라고 부르자. 프로젝트를 빌드 및 실행하고 아래와 같이 보일 것이다.
 
 ![recordVideoScreenShot](../../images/Android/FPVDemo/recordVideo.png)
 
-Then congratulations! Your Aerial First Person View Android app is complete, capable of viewing your DJI Drone's video feed, as well as remotely taking picture and videos!
+축하한다! 여러분의 첫번째 FPV Android App이 완성되었다. 이제 DJI Drone로 원격 사진과 비디오 촬영이 가능하고 비디오 스트리밍을 볼 수 있게 되었다!
 
-## Viewing your Images
+## 이미지 보기
 
-Unfortunately, this tutorial does not include guidance on viewing photos and videos onboard your DJI Drone's SD card. However, if you would like to see the pictures and videos you took through your brand new app, you can download DJI's Pilot App, found here:
+안타깝게도 이 튜토리얼에서는 DJI Drone의 SD 카드에 있는 사진과 비디오를 보는 내용은 포함되어 있지 않다. 그러나 새로운 app을 통해서 촬영한 사진과 비디오를 보고 싶다면 DJI Pilot App을 다운받기 바란다. 아래에서 다운받을 수 있다 :
 <https://play.google.com/store/apps/details?id=dji.pilot&hl=en>
-Alternatively, you can search for the app in the Google Play Store under the name 'DJI Pilot'. 
+다른 대안으로는 'DJI Pilot'라는 이름으로 Google Play Play에서 app을 검색할 수 있다.
 
-## Summary
+## 요약
 
-You’ve come a long way in this tutorial: you’ve learned how to use the DJI Mobile SDK to show the FPV view of the aircraft's camera and control the camera of a DJI platform. These features, **Capture** and **Record** are the most basic and common features in a typical drone mobile app. However, if you want to create a drone app that is more fancy, you still have a long way to go. More advanced features would include previewing the photo and video in the SD Card, showing the OSD data of the aircraft and so on. Hope you enjoyed this tutorial, stay tuned for our next one!
-
+꽤 긴 튜토리얼을 진행했다 : 비행체 카메라의 FPV view와 DJI 플랫폼의 카메라 제어를 DJI Mobile SDK를 통해 사용법을 익혔다. 드론 모바일 app에서 **Capture** 와 **Record**는 가장 기본이며 일반적인 기능이다. 그러나 좀더 멋진 drone app을 만들기를 원한다면 갈 길이 멀다. 고급 기능으로 SD 카드에 있는 사진과 비디오 미리보기, 비행체의 OSD 데이터 보여주기 등이 있다. 이 튜토리얼을 잘 즐겼기를 기대하며 다음 것도 지켜봐 달라.
