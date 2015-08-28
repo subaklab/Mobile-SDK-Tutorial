@@ -241,7 +241,7 @@ Second, add the following codes in your Activity.
 	}
 ```
 
-**주의:** As class can only extend one parent class, hence, GSDemoActivity can not extend DemoBaseActivity as it has already extended FragmentActivity. Here we add **ServiceManager.getInstance().pauseService(false);** in GSDemoActivity's callback **onResume**, and add **ServiceManager.getInstance().pauseService(true);** in GSDemoActivity's callback **onPause**.
+**주의:** class는 하나의 부모로부터 상속을 받을 수 있으므로, GSDemoActivity는 이미 FragmentActivity로부터 상속을 받으므로 DemoBaseActivity를 상속 받을 수 없다. GSDemoActivity의 callback인 **onResume**에서 **ServiceManager.getInstance().pauseService(false);**를 추가하고 **onPause**에서는 **ServiceManager.getInstance().pauseService(true);**를 추가한다.
 
 ```java
 	 @Override
@@ -259,18 +259,16 @@ Second, add the following codes in your Activity.
     }
 ```
 
-Now you can see your app loading a Google map by following the instructions to enable developer options on your Android device, connect your device to the computer through USB cable, build and run your app. The loading of the Google map will require your Android device having installed the Google Play service.
+Android장치에서 개발자 옵션을 켜고 다음 지시에 따르면 app에서 Google map을 로딩할 수 있다. Google map을 로딩하려면 미리 Android 장치는 Google Play service를 설치해야 한다.
 ![loadGoogleMap](../../images/Android/GSDemo/loadGoogleMap.png)
 
 
  
-### 2. Locate the Aircraft
+### 2. 비행체 위치
 
-When Google map is successfully loaded. You can then use a marker on the map to show the loacation of the aircraft based on the coordinates provided by **droneLocationLatitude**, **droneLocationLongitude** in **DJIMainControllerSystemState**. Implement **private void updateDroneLocation()** function to update the location of the aircraft.
+Google map이 성공적으로 로딩되면, **DJIMainControllerSystemState**내에 **droneLocationLatitude**, **droneLocationLongitude**에서 제공하는 좌표를 기반으로 비행체의 위치를 마커로 지도상에서 보여줄 수 있다. 비행체의 위치를 업데이트 하기 위해서 **private void updateDroneLocation()** 함수를 구현할 수 있다.
 
-Implement **public interface DJIMcuUpdateStateCallBack** interface to obtain the location of the aircraft.
-We set up this interface in MainController module of DJI SDK using **public void setMcuUpdateStateCallBack(DJIMcuUpdateStateCallBack mCallBack)**. Then we update the marker that shows the aircraft's location on the map. 
-Code example are listed as below:
+비행체의 위치를 얻어오기 위해서 **public interface DJIMcuUpdateStateCallBack** 인터페이스를 구현한다. **public void setMcuUpdateStateCallBack(DJIMcuUpdateStateCallBack mCallBack)**를 이용해서 DJI SDK의 MainController 모듈에서 이 인터페이스를 설정한다. 지도상에 비행체의 위치를 보여주기 위해서 마커를 업데이트 한다. 코드 예제는 아래와 같다 :
 
 ```java
 	// Update the drone location based on states from MCU.
@@ -311,7 +309,7 @@ Code example are listed as below:
     } 
 ```
 
-We will call this function after initiating the SDK APIs and calling **DJIDrone.connectToDrone()**. Please note that when calling the SDK APIs for the aircraft's modules are only possible after the activation is completed. We call the above function after the **checkPermission** returns 0:
+SDK API를 초기화하고 **DJIDrone.connectToDrone()** 호출한 이후에 이 함수를 호출한다. 활성화를 마친 이후에 비행체 모듈에 대한 SDK API를 호출이 가능하다. **checkPermission**가 0을 반환한 이후에 위에 함수를 호출한다 :
 
 ```java
 	new Thread(){
@@ -338,7 +336,7 @@ We will call this function after initiating the SDK APIs and calling **DJIDrone.
         }.start();
 ```
 
-To update the Main Controller system state, we still need to call the **public boolean startUpdateTimer(int interval)** in the callback **onResume**. We can pause timer for updating by calling **public boolean stopUpdateTimer()** in the callback **onPause**.
+Main Controller 시스템 상태를 업데이트 하기 위해서 **onResume**에서 **public boolean startUpdateTimer(int interval)**를 호출한다. **onPause** callback에서 **public boolean stopUpdateTimer()**를 호출함으로써 업데이트에 필요한 타이머를 일시 정지 시킬 수 있다. 
 
 ```java
     @Override
@@ -356,11 +354,11 @@ To update the Main Controller system state, we still need to call the **public b
     }
 ```
 
-When we open the app, the function **updateDroneLocation()** will be called after the key activation.
+app을 열 때, **updateDroneLocation()** 함수는 key가 활성화 된 후에 호출될 예정이다.
 
-Meanwhile, we implement a button "Locate" on UI. When users click the button, the function **updateDroneLocation()** will be called again.
+반면에 UI에 "Locate" 버튼을 구현한다. 사용자가 버튼을 클릭할 때, **updateDroneLocation()** 함수가 다시 호출된다.
 
-To implement the button "Locate", first, add a Button view in the **activity_gsdemo.xml** 
+"Locate" 버튼을 구현하기 위해서, 먼저 **activity_gsdemo.xml**에 Button view를 추가한다.
 
 ```xml
 
@@ -385,7 +383,7 @@ To implement the button "Locate", first, add a Button view in the **activity_gsd
 	...
 	
 ``` 
-Second, add **OnClickListener** Interface in the activity(**GSDemoActivity** in the demo example). The activity implements the interface **public class GSDemoActivity extends ... implements OnClickListener ...**, and implements the code for the method **public void onClick(View v)**,
+두번째로 **OnClickListener** 인터페이스를 activity(데모에서는 **GSDemoActivity**)에 추가한다. 이 activity는 **public class GSDemoActivity extends ... implements OnClickListener ...** 인터페이스를 구현하고 **public void onClick(View v)**에 대한 메소드를 위한 코드를 구현한다.
 
 ```
 	@Override
@@ -405,7 +403,7 @@ Second, add **OnClickListener** Interface in the activity(**GSDemoActivity** in 
 	
 ```
 
-Third, register the "Locate" button in the activity
+3번째로 activity에 "Locate" 버튼을 등록한다.
 
 ```java
 	private Button locate;
@@ -422,17 +420,17 @@ Third, register the "Locate" button in the activity
 	}
 ```
 
-Build and run the app to check the location function. Connect to aircraft to the computer through a USB cable and Launch the DJI PC simulator:
+app을 빌드 및 실행해서 위치 함수가 제대로 동작하는지 확인한다. USB 케이블을 통해서 비행체를 컴퓨터에 연결하고 DJI PC simulator를 실행한다:
 
 ![simulatorLocateAircraft](../../images/Android/GSDemo/simulatorLocateAircraft.png)
 
-Click the "locate" button, the following GUI prompt to show the location of the aircraft in the map.
+"locate" 버튼을 클릭하고 다음 GUI 프롬프트로 지도상에서 비행체의 위치를 보여준다.
 
 ![locateAircraft](../../images/Android/GSDemo/locateAircraft.png)
 
-### 3. Add and clear the waypoints
+### 3. waypoint 추가 및 제거
 
-It is critical to enable user to add waypoints in Ground Station intuitively. We will then demonstrate how to add waypoints on the map. Place a "Add" button. Whenever we click button "add", a switch variable "isAdd" will turn into "true", and the text of the button shown as "Exit". We have now entered waypoints adding mode: Click and add the desirable location in the map as a waypoint. A marker will be displayed on the map to shows that a new waypoint has been added. Click "Exit" button to exit waypoint adding mode when you have placed all the desirable waypoints in the map. The listener for clicking map is shown as follows:
+사용자가 GroundStation에서 직관적으로 waypoint를 추가하도록 하는 것은 중요하다. waypoint를 지도에 추가하는 방법 살펴보자. "Add"버튼을 만들자. "Add" 버튼을 누를 때마다, "isAdd" 변는 "true"를 반환한다. 버튼의 텍스트는 "Exit"로 보인다. 모드를 추가하기 위해서 waypoint를 넣자: 지도상에 원하는 위치를 클릭해서 waypoint를 추가하자. 마커는 새로운 waypoint가 추가되었다는 것을 보여주기 위해서 지도상에 나타난다. 원하는 waypoint를 모두 넣고 난 후에, "Exit"버튼을 누르면 waypoint 추가 모드를 빠져나간다. 지도상에 클릭에 대한 listener는 다음과 같다 :
 
 ```java
 	 @Override
@@ -449,11 +447,11 @@ It is critical to enable user to add waypoints in Ground Station intuitively. We
     }
 ```
 
-When we click on the map, the codes within the **public void onMapClick(LatLng point)** will be executed. an instance of **DJIGroundStationWaypoint** will be created and added to **mGroundStationTask**.
+지도상에 클릭할 때, **public void onMapClick(LatLng point)**내에 코드가 실행된다. **DJIGroundStationWaypoint**의 인스턴스가 생성되고 **mGroundStationTask**에 추가된다. 
 
 ![addWaypoints](../../images/Android/GSDemo/addWaypoints.png)
 
-We add the "clear" button to clear all the added waypoints. All the markers on the map will be erased and all waypoints will be removed from **mGroundStationTask**.
+"clear" 버튼을 추가해서 추가된 모든 waypoint를 제거한다. 지도상에 모든 마커는 사라지고 **mGroundStationTask**에 있는 모든 waypoint도 삭제된다.
 
 ```java
 	 @Override
@@ -484,17 +482,17 @@ We add the "clear" button to clear all the added waypoints. All the markers on t
 
 ![clearWaypoints](../../images/Android/GSDemo/clearWaypoints.png)
 
-## Configure the Navigation Task
+## 네비게이션 태스크 설정
 
-As you see, the project's code structure was simple and not robust. In order to develop it further in this tutorial, it will need to be re-factored and we will need to add more UI elements. 
+프로젝트의 코드 구조는 단순하지만 잘 짜여진 것은 아니다. 이 튜토리얼에서 좀더 구현하기 위해서 리팩터링이 필요하고 UI 컴포넌트를 더 추가해야한다.
 
-Here, as a simple example, we just show how to configure the waypoints. Users can developer their own codes to set up the waypoint sequentially. 
+여기서는 간단한 예제로, waypoint를 설정하는 방법만 보여줄 예정이다. waypoint를 연속으로 설정하기 위해서는 개발자가 추가로 코드를 작성해야 한다.
 
-We first add a new button "Config". When users click the button, a new configuration dialog will be popped up. 
+먼저 새로 "Config" 버튼을 추가한다. 사용자가 버튼을 클릭할 때, 새로운 설정창이 나타난다. 
 
 ![configButton](../../images/Android/GSDemo/configButton.png)
 
-We use a dialog to load the configuration setting view. The settings include the altitude of waypoints, whether to repeat the task, the horizontal speed of the aircraft during the task, the action after the task finished, the heading of the aircraft during the task (altitude and speed is a field of class **DJIGroundStationWaypoint**. Here we set all the waypoints' altitude or speed the same as a simple example. Users can also set different values for different waypoints' altitude or speed). We do not show the codes for the dialog here. When users click "Finish" after inputting a value or selecting an option for each item, the following function will be called to set the fields of **DJIGroundStationTask** and **DJIGroundStationWaypoint**:
+설정 셋팅 view를 로딩하는데 dialog를 사용한다. 설정은 waypoint의 고도, 태스트 반복, 태스크 동안 비행체의 수평 속도, 태스크가 끝난 후에 동작, 태스크 동안 비행체의 방향(고도와 속도는 **DJIGroundStationWaypoint**의 필드을 포함하고 있다. 여기서 모든 waypoint의 고도나 속도를 예제와 동일하게 설정한다. 사용자는 다른 waypoint의 구도나 속도에 대해서 다른 값으로 설정할 수 있다.)을 포함한다. 여기서는 dialog에 대한 코드는 보여주지 않는다. 값을 입력하거나 아이템의 옵션을 선택한 이후에 사용자가 "Finish"를 클릭할 때, 다음에 호출되는 함수는 **DJIGroundStationTask** 와 **DJIGroundStationWaypoint**의 필드 값을 설정하는 것이다:
 
 ```java
 	    private void configGroundStationTask(){
@@ -508,9 +506,9 @@ We use a dialog to load the configuration setting view. The settings include the
     }
 ```
 
-## Upload the Task to the Aircraft
+## 비행체에 태스크를 업로드 하기
 
-We have configured the **DJIGroundStationTask**. However, the task is currently stored on the mobile device. We need to upload the task to the aircraft before imitate the task. Click "Upload" button to upload the task to aircraft. The following function will be executed when "Upload" button is clicked:
+**DJIGroundStationTask**를 설정했다. 하지만 태스크는 현재 모바일 장치에 저장된 상태다. 태스크를 시작하기 전에 비행체에 태스크를 업로드해야 한다. "Upload" 버튼을 클릭해서 비행체에 태스크를 업로드한다. "Upload" 버튼이 클릭되면 다음과 같은 함수가 실행된다 :
 
 ```java
 	   private void uploadGroundStationTask(){
@@ -540,22 +538,22 @@ We have configured the **DJIGroundStationTask**. However, the task is currently 
     }
 ```
 
-We first need to call **public void openGroundStation(final DJIGroundStationExecuteCallBack mCallBack)** to initialized the Ground Station function, and when the Ground Station function is initialized successfully (the callback returns **GroundStationResult.GS_Result_Success**), then the function **public void uploadGroundStationTask(final DJIGroundStationTask task, final DJIGroundStationExecuteCallBack mCallBack)** will be executed.
+Ground Station 기능을 초기화하기 위해서 먼저 **public void openGroundStation(final DJIGroundStationExecuteCallBack mCallBack)**를 호출하고 Ground Station이 성공적으로 초기화되면(이 callback은 **GroundStationResult.GS_Result_Success**를 반환한다) **public void uploadGroundStationTask(final DJIGroundStationTask task, final DJIGroundStationExecuteCallBack mCallBack)** 함수가 실행된다.
 
 
-**Important:** It is possible that you will come across **GroundStationResult.GS_Result_Rc_Control_Mode_Error** when using the Ground Station. The root cause is that the flight mode switch on the remote contorller is not set to the "F" position. You will then need to toggle the switch to "F" position and upload the waypoints agin before using the Ground Station.  
+**중요:** Ground Station을 사용할 때, **GroundStationResult.GS_Result_Rc_Control_Mode_Error**가 발생할 가능성이 있다. 주요 원인은 리모트 컨트롤러에 빟애 모드 스위치가 "F"로 설정되어 있지 않는 경우이다. "F"로 스위치를 변경해야 하고 Ground Station을 사용하기 전에 다시 waypoint를 업로드한다. 
 
-If the flight mode switch is at "F" position when the aircraft is powered on, the user must toggle back and forth between F and another position and then have an uploading of waypoints.
+비행체가 켜질 때, 만약 비행 모드 스위치가 "F" 위치면 다른 사용자는 F와 다른 스위치를 왔다갔다해야만 하고 waypoint를 업로드한다.
 
 ![switchFlightMode](../../images/Android/GSDemo/switchFlightMode.png)
 
-When all waypoints are uploaded successfully , the DJI PC Simulator log will prompt "received mission length xx from app". 
+모든 waypoint가 성공적으로 업로드되면 DJI PC Simulator 로그가 "received mission length xx from app"를 출력한다.
 
 ![uploadwaypointsLog](../../images/Android/GSDemo/uploadwaypointsLog.png)
 
-## Start and Stop the DJIGroundStationTask
+## DJIGroundStationTask 시작 및 정지
 
-After uploading the task to the aircraft, execute the **DJIGroundStationTask**. When the  "Start" button is clicked, the following codes will be executed, in which the function **public void startGroundStationTask(final DJIGroundStationExecuteCallBack mCallBack)** will be called.
+비행체에 태스크를 업로딩한 이후에 **DJIGroundStationTask**를 실행한다. "Start" 버튼을 클릭하면 **public void startGroundStationTask(final DJIGroundStationExecuteCallBack mCallBack)**내부에 있는 다음과 같은 코드가 실행된다. 
 
 ```java
 	    private void startGroundStationTask(){
@@ -573,7 +571,7 @@ After uploading the task to the aircraft, execute the **DJIGroundStationTask**. 
 
 ![startGSTask](../../images/Android/GSDemo/startGSTask.png)
 
-The DJIGroundStationTask can be stopped during execution by calling function **public void pauseGroundStationTask(final DJIGroundStationExecuteCallBack mCallBack)** to pause the task, after the pausing the task, use **public void closeGroundStation(final DJIGroundStationExecuteCallBack mCallBack)** to close the Ground Station function.
+DJIGroundStationTask는 **public void pauseGroundStationTask(final DJIGroundStationExecuteCallBack mCallBack)** 함수를 호출해서 태스크를 일시 정지 상태로 만든다. 태스크 일시 정지 상태 이후에 **public void closeGroundStation(final DJIGroundStationExecuteCallBack mCallBack)**를 이용해서 Ground Station 기능을 종료시킨다.
 
 ```java
 	    private void stopGroundStationTask(){
@@ -601,12 +599,10 @@ The DJIGroundStationTask can be stopped during execution by calling function **p
     }
 ``` 
 
-## Summary
+## 요약
 
-In this tutorial, You have mastered how to setup and use the DJI PC Simulator to test your Ground Station app, how to upgrade your  firmware to the developer version, and how to use the DJI Mobile SDK to create a simple MapView, modify annotations of map view, checking the aircraft on the map view by simulate the GPS data from DJI PC Simulator, etc. That covers much of the ground. 
+이 튜토리얼에서 Ground Station app을 테스트 하기 위해서 DJI PC Simulator 사용 및 설정방법, 개발 버전을 위해 펌웨어 업데이트 방법, DJI Mobile SDK 사용해서 간단한 MapView 생성 방법, map view의 annotation 수정, DJI PC Simulator에서 GPS 데이터 시뮬레이터를 통해 map view에서 비행체 확인 방법 등을 익혔다. 많은 기본 지식을 다뤘다.
 
-Moreover, you have learned how to configure both **DJIGroundStationWaypoint** and **DJIGroundStationTask**. Moreover, you have now mastered how to manipulate waypoints and task by using **DJIGroundStationTask** and **DJIInspireGroundStation**.
+추가로 **DJIGroundStationWaypoint** 와 **DJIGroundStationTask**를 설정하는 방법을 배웠다. waypoint 처리 방법과 **DJIGroundStationTask** 와 **DJIInspireGroundStation** 사용해서 태스크 처리 방법을 배웠다.
 
-Congratulations! Now that you have finished the demo project, you can build on what you've learned and start to build your own ground station application. You can improve the way waypoints that are added(such as drawing a line on the map and generating waypoints automatically), play around with the properties of a waypoint (such as heading, horizontal speed, etc.), and adding more functionality. In order to make a cool ground station application, you still have a long way to go. Good luck and hope you that enjoy this.
-
-
+축하한다! 이제 데모 프로젝트를 마쳤다. 여러분이 배운 것을 만들 수 있고 여러분의 ground station app을 만들 수 있게 되었다. waypoint를 추가하는 방법(waypoint 생성 및 선연결을 자동화)을 개선하고 waypoint의 속성을 이용하여 추가 기능을 구현할 수 있다. 멋진 ground station app을 만들기 위해서 할 일이 많다. 행운을 빌며 재밌게 즐겼기를 기대한다.
