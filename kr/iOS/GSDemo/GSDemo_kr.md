@@ -585,8 +585,7 @@ map view의 annotation이 **aircraftAnnotation** 속성과 같은지를 확인�
 
 ![statusView](../../images/iOS/GSDemo/statusView.png)
 
-
-Once that's done, open **DJIRootViewController.h** file, create IBOutlets for the above UI elements and import DJISDK's header file and implement **DJIDroneDelegate** and **DJIMainControllerDelegate** protocols. Here we use Inspire 1 for the demo, so we need to create two properties, one of type **DJIDrone** and another of type **DJIInspireMainController**'s property. Also, we need to create a **CLLocationCoordinate2D** property named **droneLocation** to record the aircraft's location, as shown below:
+여기까지 하고 나면 **DJIRootViewController.h** 파일을 열고 위에 UI element를 위해 IBOutlet를 생성하고 DJISDK 헤더 파일을 import하고 **DJIDroneDelegate** 와 **DJIMainControllerDelegate** protocol을 구현한다. 여기서 데모로 Inspire 1을 이용하고 2개 속성을 생성하는데 하나는 **DJIDrone**과 **DJIInspireMainController** 속성이다. **droneLocation** 이름의 **CLLocationCoordinate2D** 속성을 생성해서 비행체의 위치를 기록한다. 아래와 같다 :
 
 ~~~objc
 #import <DJISDK/DJISDK.h>
@@ -603,7 +602,7 @@ Once that's done, open **DJIRootViewController.h** file, create IBOutlets for th
 @property(nonatomic, assign) CLLocationCoordinate2D droneLocation;
 ~~~
 
-Now, let's move on to the **DJIRootViewController.m** file and initialize the UI elements' values in a method called **initUI**. Also, add an **initDrone** method to initialize the properties for **inspireDrone**. Call the **initUI** and **initDrone** methods in the **viewDidLoad** method:
+이제 **DJIRootViewController.m**로 이동해서 **initUI** 메소드내에서 UI Element 값을 초기화한다. 또 **inspireDrone**에 대한 속성을 초기화하기 위해서 **initDrone** 메소드를 추가한다. **viewDidLoad** 메소드내에서 **initUI** 와 **initDrone** 메소드를 호출한다:
 
 ~~~objc
 
@@ -625,9 +624,9 @@ Now, let's move on to the **DJIRootViewController.m** file and initialize the UI
 }
 ~~~
 
-The **DJIInspireMainController** subclass from **DJIMainController** is a mainController to control the aircraft and get the DJIMCSystemState during take off, landing, and etc. You can check its header file in the SDK for more info. In the **initDrone** method, we set **inspireDrone** and **inspireMainController** delegates as self.
+**DJIMainController**에서 나온 **DJIInspireMainController** 서브클래스는 비행체를 제어하기 위한 mainController이고 이륙 및 착륙하는 동안 DJIMCSystemState를 얻을 수 있다. SDK의 헤더 파일을 보면 더 많은 정보를 얻을 수 있다. **initDrone** 메소드 내에서 **inspireDrone** 와 **inspireMainController** 자기 자신을 delegate한다.
 
-Remember the **registerAppSuccess** method we've added previously? Let's have it look like this:
+이전에 추가한 **registerAppSuccess** 메소드를 기억하는가? 살펴보자:
 
 ~~~objc
 #pragma mark NSNotification Selector Method
@@ -638,7 +637,7 @@ Remember the **registerAppSuccess** method we've added previously? Let's have it
 }
 ~~~
 
-In the method above, when the app is registerd successfully, we can call DJIDrone's **connectToDrone** method to connect to the aircraft, and call **startUpdateMCSystemState** method to start updating the aircraft's system state, which is information we need to update our aircraft's location and heading. Moreover, in the **viewWillDisappear** method, we need to disconnect from the drone, as shown below:
+위 메소드에서 app이 성공적으로 등록되면 DJIDrone의 **connectToDrone** 메소드를 호출해서 비행체에 연결하고 **startUpdateMCSystemState** 메소드를 호출해서 비행체 시스템 상태를 업데이트할 수 있다. 이는 비행체의 위치나 heading을 업데이트해야하는 정보이다. **viewWillDisappear** 메소드에서 드론과 연결을 해제한다. 아래와 같다 :
 
 ~~~objc
 - (void)viewWillDisappear:(BOOL)animated
@@ -650,13 +649,13 @@ In the method above, when the app is registerd successfully, we can call DJIDron
 }
 ~~~
 
-In the **viewDidLoad** method, assign the **droneLocation** property's value as kCLLocationCoordinate2DInvalid. 
+**viewDidLoad** 메소드에서 **droneLocation** 속성 값을 kCLLocationCoordinate2DInvalid으로 설정한다.
 
 ~~~objc
     self.droneLocation = kCLLocationCoordinate2DInvalid;
 ~~~
 
-Also, update the **focusMapAction** method to set **droneLocation** as the center of the map view's region, as shown below:
+**droneLocation**를 map view 영역의 중심으로 설정하기 위해서 **focusMapAction** 메소드를 업데이트한다. 아래와 같다:
 
 ~~~objc
 - (IBAction)focusMapAction:(id)sender {
@@ -672,7 +671,7 @@ Also, update the **focusMapAction** method to set **droneLocation** as the cente
 }
 ~~~
 
-Next, We need to modify the **MKMapViewDelegate** method to what is shown below. It will check the annotation variable's class and set its annotationView as a **DJIAircraftAnnotationView** Class type object:
+다음은 아래 보는 것과 같이 **MKMapViewDelegate** 메소드를 수정한다. annotation 변수의 클래스를 검사하고 annotationView를 **DJIAircraftAnnotationView** 클래스 타입 객체로 설정한다:
 
 ~~~objc
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
@@ -722,15 +721,15 @@ Furthermore, let's implement the **DJIMainControllerDelegate** method:
 }
 ~~~
 
-First, it will update the **droneLocation** with the aircraft's current location. Then, it will disable the inspireMainController's IOC function.
+먼저 **droneLocation**를 비행체의 현재 위치로 업데이트한다. 다음으로 inspireMainController의 IOC 함수를 비활성화 시킨다.
 
 ***
-**Important**: Since there are conflicts between DJI Mobile SDK's GroundStation and IOC, you cannot use them at the same time. Please make sure to close the IOC feature before using GroundStation. Otherwise, you will run into errors.
+**중요**: DJI Mobile SDK의 GroundStation과 IOC 사이에 충돌이 있기 때문에 동시에 이 둘을 사용할 수 없다. GroundStation를 사용하기 전에 IOC 기능을 닫았는지 확인하자. 그렇지 않으면 error가 발생한다
 ***
 
-Next, update the text for the status labels from the DJIMCSystemState. Furthermore, update the aircraft's location and heading by calling the related methods from **DJIMapController**.
+다음은 DJIMCSystemState로부터 status label의 text를 업데이트한다. 비행체의 위치와 heading은 **DJIMapController**의 관련 메소드를 호출해서 업데이트한다.
 
-Finally, let's implement the DJIDroneDelegate Method, as shown below:
+마지막으로 DJIDroneDelegate 메소드를 구현하자. 아래와 같다:
 
 ~~~objc
 #pragma mark - DJIDroneDelegate Method
@@ -750,7 +749,7 @@ Finally, let's implement the DJIDroneDelegate Method, as shown below:
 }
 ~~~
 
-If it succeeds to connect to the aircraft, call **DJIInspireMainController**'s **enterNavigationModeWithResult** method to check if the aircraft entered navigation mode successfully. If not, just show a UIAlertView to the user. We need to implement UIAlertView's delegate method as shown below:
+비행체에 연결하기가 성공하면 **DJIInspireMainController**의 **enterNavigationModeWithResult** 메소드를 호출해서 비행체가 네비게이션 모드로 성공적으로 들어갔는지 검사한다. 만약 그렇지 않다면 UIAlertView을 사용자에게 보여준다. UIAlertView의 delegate 메소드는 아래와 같다:
 
 ~~~objc
 #pragma mark - UIAlertViewDelegate
@@ -772,37 +771,37 @@ If it succeeds to connect to the aircraft, call **DJIInspireMainController**'s *
 }
 ~~~
 
-Let's test the application! 
-Build and run the project to install the app onto your mobile device. After that, please connect the aircraft to your PC or Virtual Machine running Windows via a Micro USB cable, and then power on the aircraft and the remote controller. Click Display Simulator. You can type in your current location's latitude and longitude data in the Simulator Config, if you would like. 
+app 테스트를 진행해보자.
+프로젝트를 빌드 및 실행하고 app을 모바일 장치에 설치한다. 이렇게 한 이후, 비행체를 Micro USB케이블을 이용해서 PC나 윈도우가 실행되는 가상머신에 연결한다. 그런 다음 비행체와 리모트 컨트롤러에 전원을 넣는다. Display Simulator를 클릭한다. Simulator Config에서 현재 위치의 위도/경도 데이터를 입력한다.
 
 ![simulatorPreview](../../images/iOS/GSDemo/simulator_preview.png)
 
-Then, run the app and connect your mobile device to the remote controller using Apple's lighting cable. You may see the following screenshot:
+app을 실행하고 모바일 장치를 Apple의 라이트링 케이블을 이용해서 리모트 컨트롤러에 연결한다. 다음과 같은 스크린샷을 볼 수 있다:
 
 ![enterNaviModeFailed](../../images/iOS/GSDemo/enterNaviModeFailed.jpg)
 
-**Important**: To fix this problem, please switch the Remote Controller's mode selection to the **F** position (which used to be the A position in the previous version) and press **Retry** button. If the mode selection bar is in the F position when the autopilot is powered on, the user must toggle back and forth between **F** and another position and then press the **Retry** button again.
+**중요**: 이 문제를 해결하기 위해서, 리모트 컨트롤러의 모드를 **F**에 위치 시키고 **Retry** 버튼을 누른다. 만약 모드 선택 바가 F 위치에 있따면 autopilot는 전원이 켜지고 사용자는 반드시 **F**와 다른 위치 사이를 왔다갔다한 이후에 **Retry** 버튼을 다시 누른다.
 
-You are required to be in the **F** position when using the Ground Station, Hotpoint and Joystick functions in the DJI Mobile SDK.
+DJI Mobile SDK에서 Ground Station, Hotpoint와 죠이스틱 기능을 사용할 때, **F** 위치에 둬야한다.
 
 ![switchFlightMode](../../images/iOS/GSDemo/switchFlightMode.png)
 
-Next, let's go to the DJI PC Simulator on your PC and press the **Start Simulation** button. If you check the application now, a tiny red aircraft will be shown on the map as seen below:
+다음으로, PC에 DJI PC Simulator으로 가서 **Start Simulation** 버튼을 누른다. 만약 app을 검사하면 작고 붉은 비행체가 지도에 나타날 것이다:
 
 ![aircraftOnMap1](../../images/iOS/GSDemo/aircraftOnMap1.jpg)
 
-If you cannot find the aircraft, press the "**Focus Map**" button and the map view will zoom in to center the aircraft on the center of the map view region as shown below:
+비행체가 보이지 않느다면 "**Focus Map**" 버튼을 누르고 map view는 map view 영역의 중앙에 비행체를 중간에 위치시킥 위해서 줌인이 될 것이다:
 
 ![focusAircraft](../../images/iOS/GSDemo/focusAircraft.gif)
 
-Now, if you press the **Stop Simulation** button on the Simulator Config, the aircraft will disappear on the map, since the simulator stops providing GPS data to the aircraft.
+이제 Simulator Config에서 **Stop Simulation** 버튼을 누르면, 비행체는 지도상에서 사라지는데 이것은 simulator가 비행체로 GPS 데이터를 보내는 것을 멈췄기 때문이다.
 
-## Refactor the UI
+## UI 리팩터링하기
 
-As you seen, the project's code structure was simple and not robust. In order to develop it further in this tutorial, it will need to be refactored and we will need to add more UI elements. 
+본것과 같이, 프로젝트의 코드 구조는 간단하지만 잘 짜여지지는 않았다. 이 튜토리얼에서 더 개발하고자 한다면 리팩터링이 필요하고 UI element를 더 추가해야 한다.
 
-### 1. Add & Handle The New UIButtons
-First, we will create a new file named **DJIGSButtonController**, which will be subclass of **UIViewController**. Make sure the check box saying **Also create XIB file** is selected when creating the file. Then open the **DJIGSButtonController.xib** file and set its size to **Freeform** under the **Size** dropdown in the **Simulated Metrics** section. In the view section, change the width to **110** and height to **260**. Take a look at the changes made below:
+### 1. 새로운 UIButton 추가와 처리
+먼저  **UIViewController**의 서브클래스로 **DJIGSButtonController** 이름의 새로운 파일을 생성한다. 파일 생성시에 체크 박스에서 **Also create XIB file** 항목을 선택한다. 다음으로 **DJIGSButtonController.xib** 파일을 열고,  **Simulated Metrics**내에 **Size** 드롭다운 아래에 **Freeform**으로 size를 설정한다. view 섹션에서 **110**로 폭을 변경하고 높이는 **260**로 변경한다. 아래와 같이 변경한다 :
 
 ![freeform](../../images/iOS/GSDemo/freeform.png)
 ![changeSize](../../images/iOS/GSDemo/changeSize.png)
