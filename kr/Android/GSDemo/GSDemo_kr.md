@@ -95,60 +95,60 @@ Also, you can check the firmware upgrade status by checking the **txt** file gen
   ![upgradeInspire1Success](../../images/Android/GSDemo/upgradeInspire1Success.png)
   
   
-## Setup the Map View
+## Map View 설정하기
 
-### 1. Create a map view
+### 1. map view 생성
 
-Use map view to display waypoints and show the flight route of the aircraft when the flight task is being executed. We take Google map for an example.
+waypoint를 표시하기 위해 map view를 사용하고 비행 타스크를 실행할 때 비행체의 경로를 보여준다. 예제로 Google map을 사용한다.
 
-Follow the setup guides in Google's official documentation <https://developers.google.com/maps/documentation/android/config>. to add a Google map in your Android application. 
+Google의 공식 가이드 문서<https://developers.google.com/maps/documentation/android/config>를 참조해서 Google map을 Android app에 추가하자. 
 
-(1) Install the Android SDK. 
+(1) Android SDK 설치
 
-Installed the Android SDK through the **Android SDK Manager**. Enter the **Android SDK Manager** by clicking "Window" from the menu, then clicking "Android SDK Manager".
+**Android SDK Manager**를 통해 Android SDK를 설치한다. **Android SDK Manager**는 메뉴에서 "Window"를 클릭해서 진입할 수 있다. 다음으로 "Android SDK Manager"를 클릭한다.
 
-(2) Install and set up the Google Play services SDK by referring to the setup guide presented in: <https://developers.google.com/android/guides/setup>
+(2) Google Play services SDK를 설치하기 위해 다음을 참조한다 : <https://developers.google.com/android/guides/setup>
 
-**The Google Maps Android API** is included in the Google Play services SDK. Install the Google Play services SDK  by **Android SDK Manager**
+**The Google Maps Android API**는 Google Play services SDK에 포함되어 있다. **Android SDK Manager**로 Google Play services SDK를 설치한다.
 ![installGooglePlayService](../../images/Android/GSDemo/installGooglePlayService.png)
 
-After the Google Play services SDK is installed, locate the library project under the ADT path "xxx/\<android-sdk>/extras/google/google_play_services/libproject/google-play-services_lib". Copy the library project to the location where you store your Android app projects.
+Google Play services SDK를 설치 후, ADT 경로인 "xxx/\<android-sdk>/extras/google/google_play_services/libproject/google-play-services_lib" 아래에 library 프로젝트를 위치시킨다. library 프로젝트를 여러분의 Android app 프로젝트 위치에 복사한다.
 
-Import the library project into your Eclipse workspace. Click **File>Import**, then select **Android>Existing Android Code into Workspace**, and access the copy of the library project to import it.
+library 프로젝트를 Eclipse workspace로 import시킨다. **File>Import**를 클릭하고 **Android>Existing Android Code into Workspace**를 선택한다. import시키기 위해서 library 프로젝트의 복사본에 접근할 수 있다.
 
-Add Google Play services library reference to your project by right clicking **Package Explorer**, then Click **Properties>Android**. Click **Add...** to add **google-play-services_lib**.
+Google Play services library는 **Package Explorer** 오른쪽 클릭으로 프로젝트를 참조한다. 다음으로 **Properties>Android**을 클릭한다. **google-play-services_lib**를 추가하기 위해서 **Add...**를 클릭한다.
 
 ![addGooglePlayService](../../images/Android/GSDemo/addGooglePlayService.png) 
 
-After Google Play services library is added as a dependency for your project. Open **manifest** file for your app and add the following tag as a child of the ** \<application>** element:
+Google Play services가 프로젝트를 프로젝트의 의존성을 위해 추가한다. **manifest** 파일을 열고 아래와 같이 ** \<application>** element의 자식으로 다음 태그를 추가한다 :
 
 ```xml
 	<meta-data android:name="com.google.android.gms.version"
 		android:value="@integer/google_play_services_version" />
 ```
 
-You can now start using the Google Play services APIs to develop your project.
+이제 프로젝트를 개발하는데 Google Play services를 사용할 수 있게 되었다.
 
-(3) Obtain API key by referring to : <https://developers.google.com/maps/documentation/android/signup>
+(3) API key를 얻는 것은 다음을 참조하자 : <https://developers.google.com/maps/documentation/android/signup>
 
-1.Obtain App Certificate.
+1.App 인증 얻기
 
-Obtain the **SHA-1 fingerprint** of the debug certificate or release certificate by using the command **keytool**.  Use the **SHA-1 fingerprint** for the debug certificate. When using Eclipse with ADT, you can obtain the **SHA-1 fingerprint** by selecting **Window>Preferences>Android>Build**. 
+디버그 인증의 **SHA-1 fingerprint**를 얻거나 **keytool** 명령을 이용해서 인증을 릴리즈할 수 있다. 인증을 디버깅하기 위해서 **SHA-1 fingerprint**를 사용한다. Eclipse를 이용할 때, **Window>Preferences>Android>Build**를 선택해서 **SHA-1 fingerprint**를 얻을 수 있다.
 
 ![debugSHA1](../../images/Android/GSDemo/debugSHA1.png)
 
-2.Register a project in the Google Developers Console and add the Google Maps Android API v2 as a service for the project.
+2.Google Developers Console에서 프로젝트를 등록하고 Google Maps Android API v2를 프로젝트의 service로 추가한다.
 
-Login the Google Developer console <https://console.developers.google.com>. Select existing or create a project. Expand **APIs & auth** on the sidebar. Then select **APIs**. Select **Enabled APIs** link in the API section to browse all of the enabled APIs. Ensure the Android API is among the list of enabled APIs. If you have not enabled it, select the API from the list of APIs, then select the Enable API button to enable the Android API. The only API you need is the **Google Maps Android API**.
+Google Developer console <https://console.developers.google.com>에 로그인한다. 다음으로 기존 프로젝트나 프로젝트를 선택한다. 사이드바에서 **APIs & auth**를 확장한다. **APIs**를 선택한다. API 섹션에 있는 **Enabled APIs** link를 선택해서 유효한 모든 API를 탐색가능하다. 유효한 API 리스트에서 Android API를 확인한다. 만약 선택가능한 상태가 아니라면 API 리스트에서 API를 선택하고 Android API를 사용가능하게 하기 위해서 Enable API 버튼을 선택한다. 여러분에게 필요한 API는 **Google Maps Android API**이다.
 
-3.Create an Android API key
+3.Android API key 생성
 
-Click the project. In the sidebar on the left, select **Credentials**. If your project doesn't already have a **Key for Android applications**, create an API key by clicking **Create New Key** and then **Android key**. In the resulting dialog, enter your app's SHA-1 fingerprint, then a semicolon(;) then your app's package name. The Google Developers Console displays a section titled **Key for Android applications** followed by your API key.
+프로젝트를 클릭한다. 왼쪽 사이드바에서 **Credentials**를 선택한다. 프로젝트가 **Key for Android applications**를 이미 가지고 있지 않다면, **Create New Key**를 클릭하고 **Android key**를 클릭해서 API key를 생성한다. 결과창에서 app의 SHA-1 fingerprint를 입력하고 세미콜론(;) 다음으로 app의 package 이름을 입력한다. Google Developers Console은 **Key for Android applications**라는 제목의 섹션과 여러분의 API key를 출력한다.
 ![androidAPIKey](../../images/Android/GSDemo/androidAPIKey.png)
 
-4.Add the API key to your application
+4.API key를 app에 추가히기
 
-In AndroidManifest.xml, add the following element as a child of \<application> element, 
+AndroidManifest.xml에서 다음 element를 \<application> element의 자식으로 추가한다. 
 
 ```xml
 	<meta-data
@@ -156,11 +156,11 @@ In AndroidManifest.xml, add the following element as a child of \<application> e
 		android:value="API_KEY" />
 ```
  
-Substitute your API key for API_KEY in the value attribute. 
+여러분의 API key를 값 속성에 있는 API_KEY로 대체한다.
 
-(4) Add the required settings to your application's manifest.
+(4) 요청한 설정을 app의 manifest로 추가한다.
 
-1.Specify Android permissions: specify the permissions your application needs, by adding **\<uses-permission>** elements as children of the \<manifest> element in **AndroidManifest.xml**. 
+1.Android permission 지정 : 여러분의 app에서 필요로 하는 permission을 지정하기 위해서 **AndroidManifest.xml** 파일 내부에 \<manifest> element의 자식으로 **\<uses-permission>** elements를 추가한다. 
 
 ```xml
 	<uses-permission android:name="android.permission.INTERNET"/>
@@ -170,17 +170,17 @@ Substitute your API key for API_KEY in the value attribute.
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 ```
 
-For the details of description on the permissions, refer to <https://developers.google.com/maps/documentation/android/config>.
+permission의 상세한 내용을 <https://developers.google.com/maps/documentation/android/config>를 참조한다.
 
-2. Requirement for OpenGL ES version 2
+2. OpenGL ES version 2에 대한 요구사항
 
 ```xml
 	<uses-feature android:glEsVersion="0x00020000" android:required="true" />
 ```
 
-After the above configurations are done, now you can use the following codes to load Google map.
+위에 설정을 완료하면, 이제 Google map을 로딩하기 위해서 다음과 같은 코드를 사용한다.
 
-First, add the following xml codes in the app's layout where you want to load the map(In our demo, it is **activity_gsdemo.xml**):
+먼저 map을 로드할 app의 layout에 xml code를 추가한다. (데모에서는 **activity_gsdemo.xml** 파일)
 
 ```xml
 	...
@@ -241,7 +241,7 @@ Second, add the following codes in your Activity.
 	}
 ```
 
-**Note:** As class can only extend one parent class, hence, GSDemoActivity can not extend DemoBaseActivity as it has already extended FragmentActivity. Here we add **ServiceManager.getInstance().pauseService(false);** in GSDemoActivity's callback **onResume**, and add **ServiceManager.getInstance().pauseService(true);** in GSDemoActivity's callback **onPause**.
+**주의:** As class can only extend one parent class, hence, GSDemoActivity can not extend DemoBaseActivity as it has already extended FragmentActivity. Here we add **ServiceManager.getInstance().pauseService(false);** in GSDemoActivity's callback **onResume**, and add **ServiceManager.getInstance().pauseService(true);** in GSDemoActivity's callback **onPause**.
 
 ```java
 	 @Override
