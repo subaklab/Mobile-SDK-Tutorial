@@ -21,16 +21,16 @@
   
 ### 2. 재생 모드 전환
 
-  Now, let's delete the **ViewController.h** and **ViewController.m** files, which were created by Xcode when you created the project. Then, create a viewController named "DJIRootViewController" and set it as the **Root View Controller** in Main.storyboard**. This demo and its code was written to be used with the iPad, so we'll have to adjust the User Interface of **Main.storyboard** accordingly. We'll change the **Root View Controller**'s frame. Let's set its size to **Freeform** under the **Size** dropdown in the **Simulated Metrics** section. In the view section, change the width to **1024** and height to **768**. Take a look at the changes made below:
+  이제 **ViewController.h** 와 **ViewController.m** 파일을 삭제한다. 여러분이 프로젝트를 생성할 때 Xcode에서 생성된 것들이다. 다음으로 "DJIRootViewController"라는 viewController를 생성하고 **Main.storyboard**내에서 **Root View Controller**로 설정하자. 이 데모에서 코드는 iPad용으로 작성되었다. 따라서 **Main.storyboard**의 UX를 조정할 수 있다. **Root View Controller**의 프레임을 변경한다. **Simulated Metrics**섹션에서 **Size** 드롭다운아래 **Freeform**에 대한 크기를 설정할 수 있다. view센셕에서 폭을 **1024**로 높이는 **768**로 변경한다. 아래와 같이 변경한다:
 
   ![freeform](../../../images/iOS/PlaybackDemo/freeform.png)
   ![changeSize](../../../images/iOS/PlaybackDemo/changeSize.png)
   
-Then, add a UIView inside the **Root View Controller** and set it as an IBOutlet called **fpvPreviewView**. Add two UIButtons and one UISegmentedControl at the bottom of the View Control and set their IBOutlets and IBActions. Here we set three segments in the UISegmentedControl: **Capture**, **Record** and **Playback**. Lastly, drag a UILabel to the top, horizontally center it in the view controller and hide it first.
+**Root View Controller** 내부로 UIView를 추가하고 **fpvPreviewView**라는 IBOutlet로 설정한다. 2개 UIButton과 View Control의 밑에 UISegmentedControl을 추가하고 IBOutlets와 IBActions를 설정한다. UISegmentedControl에 3개 세그먼트를 설정한다: **Capture**, **Record**, **Playback**. 마지막으로 UILabel을 맨 위로 드래그하고 view controller에 수평으로 중심에 위치시키고 숨긴다. 
 
   ![RootViewController1](../../../images/iOS/PlaybackDemo/rootViewController_1.png)
   
- Once that's done, enter the **DJIRootViewController.m** file and import the **DJISDK** and **VideoPreviewer** header files. Then create a property of the **DJIDrone** class and one of the **DJICamera** class and implement their protocols in the class extension. Next, add the two **UIButtons**, the **UISegmentedControl** and the **UILabel**'s IBOutlet properties. Add a boolean property named "isRecording" to check the record state. Lastly, add the IBAction methods for all the UI controls as below:
+ 완려되면, **DJIRootViewController.m** 파일에 들어가고 **DJISDK**와 **VideoPreviewer** 헤더 파일을 import시킨다. **DJIDrone** 클래스의 속성을 생성하고 **DJICamera** 클래스의 하나 그리고 클래스 확장에서 protocol을 구현한다. 다음으로 2개 **UIButtons**을 추가하고 **UISegmentedControl**와 **UILabel**의 IBOutlet 속성을 추가한다.  record 상태로 체크를 검사하기 위해서 "isRecording" 이라는 boolean 속성을 추가한다. 모든 UI control을 위해 마지막으로 IBAction 메소드를 추가한다:
 
 ~~~objc
 #import "DJIRootViewController.h"
@@ -52,7 +52,7 @@ Then, add a UIView inside the **Root View Controller** and set it as an IBOutlet
 
 ~~~
 
-Create a new method named **initData** for data initialization and call it in the ViewDidLoad method. Next, initialize the **DJIDrone** instance and set its type as **DJIDrone_Inspire** (you can change this type based on the UAV you have). Set the **drone** and **camera** instances' delegate to **self**. Moreover, create a new method named "registerApp" and invoke it in the viewDidLoad method. Also, implement the DJIAppManagerDelegate method to do initial setup after register app success:
+데이터 초기화를 위해서 **initData**라는 새로운 메소드를 생성하고 ViewDidLoad 메소드에서 이것을 호출한다. 다음으로 **DJIDrone** 인스턴스를 생성하고 **DJIDrone_Inspire**(가지고 있는 UAV에 맞게 변경)로서 타입을 설정한다. **drone**과 **camera** 인스턴스의 delegate를 **self**로 설정한다. "registerApp"라는 새로운 메소드를 생성하고 viewDidLoad내에서 호출한다. app 등록이 성공한 이후에 초기화 설정을 하기 위해서 DJIAppManagerDelegate를 구현한다:
 
 ~~~objc
 - (void)viewDidLoad {
@@ -95,7 +95,7 @@ Create a new method named **initData** for data initialization and call it in th
 
 ~~~
 
- Moreover, in the viewWillAppear method, set the **fpvPreviewView** instance as a View of **VideoPreviewer** to show the Video Stream and reset it to nil in the viewWillDisappear method, also call the **destroy** method of DJIDrone class in the same method:
+ viewWillAppear 메소드에서 **fpvPreviewView** 인스턴스를 **VideoPreviewer**의 View로 설정한다. 이것은 Video Stream을 보여주기 위해서고 viewWillDisappear 메소드에서 nil로 리셋한다. 또 동일한 메소드에 있는 DJIDrone 클래스의 **destroy** 메소드를 호출한다:
  
 ~~~objc
 
@@ -119,7 +119,7 @@ Create a new method named **initData** for data initialization and call it in th
 }
 ~~~
 
-  Furthermore, implement the **DJICameraDelegate** methods, as shown below:
+  **DJICameraDelegate** 메소드를 구현한다. 다음과 같다:
   
 ~~~objc
 #pragma mark - DJICameraDelegate
@@ -255,17 +255,17 @@ Create a new method named **initData** for data initialization and call it in th
 
 ~~~
 
-  As you can see, we have implemented the **Playback** work mode method, just call the **setCameraWorkMode** method of the **DJIInspireCamera** class and pass the **CameraWorkModePlayback** value to it. Show an alertView in case there is any error.
+  **Playback** work mode 메소드를 구현했고 **DJIInspireCamera** 클래스의 **setCameraWorkMode**를 호출하고 **CameraWorkModePlayback** 값을 여기에 전달한다. error가 있는 경우 alertView를 보여준다. 
    
-  For now, build and run the project in Xcode. Try to use the **Capture** and **Record** feature to take photos and record videos. Then switch the **Camera Mode** by tapping on the UISegmentControl, switch to **Playback** mode to see if you can see the last photo you took or the last video you recorded. Here is a screenshot of what your playback mode should look like:
+  지금까지 Xcode에 프로젝트를 빌드하고 실행한다. 사진을 찍고 비디오를 촬영하기 위해서 **Capture**와 **Record**를 사용하자. 다음으로 UISegmentControl를 두드려서 **Camera Mode**를 전환하며, 마지막 촬영한 사진이나 비디오를 보기 위해서 **Playback** 모드로 전환한다. 여기 스크린샷은 playback모드이다:
   
  ![singlePreview](../../../images/iOS/PlaybackDemo/singlePreview.jpg)
   
-### 3. Previewing Single Files
+### 3. 단일 파일 미리보기
 
-We can switch to the **Playback** mode now. Let's add two **UISwipeGestureRecognizer**s to preview the previous and the next media files in the SD Card.
+이제 **Playback** 모드로 전환할 수 있다. 2개 **UISwipeGestureRecognizer**를 추가해서 SD 카드에 있는 이전과 다음 미디어 파일을 미리보기 하자.
 
-Open the **DJIRootViewController.m** file, create two properties of **UISwipeGestureRecognizer** and name them **swipeLeftGesture** and **swipeRightGesture** in the class extension. Then initialize them in the **initData** method as follows:
+**DJIRootViewController.m** 파일을 열고, **UISwipeGestureRecognizer**의 2개 속성을 생성하고 확장 클래스에서 이름을 **swipeLeftGesture** 와 **swipeRightGesture**라고 붙인다. **initData** 메소드에서 초기화한다:
 
 ~~~objc
 
@@ -287,7 +287,7 @@ Open the **DJIRootViewController.m** file, create two properties of **UISwipeGes
 
 ~~~
 
-Implement the gesture action selector methods:
+gesture 동작 셀렉터 메소드 구현하기:
 
 ~~~objc 
 - (void)swipeLeftGestureAction:(UISwipeGestureRecognizer *)gesture
@@ -301,8 +301,9 @@ Implement the gesture action selector methods:
 }
 ~~~
 
-The above code uses the **singlePreviewNextPage** and **singlePreviewPreviousPage** methods of DJIInspireCamera class to preview the next and previous files. Since there are two types of the media files in the SD Card, **Photo** and **Video**, we'll have to implement video playback feature as well.
+위에 코드는 이전과 다음 파일을 미리보기 하기 위해서 DJIInspireCamera 클래스의 **singlePreviewNextPage**와 **singlePreviewPreviousPage** 메소드를 사용한다. SD카드에 미디어 파일의 2가지 타입으로 **Photo**와 **Video**가 있기 때문에, 비디오 재생 기능을 구현해야만 한다.
 
+**Main.storyboard** 열고 UIVIew 객체를 드래그해서 viewController의 맨위에 위치시킨다. UIButton를 좀전에 추가한 view에 추가한다.
 Open **Main.storyboard**, drag a UIView object and position it on the top of the viewController, then drag a UIButton to the view you just added as subview and named **Stop**. Next, drag a UIButton object to the center of the viewController, set its image as "playVideo"(You can get this image file from the project source code, in the Images.xcassets folder).
 
  ![playbackButtons](../../../images/iOS/PlaybackDemo/playbackButtons.jpg)
