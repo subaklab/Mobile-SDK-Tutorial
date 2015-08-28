@@ -303,12 +303,11 @@ gesture 동작 셀렉터 메소드 구현하기:
 
 위에 코드는 이전과 다음 파일을 미리보기 하기 위해서 DJIInspireCamera 클래스의 **singlePreviewNextPage**와 **singlePreviewPreviousPage** 메소드를 사용한다. SD카드에 미디어 파일의 2가지 타입으로 **Photo**와 **Video**가 있기 때문에, 비디오 재생 기능을 구현해야만 한다.
 
-**Main.storyboard** 열고 UIVIew 객체를 드래그해서 viewController의 맨위에 위치시킨다. UIButton를 좀전에 추가한 view에 추가한다.
-Open **Main.storyboard**, drag a UIView object and position it on the top of the viewController, then drag a UIButton to the view you just added as subview and named **Stop**. Next, drag a UIButton object to the center of the viewController, set its image as "playVideo"(You can get this image file from the project source code, in the Images.xcassets folder).
+**Main.storyboard** 열고 UIVIew 객체를 드래그해서 viewController의 맨위에 위치시킨다. UIButton를 좀전에 subview로 추가한 view에 추가하고 **Stop**이라 이름 붙인다. UIButton 객체를 viewController의 가운데로 드래그하고 이미지를 "playVideo"(프로젝트 소스 코드에서 image파일을 얻을 수 있으며 Images.xcassets 폴더에 있다)로 설정한다.
 
  ![playbackButtons](../../../images/iOS/PlaybackDemo/playbackButtons.jpg)
  
- Here we hide the **Stop** and the **playVideo** buttons. Now let's go to **DJIRootViewController.m** and create IBOutlets and IBActions for the newly added UIs:
+ **Stop**과 **playVideo** 버튼을 숨긴다. **DJIRootViewController.m**로 가서 새로 추가한 UI를 위해 IBOutlets와 IBActions을 생성한다:
  
 ~~~objc
 @property (nonatomic, strong) IBOutlet UIView* playbackBtnsView;
@@ -318,14 +317,14 @@ Open **Main.storyboard**, drag a UIView object and position it on the top of the
 - (IBAction)stopVideoBtnAction:(id)sender; 
 ~~~
 
-Moreover, before implementing the IBAction methods, we'll add two new properties of the DJICameraSystemState class and the DJICameraPlaybackState class and named them as **cameraSystemState** and **cameraPlaybackState** respectively in the class extension as shown below:
+IBAction 메소드를 구현하기 전에, DJICameraSystemState 클래스의 새로운 속성 2개와 DJICameraPlaybackState 클래스를 추가하고 클래스 확장에서 **cameraSystemState**와 **cameraPlaybackState**라고 이름 붙이다:
 
 ~~~objc
 @property (strong, nonatomic) DJICameraSystemState* cameraSystemState;
 @property (strong, nonatomic) DJICameraPlaybackState* cameraPlaybackState;
 ~~~
 
-These properties are used to save the current camera system state and the playback state. Let's update the **cameraSystemState** property value and hide the **playbackBtnsView** based on **DJICameraSystemState**'s workMode in the "-(void) camera:(DJICamera*)camera didUpdateSystemState:(DJICameraSystemState*)systemState" delegate method:
+이런 속성들은 현재 카메라 시스템 상태와 재생 상태를 저장한다. **cameraSystemState** 속성 값을 업데이트하고 "-(void) camera:(DJICamera*)camera didUpdateSystemState:(DJICameraSystemState*)systemState" delegate 메소드에서 **DJICameraSystemState**의 workMode를 기반으로 **playbackBtnsView**를 숨긴다:
 
 ~~~objc
 -(void) camera:(DJICamera*)camera didUpdateSystemState:(DJICameraSystemState*)systemState
@@ -362,7 +361,7 @@ These properties are used to save the current camera system state and the playba
 }
 ~~~
 
-Additionally, implement the **-(void) camera:(DJICamera *)camera didUpdatePlaybackState:(DJICameraPlaybackState *)playbackState** delegate method as shown below:
+추가로 아래처럼 **-(void) camera:(DJICamera *)camera didUpdatePlaybackState:(DJICameraPlaybackState *)playbackState** delegate 메소드를 구현한다:
 
 ~~~objc
 -(void) camera:(DJICamera *)camera didUpdatePlaybackState:(DJICameraPlaybackState *)playbackState
@@ -393,9 +392,9 @@ Additionally, implement the **-(void) camera:(DJICamera *)camera didUpdatePlayba
 }
 ~~~
 
-As you can see, we have updated the **cameraPlaybackState** property's value in the **-(void) camera:(DJICamera *)camera didUpdatePlaybackState:(DJICameraPlaybackState *)playbackState** delegate method, and have also updated the **playVideoBtn**'s hidden state based on the DJICameraSystemState's **workMode** and the DJICameraPlaybackState's **playbackMode**.
+**-(void) camera:(DJICamera *)camera didUpdatePlaybackState:(DJICameraPlaybackState *)playbackState** delegate 메소드에 **cameraPlaybackState** 속성 값을 업데이트했다. DJICameraSystemState의 **workMode**와 DJICameraPlaybackState의 **playbackMode**를 기반으로 **playVideoBtn**의 감춰진 상태를 업데이트 한다.
 
-Finally, we can implement the **IBAction** methods as follows:
+마지막으로 **IBAction** 메소든 아래와 같이 구현한다:
 
 ~~~objc
 - (IBAction)playVideoBtnAction:(id)sender {
