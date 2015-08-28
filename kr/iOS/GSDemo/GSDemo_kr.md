@@ -305,9 +305,9 @@ map에 waypoint를 추가하는 메소드. 다음으로 IBAction 메소인 **edi
 
 ### 4. Focus The MKMapView
 
-You may be wondering why the map's location is different from your current location and why it is difficult to find your location on the map. Focusing the map to your current location quickly would be helpful for the application. To implement that feature, we need to use **CLLocationManager**.
+지도상의 위치가 현재 여러분의 위치와 차이가 나는지, 지도상에서 여러분의 위치를 찾는게 왜 어려운지 궁금할 것이다. 현재 위치를 지도상에 빠르게 포커싱하는 것은 app에 도움이 된다. 이런 특징을 구현하기 위해서 **CLLocationManager**를 사용해야 한다.
 
-Open the **DJIRootViewController.h** file and import CoreLocation's header file. Create a **CLLocationManager** property named "**locationManager**". Then create a **CLLocationCoordinate2D** property named "**userLocation**" to store the user's location data. Next, implement **CLLocationManager**'s **CLLocationManagerDelegate** protocol in the class, as shown below:
+**DJIRootViewController.h** 파일을 열고 CoreLocation의 헤더 파일을 import시킨다. **CLLocationManager** 속성에 "**locationManager**" 이름을 붙인다. **CLLocationCoordinate2D** 속성에는 "**userLocation**"라고 이름 붙이며 사용자의 위치 데이터를 저장한다. 다음으로 아래와 같이 **CLLocationManager**의 **CLLocationManagerDelegate** 프로토콜을 구현한다. 
 
 ~~~objc
 #import <DJISDK/DJISDK.h>
@@ -328,11 +328,11 @@ Open the **DJIRootViewController.h** file and import CoreLocation's header file.
 @end
 ~~~
 
-In the code above, we also added a UIButton named "**Focus Map**" in DJIRootViewController's scene in **Main.storyboard** and added an IBAction method named as "**focusMapAction**". Here is the screenshot of the scene from **Main.storyboard**:
+위 코드와 같이, **Main.storyboard**에서 DJIRootViewController의 "**Focus Map**" 이름의 UIButton을 추가하고 "**focusMapAction**"라는 IBAction 메소드를 추가한다. **Main.storyboard**의 스크린샷은 아래와 같다:
 
 ![focusMap](../../images/iOS/GSDemo/focusMap.png)
 
-Once you are done, go to **DJIRootViewController.m** file and add the following code:
+일단 완료하면 **DJIRootViewController.m** 파일로 가서 다음 코드를 추가한다:
 
 ~~~objc
 - (void)viewWillAppear:(BOOL)animated
@@ -402,24 +402,24 @@ Once you are done, go to **DJIRootViewController.m** file and add the following 
 
 ~~~
 
-First, we initialize **userLocation** data to kCLLocationCoordinate2DInvalid in the viewDidLoad method. Then we add a new method named as **startUpdateLocation** to initialize **locationManger**, set its properties and start updating location. If the Location Service is not available, we add an UIAlertView to display the warning. The **startUpdateLocation** is called in **viewWillAppear** method and is stopped in the **viewWillDisappear** method. Moreover, we need to implement CLLocationManagerDelegate method to update **userLocation** property. Finally, we implement the **focusMapAction** method to focus **mapView** to the user's current location.
+먼저 **userLocation** 데이터 viewDidLoad 메소드에 있는 kCLLocationCoordinate2DInvalid로 초기화한다. **locationManger**를 추가하기 위해, **startUpdateLocation** 이름의 새로운 메소드를 추가한다. 속성을 설정하고 위치를 업데이트한다. 만약 Location Service가 불가능하면 알림을 위해 UIAlertView를 추가한다. **startUpdateLocation**는 **viewWillAppear** 메소드에서 호출되고 **viewWillDisappear**에서 멈추게 된다. **userLocation** 속성을 업데이트 하기 위해서는 CLLocationManagerDelegate 메소드를 구현해야한다. 마지막으로 **mapView**에 사용자의 현재 위치를 포커스 시키기 위해 **focusMapAction** 메소드를 구현한다.
 
-In iOS8, we must call **locationManager**'s **requestAlwaysAuthorization** first, which was done in **startUpdateLocation** method. Next, add a NSLocationAlwaysUsageDescription or NSLocationWhenInUseUsageDescription key to your project’s Info.plist containing the message to be displayed to the user when a UIAlert asking whether or not they want to allow the application to use their location. We set the messages empty here:
+iOS8에서 먼저 **locationManager**의 **requestAlwaysAuthorization**를 호출해야만 한다. 이는 **startUpdateLocation**에서 실행된다. 다음으로 UIAlert이 app에서 위치를 사용하는 것을 허용할지 말지를 물어볼 때, NSLocationAlwaysUsageDescription나 NSLocationWhenInUseUsageDescription key를 여러분의 프로젝트에 있는 Info.plist에 추가한다. 메시지를 비워도록 설정한다 :
 
 ![infoPlist](../../images/iOS/GSDemo/infoPlist.png)
 
-It's time to build and run the project to check the focus map feature. When you launch the app for the first time, a pop up alert asking for your permission to access your location will appear. Select **Allow** and press the **Focus Map** button. If the map view animates to your current location like the following animation, congratulations, you have finished the **Focus Map** feature!
+포커스 지도 기능을 검사하기 위해 프로젝트를 빌드하고 실행하는 때가 되었다. 처음으로 app을 실행할 때, 여러분의 위치에 접근을 허용하는 것을 물어보는 팝업이 나타난다. **Allow**를 선택하고 **Focus Map** 버튼을 누른다. 만약 아래 애니메이션과 같이 map view가 여러분의 현재 위치로 움직이는 화면이 나타나면 성공이다. 지금까지 **Focus Map** 기능을 마쳤다.
 
 ![focusMap](../../images/iOS/GSDemo/focusMap.gif)
 
 
-### 5. Show The Aircraft on Map View
+### 5. Map View에 Aircraft 보여주기
 
-Now, we can focus the mapView to our current location, which is a good start! However, let's do something more interesting. We're going to simulate the aircraft's GPS location using the DJI PC Simulator and show it on our map view.
+이제 현재 위치에 mapView를 포커스할 수 있게 되었다. 괜찮은 출발이다. 하지만 좀더 흥미로운 것을 해보자. DJI PC Simulator를 이용해서 비행체의 GPS 위치를 시뮬레이션 해볼 것이다. 그리고 이를 map view로 보여주자.
 
-You may know how to setup the DJI PC Simulator, and its basic usage. If you want to place the aircraft in your current GPS location on Map View, you can set the latitude and longitude values in the **Simulator Config** to yours. We take the simulator's initial values in the following example.
+여러분은 DJI PC Simulator를 설정하는 방법은 기본이라 이미 알고 있을 것이다. 만약 비행체를 Map View에 현재 GPS 위치로 옮기려면, **Simulator Config**에 위도, 경도 값을 설정한다. 다음 예제에서 시뮬레이터의 초기 값을 가져올 수 있다. 
 
-Let's come back to the code. Create a new subclass of **MKAnnotationView** named "DJIAircraftAnnotationView" and a new subclass of **NSObject** named **DJIAircraftAnnotation**. Below is the code:
+코드로 돌아와서, "DJIAircraftAnnotationView" 이름을 가진 **MKAnnotationView**의 서브클래스를 만들고, **DJIAircraftAnnotation** 이름의 **NSObject** 서브 클래스를 만든다. 아래와 같다 :
 
 - DJIAircraftAnnotationView.h
 
@@ -462,7 +462,7 @@ Let's come back to the code. Create a new subclass of **MKAnnotationView** named
 
 ~~~
 
-In the code above, we create a MKAnnotationView for the aircraft, add a method named **updateHeading** to change the aircraft's rotation, and set its image to "**aircraft.png**"(You can get the image from this tutorial's demo project.) in the init method. Also, we disable the DJIAircraftAnnotationView's draggable property. Take a look at the code below:
+위 코드에서 비행체를 위해 MKAnnotationView 생성하고 비행체의 rotation을 변경하기 위해 **updateHeading**라는 메소드를 추가하고 이미지를 "**aircraft.png**"(튜토리얼의 데모 프로젝트에서 이미지 가져온다)로 설정한다. DJIAircraftAnnotationView의 draggable 속성은 비활성화 시킨다. 아래 코드를 보자 :
 
 - DJIAircraftAnnotation.h
 
@@ -514,21 +514,21 @@ In the code above, we create a MKAnnotationView for the aircraft, add a method n
 @end
 ~~~
 
-The **DJIAircraftAnnotation** class implements the **MKAnnotation** protocol. It's used to store and update a CLLocationCoordinate2D property. Also, we can update DJIAircraftAnnotationView's heading with the **updateHeading** method.
+**DJIAircraftAnnotation** 클래스는  **MKAnnotation** 프로토콜을 구현한다. CLLocationCoordinate2D 속성을 저장하고 업데이트한다. **updateHeading** 메소드와 함께 DJIAircraftAnnotationView의 앞부분을 업데이트한다. 
 
-Once you're done with that, open the **DJIMapController.h** file and import the **DJIAircraftAnnotation.h** file:
+일단 이것이 완료되면, **DJIMapController.h** 파일을 열고 **DJIAircraftAnnotation.h** 파일을 import한다:
 
 ~~~objc
 #import "DJIAircraftAnnotation.h"
 ~~~
 
-Then create a property of an instance of DJIAircraftAnnotation and name it **aircraftAnnotation**. 
+DJIAircraftAnnotation 인스턴스의 속성을 생성하고 **aircraftAnnotation**라고 이름 붙인다. 
 
 ~~~objc
 @property (nonatomic, strong) DJIAircraftAnnotation* aircraftAnnotation;
 ~~~
 
-Furthermore, add two new methods to update the aircraft's location and it's heading on the map.
+2개 메소드를 추가해서 비행체의 위치와 heading을 업데이트한다.
 
 ~~~objc
 /**
@@ -542,7 +542,7 @@ Furthermore, add two new methods to update the aircraft's location and it's head
 -(void)updateAircraftHeading:(float)heading;
 ~~~
 
-Next, let's come back to the **DJIMapController.m** file and implement the two methods we just added:
+다음으로 **DJIMapController.m** 파일로 돌아가서 금방 추가한 2개 메소드를 구현한다:
 
 ~~~objc
 -(void)updateAircraftLocation:(CLLocationCoordinate2D)location withMapView:(MKMapView *)mapView
@@ -563,7 +563,7 @@ Next, let's come back to the **DJIMapController.m** file and implement the two m
 }
 ~~~
 
-Also, since we don't want the **aircraftAnnotation** removed by the **cleanAllPointsWithMapView** method in the DJIMapController.m file, we need to modify it, as shown below:
+DJIMapController.m 파일에 **cleanAllPointsWithMapView** 메소드에서 제거한 **aircraftAnnotation**가 필요없으므로 아래와 같이 수정해야 한다 :
 
 ~~~objc
 - (void)cleanAllPointsWithMapView:(MKMapView *)mapView
@@ -579,11 +579,12 @@ Also, since we don't want the **aircraftAnnotation** removed by the **cleanAllPo
     }   
 }
 ~~~
-We add an if statement to check if the annotation of the map view is equal to the **aircraftAnnotation** property, and if it is not, we remove it. By doing so, we can prevent the Aircraft's annotation from being removed.
+map view의 annotation이 **aircraftAnnotation** 속성과 같은지를 확인하기 위해 if 절을 추가한다. 그리고 그렇지 않으면 이를 제거한다. 이렇게 함으로써 비행체의 annotation이 삭제되는 것을 막을 수 있다.
 
-To provide a better user experience, we need to add a status view on top of the mapView to show the aircraft's flight mode type, current GPS satellite count, vertical and horizontal flight speed and the flight altitude. Let's add the UI in **Main.storyboard**'s RootViewController Scene, as seen below:
+더 나은 UX를 제공하기 위해서, 비행체의 비행 모드 타입, 현재 GPS 위성 카운트, 수직/수평 비행 속도, 비행 고도 등을 보여주기 위해서 mapView의 윗부분에 status view를 추가한다. **Main.storyboard**에 RootViewController UI를 추가하자. 아래와 같다 :
 
 ![statusView](../../images/iOS/GSDemo/statusView.png)
+
 
 Once that's done, open **DJIRootViewController.h** file, create IBOutlets for the above UI elements and import DJISDK's header file and implement **DJIDroneDelegate** and **DJIMainControllerDelegate** protocols. Here we use Inspire 1 for the demo, so we need to create two properties, one of type **DJIDrone** and another of type **DJIInspireMainController**'s property. Also, we need to create a **CLLocationCoordinate2D** property named **droneLocation** to record the aircraft's location, as shown below:
 
