@@ -412,17 +412,17 @@ IBAction 메소드를 구현하기 전에, DJICameraSystemState 클래스의 새
 }
 ~~~
 
-In the **playVideoBtnAction** and **stopVideoBtnAction** methods, we check if the media type is video, then call the **startVideoPlayback** and the **stopVideoPlayback** methods of the **DJIInspireCamera** class to start and stop playing the video. 
+**playVideoBtnAction**와 **stopVideoBtnAction** 메소드에서 미디어 타입이 비디오인지를 검사하고 비디오 플레이를 시작하거나 멈추기 위해서 **DJIInspireCamera** 클래스의 **startVideoPlayback**와 **stopVideoPlayback** 메소드를 호출한다.
 
-Once it's done, build and run the project. Try swiping left and right in playbackMode to navigate through your photos and videos. If you see the play button at the center of the screen, press it to play the video.
+프로젝트를 빌드 및 실행한다. 사진과 비디오를 탐색하기 위해 playbackMode에서 왼쪽에서 오른쪽으로 스위핑한다. 스크린 중앙에 play 버튼이 보이면 비디오를 재생하기 위해 눌러보자.
 
-Playing your video through the playback app:
+playback app을 통해 비디오를 재생하기 :
 
  ![playVideo](../../../images/iOS/PlaybackDemo/playVideo.gif)
 
-### 4. Previewing Multiple Files
+### 4. 여러 파일 미리보기
 
-Before we move forward, let's explain the **Playback mode**. There are multiple playback modes in the camera, and we can check the **CameraPlaybackMode** enum type in the **DJICameraPlaybackState.h** file as follows:
+진도를 나가기 전에 **Playback mode**에 대해 알아보자. 카메라에는 여러가지 재생 모드가 있다. **DJICameraPlaybackState.h** 파일내에 **CameraPlaybackMode** enum 타입을 확인해 보라:
 
 ~~~objc
 /**
@@ -464,15 +464,15 @@ typedef NS_ENUM(uint8_t, CameraPlaybackMode){
 };
 ~~~
 
-As shown in the code above, we can preview files in two ways: **Single Preview** and **Multiple Preview**. We can also zoom into out of photos, play videos, delete photos and videos and even download them. 
+위 코드와 같이, 2가지 방법으로 미리보기가 가능하다 : **Single Preview**와 **Multiple Preview**이다. 줌, 비디오 재생, 사진과 비디오 삭제 그리고 내려받기를 할 수 있다.
 
-We will learn how to preview multiple files here. Here is what **Multiple Preview** looks like:
+여러 파일을 미리보기 하는 방법을 배워보자. **Multiple Preview**은 다음과 같다 :
 
  ![multiplePreview](../../../images/iOS/PlaybackDemo/multiplePreview.jpg)
  
-You can preview at most eight files at the same time. Since the preview images are shown in the **fpvPreviewView**, you cannot interact with them yet. Let's add buttons and swipe gestures to interact with them.
+동시에 8개 파일을 미리보기할 수 있다. **fpvPreviewView**에서 미리보기 이미지가 나타나기 때문에, 아직은 상호동작하는 기능을 없다. 버튼을 추가하고 상호동작하는 스윕 gesture를 추가하자.
 
-First, we will create a new file named **DJIPlaybackMultiSelectViewController**, which will be a subclass of **UIViewController**. Make sure the check box for **Also create XIB file** is selected when creating the file. Then open the **DJIPlaybackMultiSelectViewController.xib** file and, under the **Size** dropdown in the **Simulated Metrics** section, set its size to **Freeform** . In the view section, change the width to **1024** and height to **768**. Take a look at the changes made below:
+먼저 **UIViewController**의 서브클래스로 **DJIPlaybackMultiSelectViewController** 이름의 새로운 파일을 생성한다. **Also create XIB file**에 대한 체크박스를 선택한다. **DJIPlaybackMultiSelectViewController.xib** 파일을 열고 **Simulated Metrics** 섹션에 **Size** 드롭다운 아래에 **Freeform**에 사이즈를 설정한다. view 섹션에서 폭은 **1024**, 높이는 **768**로 변경한다. 아래와 같다 :
 
   ![freeform](../../../images/iOS/PlaybackDemo/freeform.png)
   ![changeSize](../../../images/iOS/PlaybackDemo/changeSize.png)
