@@ -190,8 +190,8 @@
 }
 
 ~~~
-      
-  Lastly, implement the IBAction methods as shown below:
+
+  마지막으로 아래와 같이 IBAction 메소드를 구현한다.
   
 ~~~objc
 - (IBAction)captureAction:(id)sender {
