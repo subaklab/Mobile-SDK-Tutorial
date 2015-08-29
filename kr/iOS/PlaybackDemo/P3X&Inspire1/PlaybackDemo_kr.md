@@ -477,17 +477,17 @@ typedef NS_ENUM(uint8_t, CameraPlaybackMode){
   ![freeform](../../../images/iOS/PlaybackDemo/freeform.png)
   ![changeSize](../../../images/iOS/PlaybackDemo/changeSize.png)
   
-Then drag a **UIView** object to the viewController as subview and set its name to **Buttons View**. Next set its frame as follows:
+**UIView** 객체를 서브뷰로서 viewController로 드래그해서 **Buttons View**라는 이름을 붙인다. 다음으로 프레임을 다음과 같이 설정한다 :
 
   ![buttonsViewFrame](../../../images/iOS/PlaybackDemo/buttonsViewFrame.png)
   
-Moreover, drag eight **UIButton** objects to the **Buttons View** as subviews and position them as follows(You can check the demo project's **DJIPlaybackMultiSelectViewController.xib** file to get the details on how to setup these buttons's frame):
+8개 **UIButton** 객체를 서브뷰로 **Buttons View**에 드래그하고 다음과 같이 위치시킨다.(이 버튼들의 프레임을 설정하는 방법에 대한 상세 내용은 데모 프로젝트의 **DJIPlaybackMultiSelectViewController.xib** 파일을 살펴보자):
 
   ![buttonsView](../../../images/iOS/PlaybackDemo/buttonsView.png)
 
-These buttons represent eight media files when you are in the **Multiple Preview Mode**. Pressing any of these buttons will enter **Single Preview Mode**. 
+**Multiple Preview Mode**에 있을 때, 이 버튼들은 8개 미디어 파일을 나타낸다. 이 버튼들 중에 어떤 것을 누르면 **Single Preview Mode**로 들어간다.
 
-Now let's open the **DJIPlaybackMultiSelectViewController.h** file and create two block properties as follows:
+이제 **DJIPlaybackMultiSelectViewController.h** 파일을 열고 다음과 같이 2개 block property를 생성한다.
 
 ~~~objc
 #import <UIKit/UIKit.h>
@@ -500,9 +500,9 @@ Now let's open the **DJIPlaybackMultiSelectViewController.h** file and create tw
 @end
 ~~~
 
-The first block is used to check the selected button action with index, the second one is used to check the swipe gesture action.
+첫번째 블록은 인덱스를 가지는 선택 버튼 액션을 확인하는데 사용하고 두번째 블록은 스와입 gesture 액션을 검사한다.
 
-Then go to **DJIPlaybackMultiSelectViewController.m** file and create four **UISwipeGestureRecognizer** properties to represent the **left**, **right**, **up** and **down** swipe gestures. Additionally, create eight IBAction methods and link them to the UIButton objects in the **DJIPlaybackMultiSelectViewController.xib** file:
+**DJIPlaybackMultiSelectViewController.m** 파일로 가서 4개 **UISwipeGestureRecognizer** 속성을 생성해서 **left**, **right**, **up**, **down** 스와입 gesture를 표현하자. 추가로 8개 IBAction 메소드와 이를 **DJIPlaybackMultiSelectViewController.xib** 파일내에 UIButton 객체에 연결시키자:
 
 ~~~objc
 #import "DJIPlaybackMultiSelectViewController.h"
@@ -526,7 +526,7 @@ Then go to **DJIPlaybackMultiSelectViewController.m** file and create four **UIS
 @end
 ~~~
 
-Init the swipe gestures properties in the viewDidLoad method and implement the action methods as shown below:
+viewDidLoad 메소드에서 스와입 gesture 속성을 초기화하고 아래와 같이 action 메소드를 구현하자:
 
 ~~~objc
 - (void)viewDidLoad {
@@ -579,9 +579,9 @@ Init the swipe gestures properties in the viewDidLoad method and implement the a
 
 ~~~ 
 
-These four swipe gestures are for single and multiple files preview. Swipe left or right to preview files in **Single Preview Mode**, swipe up or down to preview files in **Multiple Preview Mode**. We invoke the **swipeGestureAction** block inside the swipe action method with a **UISwipeGestureRecognizerDirection** value.
+이렇게 4개 스와입 gesture는 단일/복수 파일을 미리보기 하는데 사용한다. **Single Preview Mode**내에 파일을 미리보기를 위해 왼쪽이나 오른쪽으로 스와입 동작을 하고 **Multiple Preview Mode**에서 파일을 미리보기하는 경우 위나 아래로 스와입 동작을 한다. **UISwipeGestureRecognizerDirection** 값을 가지는 스와입 액션 메소드내부에 **swipeGestureAction** 블록을 호출한다.
 
-Next, implement the IBAction methods for the eight UIButtons as follows:
+8개 UIButton을 위해서 다음과 같이 IBAction 메소드를 구현한다:
 
 ~~~objc
 #pragma mark UIButton Action Methods
@@ -634,11 +634,11 @@ Next, implement the IBAction methods for the eight UIButtons as follows:
 }
 ~~~
 
-We invoke the **selectItemBtnAction** block inside the IBAction methods with related button index. The index starts from 0 here because the file index counted in Playback Multiple Preview Mode starts from 0.
+관련 버튼 인덱스를 가지고 IBAction 내부에 **selectItemBtnAction** 블록을 호출한다. 다중 미리보기 모드에서 파일 인덱스가 0부터 시작하므로 여기서 인덱스는 0에서 시작했다.
 
-Now, go back to **DJIRootViewController.m** file. Since we have added the swipe left and swipe right gestures in the DJIPlaybackMultiSelectViewController.m file, let's delete the **swipeLeftGesture** and **swipeRightGesture** properties and their related codes in the DJIRootViewController.m file to refactor the code structure. 
+이제 **DJIRootViewController.m** 파일로 돌아가보자. DJIPlaybackMultiSelectViewController.m 파일에 스와입 왼쪽 그리고 오른쪽 동작을 추가했다. **swipeLeftGesture** 와 **swipeRightGesture** property와 리팩터링을 위해 DJIRootViewController.m 내에 있는 관련 코드를 삭제하자.
 
-Then import the DJIPlaybackMultiSelectViewController.h header file and create a property of DJIPlaybackMultiSelectViewController named **playbackMultiSelectVC**. Next, we create a new method named **initPlaybackMultiSelectVC** and implement it in the **viewDidLoad** method:
+DJIPlaybackMultiSelectViewController.h 헤더 파일을 import하고 **playbackMultiSelectVC** 라는 이름의 DJIPlaybackMultiSelectViewController 속성을 생성한다. **initPlaybackMultiSelectVC**라는 새로운 메소드를 생성하고 **viewDidLoad** 메소드에서 구현한다:
 
 ~~~objc
 - (void)viewDidLoad {
@@ -681,15 +681,15 @@ Then import the DJIPlaybackMultiSelectViewController.h header file and create a 
 }
 ~~~
 
-So in the **initPlaybackMultiSelectVC** method, we init the **playbackMultiSelectVC** property first, and then we invoke the **selectItemBtnAction** block's setter method and implement the **enterSinglePreviewModeWithIndex** method of the **DJIInspireCamera** with selected index. This way, we can switch to Single Preview Mode from Multiple Preview Mode. 
+**initPlaybackMultiSelectVC** 메소드에서 **playbackMultiSelectVC** 속성을 먼저 초기화하고 다음으로 **selectItemBtnAction** 블록의 setter 메소드를 호출하고 선택한 인덱스를 가지고 **DJIInspireCamera**의 **enterSinglePreviewModeWithIndex** 메소드를 호출한다. 이런 방식으로 다중 미리보기 모드에서 단일 미리보기 모드로 전환할 수 있다. 
 
-Furthermore, we invoke the **swipeGestureAction** block's setter method and implement the preview files feature based on the **UISwipeGestureRecognizerDirection** value.
+추가로 **swipeGestureAction** 블록의 setter 메소드를 호출하고 **UISwipeGestureRecognizerDirection** 값을 기반으로 파일 미리보기 기능을 구현한다.
 
-Once this is done, go to **Main.storyboard** and drag a **UIButton** object to the **playbackBtnsView** as subView, naming it as **Multi Pre** and positioning it as follows:
+이것이 완료되면, **Main.storyboard**로 가서 **UIButton** 객체를 서브뷰로 **playbackBtnsView**로 드래그한다. **Multi Pre**라는 이름을 주고 다음과 같이 위치시킨다:
 
 ![multiPreBtn](../../../images/iOS/PlaybackDemo/multiPreBtn.jpg)
 
-Finally, create an IBAction method named **multiPreviewButtonClicked** and link it to the above UIButton in the **Main.storyboard**. Implement the method as shown below to enter Multiple Preview Mode:
+마지막으로 **multiPreviewButtonClicked**라는 이름의 IBAction 메소드를 생성하고, **Main.storyboard**에서 UIBUtton 위로 연결시킨다. 다중 미리보기 모드에 진입하기 위해서 아래와 같은 메소드를 구현한다:
 
 ~~~objc
 - (IBAction)multiPreviewButtonClicked:(id)sender {
@@ -697,15 +697,15 @@ Finally, create an IBAction method named **multiPreviewButtonClicked** and link 
 }
 ~~~
 
-Let's build and run the project and try to enter Multiple Preview Mode. Use the swipe up and down gestures to preview files. Switch to the Single Preview Mode by pressing any of the eight preview images. Here is a screenshot:
+프로젝트를 빌드하고 실행하자. 다중 미리보기 모드에 들어가자. 파일 미리보기를 위해서 스와입 위와 아래 gesture를 사용한다. 8개 미리보기 이미지 중에 하나를 누르면 단일 미리보기 모드로 전환된다. 스크린샷은 아래와 같다:
 
 ![multiPre](../../../images/iOS/PlaybackDemo/multiPre.jpg)
 
-## Deleting Photos and Videos
+## 사진과 비디오 삭제
 
-You can now preview photos and videos in Single Preview Mode and Multiple Preview Mode. But what if you want to delete a file you don't like? Let's implement the delete files feature!
+단일 미리보기 모드와 다중 미리보기 모드에서 사진과 비디오를 미리보기할 수 있다. 하지만 원하지 않는 파일을 삭제하려고 한다면? 파일을 삭제하는 기능을 구현해보자!
 
-Go to Main.storyboard and drag three UIButtons to the **playbackBtnsView** as subviews and named them **Select**, **Select All** and **Delete**. We hide the "Select" and "Select All" buttons here. Then go to the **DJIRootViewController.m** file and create two IBOutlets for the "Select" and "Select All" buttons, and also the three IBAction methods for the three buttons as follows:
+Main.storyboard로 가서 3개 UIButton을 서브뷰로 **playbackBtnsView**로 드래그하고 **Select**, **Select All**, **Delete**라는 이름을 붙인다. 여기서는 "Select", "Select All" 버튼은 숨기자. **DJIRootViewController.m** 파일로 가서 "Select"와 "Select All" 버튼을 위해 2개 IBOutlet를 생성한다. 또 3개 버튼에 대해서 각각 IBAction 메소드를 생성한다. 아래와 같다 :
 
 ~~~objc
 @property (weak, nonatomic) IBOutlet UIButton *selectBtn;
@@ -716,7 +716,7 @@ Go to Main.storyboard and drag three UIButtons to the **playbackBtnsView** as su
 - (IBAction)selectAllBtnAction:(id)sender;
 ~~~
 
-Next, implement the IBAction methods as shown below:
+다음으로 아래와 같이 IBAction 메소드를 구현한다:
 
 ~~~objc
 - (IBAction)selectButtonAction:(id)sender {
@@ -740,9 +740,9 @@ Next, implement the IBAction methods as shown below:
 }
 ~~~
 
-The above code implements the selectButtonAction method to enter and exit MultipleEditMode by calling the DJIInspireCamera class's **exitMultipleEditMode** and **enterMultipleEditMode** methods. Then in selectAllBtnAction IBAction method, we use an if statement to check if all the files in the page are selected and invoke the **selectAllFilesInPage** and **unselectAllFilesInPage** methods of DJIInspireCamera.
+위 코드로 DJIInspireCamera 클래스의 **exitMultipleEditMode**와 **enterMultipleEditMode** 메소드를 호출해서 MultipleEditMode에 들어가고 나가기 위해서 selectButtonAction 메소드를 구현했다. selectAllBtnAction IBAction 메소드에서 페이지에 있는 모든 파일이 선택되었는지 검사하는 if절을 사용하며, DJIInspireCamera의 **selectAllFilesInPage**와 **unselectAllFilesInPage**를 호출한다.
 
-Moreover, update the **selectBtn** and **selectAllBtn** buttons' hidden values in the following method:
+추가로 다음 메소드에서 **selectBtn**와 **selectAllBtn**의 숨긴 값을 업데이트한다:
 
 ~~~objc
 - (void)updateUIWithPlaybackState:(DJICameraPlaybackState *)playbackState
@@ -785,16 +785,16 @@ Moreover, update the **selectBtn** and **selectAllBtn** buttons' hidden values i
 }
 ~~~ 
 
-Before implementing the **deleteButtonAction** method, let's create two new properties in the class extension as follows:
+**deleteButtonAction** 메소드를 구현하기 전에, 클래스 확장에서 2개 속성을 생성하자:
 
 ~~~objc
 @property (strong, nonatomic) UIAlertView* statusAlertView;
 @property (assign, nonatomic) int selectedFileCount;
 ~~~
 
-Here, we create an **int** property named **selectedFileCount** to count the number of files currently selected in the Multiple Preview Mode. We also create a **UIAlertView** property named as **statusAlertView** to show alerts when deleting files.
+여기서 다중 미리보기 모드에서 현재 선택된 파일의 수를 계산하기 위해서 **selectedFileCount**라는 이름의 **int** 속성을 생성한다. 파일을 삭제할 때 경고를 보여주기 위해서 **statusAlertView**이라는 **UIAlertView** 속성을 생성한다.
 
-Create the following three methods to **show**, **dismiss** and **update** the alertView:
+다음과 같이 alertView를 **show**, **dismiss**, **update**하기 위해 3개 메소드를 생성한다:
 
 ~~~objc
 -(void) showStatusAlertView
@@ -826,7 +826,7 @@ Create the following three methods to **show**, **dismiss** and **update** the a
 }
 ~~~
 
-Furthermore, implement the **deleteButtonAction** action method as shown below:
+추가로 아래와 같이 **deleteButtonAction** 액션 메소드를 구현한다 :
 
 ~~~objc
 - (IBAction)deleteButtonAction:(id)sender {
@@ -863,14 +863,14 @@ Furthermore, implement the **deleteButtonAction** action method as shown below:
 }
 ~~~
 
-The above code updates the **selectedFileCount** property value with **cameraPlaybackState**'s "numbersOfSelected" value. It then checks the **playbackMode** value of cameraPlaybackState to show alertViews in the "MultipleFilesEdit" and "SingleFilePreview" mode. Here we use macro definition for the UIAlertView's tag property:
+**cameraPlaybackState**의 "numbersOfSelected" 값을 가지고 **selectedFileCount** 속성 값을 업데이트한다. "MultipleFilesEdit"과 "SingleFilePreview" 모드에서 alertView를 보여주기 위해서 cameraPlaybackState의 **playbackMode** 값을 검사한다. UIAlertView의 태그 속성을 위해서 매크로 정의를 사용한다:
 
 ~~~objc
 #define kDeleteAllSelFileAlertTag 100
 #define kDeleteCurrentFileAlertTag 101
 ~~~
 
-Finally, let's implement the UIAlertView delegate method as follows to call the DJIInspireCamera's **deleteAllSelectedFiles** and **deleteCurrentPreviewFile** methods to delete files and update selectBtn's title:
+마지막으로 파일을 지우고 selectBtn의 타이틀을 업데이트하기 위해서 DJIInspireCamera의 **deleteAllSelectedFiles**와 **deleteCurrentPreviewFile** 메소드를 호출해서 UIAlertView delegate 메소드를 구현한다:
 
 ~~~objc 
 #pragma mark UIAlertView Delegate Method
@@ -890,26 +890,26 @@ Finally, let's implement the UIAlertView delegate method as follows to call the 
 }
 ~~~
 
-Build and run the project, and try the select multiple files, delete single and multiple files features. Here's what it should look like:
+프로젝트를 빌드하고 실행하자. 그리고 여러 파일을 선택하기, 파일 삭제 기능을 사용해보자. 아래와 같은 화면을 볼 수 있다:
 
-* Deleting a  Single File:
+* 단일 파일 삭제하기:
 
 ![deleteSingleFile](../../../images/iOS/PlaybackDemo/deleteSingleFile.gif)
 
-* Deleting Multiple Files:
+* 복수 파일 삭제하기:
 
 ![deleteMultiFiles](../../../images/iOS/PlaybackDemo/deleteMultiFiles.gif)
 
 
-## Downloading And Saving Photos
+## 사진 다운로드 받기와 저장하기
 
-### 1. Downloading Photos
+### 1. 사진 다운로드 받기
 
-Let's implement the download photo feature now. First, go to the **Main.storyboard** file and drag a **UIButton** object to the **playbackBtnsView** and name it "Download". Then position it as shown below:
+사진 다운로드 받기 기능을 구현해보자. 먼저 **Main.storyboard** 파일로 가서 **UIButton** 객체를 **playbackBtnsView**로 드래그하고 "Download"라고 이름 붙인다. 다음으로 아래와 같이 위치시킨다 :
 
 ![download](../../../images/iOS/PlaybackDemo/download.jpg)
 
-Then go to **DJIRootViewController.m** file and create the following property objects and IBAction methods in the class extension:
+**DJIRootViewController.m** 파일로 가서 클래스 확장에서 다음과 같은 속성 객체와 IBAction 메소드를 생성한다:
 
 ~~~objc
 @property (strong, nonatomic) NSMutableData *downloadedImageData;
@@ -923,17 +923,17 @@ Then go to **DJIRootViewController.m** file and create the following property ob
 - (IBAction)downloadButtonAction:(id)sender;
 ~~~
 
-Lets briefly explain what each of these properties is for.
+간단하게 설명하자면 이 속성들의 각각은 다음과 같은 목적이 있다.
 
-- **downloadedImageData** is used to store the downloaded image's **NSData**
-- **updateImageDownloadTimer** is used to update the download progress status
-- **downloadImageError** is for NSError storage
-- **targetFileName** is used to store the current downloaded image file name
-- **totalFileSize** is for storing the total file size of each downloading image
-- **currentDownloadSize** is used to store the downloaded size of the image
-- **downloadedFileCount** is used to store the downloaded file count
+- **downloadedImageData**는 다운받은 이미지의 **NSData**를 저장하는데 사용한다.
+- **updateImageDownloadTimer**는 다운로드 진행 상태를 업데이트하는데 사용한다.
+- **downloadImageError**는 NSError 저장을 위해 사용한다.
+- **targetFileName**는 현재 다운받은 이미지 파일 이름을 저장하는데 사용한다.
+- **totalFileSize**는 각 다운받는 이미지의 전체 파일 사이즈를 저장하는데 사용한다.
+- **currentDownloadSize**는 다운받은 이미지의 크기를 저장하는데 사용한다.
+- **downloadedFileCount**는 다운받은 파일 갯수를 저장하는데 사용한다.
 
-Let's init the **downloadedImageData** property in the **initData** method as follows:
+**initData** 메소드 내에서 **downloadedImageData** 속성을 초기화 시키자:
 
 ~~~objc
 - (void)initData
@@ -947,7 +947,7 @@ Let's init the **downloadedImageData** property in the **initData** method as fo
 }
 ~~~
 
-Before moving forward, we need to first explain the following method in **DJIInspireCamera** class:
+진도를 나가기 전에, 먼저 **DJIInspireCamera** 클래스에 있는 다음 메소드를 소개하고자 한다:
 
 ~~~objc
 /**
@@ -961,11 +961,11 @@ Before moving forward, we need to first explain the following method in **DJIIns
 -(void) downloadAllSelectedFilesWithPreparingBlock:(DJIFileDownloadPreparingBlock)prepareBlock dataBlock:(DJIFileDownloadingBlock)dataBlock completionBlock:(DJIFileDownloadCompletionBlock)completion;
 ~~~
 
-This method has three params, the first param **prepareBlock** is a file download preparing block. You can do some download initialization work here like showing an alertView to clarify the download file's file name, file size, etc. The second param **dataBlock** is a download data update block, you can append the downloaded data here and increase the downloaded size data. The third param **completion** is a download complete block, you can save the downloaded image to the Photo Album here.
+이 메소드는 3개 인자를 가지고 있다. 첫번째 인자인 **prepareBlock**는 파일 다운로드 준비 블록이다. 다운로드 파일의 이름, 크기 등을 명시하기 위해 alertView를 보여주는 방식과 같이 여기서 다운로드 초기화 관련 일을 할 수 있다. 두번째 인자인 **dataBlock**는 다운로드 데이터 업데이트 블록으로 다운받은 데이터와 다운받은 크기 데이터를 추가할 수 있다. 세번째 인자인 **completion**은 다운로드 완료 블록으로 다운받은 이미지를 Photo Album에 저장할 수 있다.
 
-**Important**: we cannot update the download file status UI in the **dataBlock** block, since it will slow down the file download speed. So we should use the **downloadedImageData** property to append downloaded data and use the **updateImageDownloadTimer** to update the UI.
+**중요**: **dataBlock** 블록에서 다운로드 파일 상태 UI를 업데이트할 수 없다. 따라서 파일 다운로드 속도를 보여줄 예정이다. 다운받은 데이터를 추가하기 위해서  **downloadedImageData** 속성을 사용하며 UI를 업데이트하기 위해서 **updateImageDownloadTimer**를 사용한다.
 
-So let's create three new methods here to set up the **updateImageDownloadTimer**:
+**updateImageDownloadTimer**를 설정하기 위해서 3개 새로운 메소드를 생성하자:
 
 ~~~objc
 - (void)updateDownloadProgress:(NSTimer *)updatedTimer
@@ -1002,9 +1002,9 @@ So let's create three new methods here to set up the **updateImageDownloadTimer*
 }
 ~~~
 
-As you can see, we use the startUpdateTimer and stopTimer methods to start and stop the **updateImageDownloadTimer**. Then we implement the **updateDownloadProgress** selector method to update the **statusAlertView**'s title and message value.
+보는 바와 같이,  **updateImageDownloadTimer**를 시작과 정지를 위해 startUpdateTimer와 stopTimer 메소드를 사용한다. 다음으로 **statusAlertView**의 타이틀과 메시지 값을 업데이트하기 위해서 **updateDownloadProgress** 셀렉터 메소드를 구현한다.
 
-Next, create a new method name **resetDownloadData** to reset all the download related property values:
+다음으로, 모든 다운로드 관련된 속성 값을 리셋하기 위해서 **resetDownloadData**라는 이림의 새로운 메소드를 생성한다:
 
 ~~~objc
 - (void)resetDownloadData
@@ -1018,7 +1018,7 @@ Next, create a new method name **resetDownloadData** to reset all the download r
 }
 ~~~
 
-Furthermore, define two UIAlertView constant tag objects, implement the **downloadButtonAction** method and improve the UIAlertView Delegate Method with the following code:
+추가로 UIAlertView 상수 태그 객체를 정의하고 **downloadButtonAction** 메소드를 구현하고 UIAlertView Delegate 메소드를 다음과 같이 개선한다:
 
 ~~~objc
 
@@ -1088,9 +1088,9 @@ Furthermore, define two UIAlertView constant tag objects, implement the **downlo
 }
 ~~~
 
-In **downloadButtonAction** method, we update the **statusAlertView**'s title and message. And create two new **UIAlertView**s to ask users for permission to download files based on the **cameraPlaybackState**'s **playbackMode** value. Finally, in the UIAlertView delegate method, we just implement the **downloadFiles** method once the **OK** button of alertView is pressed. 
+**downloadButtonAction** 메소드에서, **statusAlertView** 타이틀과 메시지를 업데이트했다. 그리고 **cameraPlaybackState**의 **playbackMode** 값을 기반으로 파일을 다운로드하기 위해서 사용자에게 허가를 요청하기 위해서 새로 2개의 **UIAlertView**를 생성한다. 마지막으로 UIAlertView delegate 메소드에서, 일단 alertView의 **OK**버튼이 눌러지면 **downloadFiles** 메소드가 동작한다.
 
-Lastly, implement the **downloadFiles** method as shown below:
+마지막으로 아래와 같이 **downloadFiles** 메소드를 구현하자:
 
 ~~~objc
 -(void) downloadFiles
@@ -1139,24 +1139,24 @@ Lastly, implement the **downloadFiles** method as shown below:
 }
 ~~~ 
 
-In this method, we call the **resetDownloadData** method to reset data first. We check if the playbackMode is **SingleFilePreview** and update the **selectedFileCount** variable's value. Then we call the following method of the **DJIInspireCamera** class:
+이 메소드에서 먼저 데이터를 리셋하기 위해서 **resetDownloadData** 메소드를 호출한다. playbackMode가 **SingleFilePreview**인지를 검사하고 **selectedFileCount** 변수 값을 업데이트한다. 다음으로 **DJIInspireCamera** 클래스의 아래와 같은 메소드를 호출한다:
 
 ~~~objc
 -(void) downloadAllSelectedFilesWithPreparingBlock:(DJIFileDownloadPreparingBlock)prepareBlock dataBlock:(DJIFileDownloadingBlock)dataBlock completionBlock:(DJIFileDownloadCompletionBlock)completion;
 ~~~
 
-In the first block prepareBlock, we call the **startUpdateTimer** method to start updateImageDownloadTimer. Then, we update the **totalFileSize** and **targetFileName** variables. Next, we show statusAlertView and update its title and message with the download image info.
+첫번째 블록인 prepareBlock에서 **startUpdateTimer** 메소드를 호출해서 updateImageDownloadTimer를 시작시킨다. 그런 다음, **totalFileSize**와 **targetFileName** 변수를 업데이트한다. 다음은 statusAlertView를 보여주고 다운로드 이미지 정보를 가지고 타이틀과 메시지를 업데이트한다.
 
-In the second block dataBlock, we append the **downloadedImageData** with the downloaded image data and update the **currentDownloadSize** and **downloadImageError** variables' values.
+두번째 블록인 dataBlock에서 다운받은 이미지 데이터를 가지고 **downloadedImageData**를 추가하고 **currentDownloadSize**와 **downloadImageError** 변수 값을 업데이트한다.
 
-In the third block completion, we increase the **downloadedFileCount** variable. We then create an UIImage object with **downloadedImageData**. Next, we reset downloadedImageData's data and currentDownloadSize's value. Moreover, we update **statusAlertView** with the image download info. 
+세번째 블록인 completion에서 **downloadedFileCount** 변수를 증가시킨다. 그런 다음, **downloadedImageData**를 가지고 UIImage 객체를 생성한다. 다음은 downloadedImageData의 데이터와 currentDownloadSize의 값을 리셋시킨다. 추가로 이미지 다운로드 정보를 가지고 **statusAlertView**을 업데이트한다.
 
 
-### 2. Saving downloaded photos to Photo Album
+### 2. 다운받은 사진을 Photo Album에 저장하기
 
-Now, we have implemented the download photos features, but if we want to save the downloaded photos to the iOS Photo Album?
+이제 사진 다운로드 기능을 구현했다. 하지만 iOS Photo Album에 다운받은 사진을 저장하고 싶다면?
 
-To do this, we will create a new property of NSMutableArray class and name it **downloadedImageArray** and initialize it in the **initData** method, also resetting it in the **resetDownloadData** method as follows:
+이렇게 하려면, NSMutableArray 클래스의 새로운 속성 생성하고 **downloadedImageArray**라고 이름 붙이고 **initData** 메소드 내에서 초기화할 예정이다. 따라서 아래와 같이 **resetDownloadData** 메소드내에서 리셋시킨다:
 
 ~~~objc
 - (void)initData
@@ -1182,7 +1182,7 @@ To do this, we will create a new property of NSMutableArray class and name it **
 }
 ~~~
 
-Once that's done, let's add two new methods as shown below:
+여기까지 완성하면 아래와 같이 2개 새로운 메소드를 추가하자:
 
 ~~~objc
 - (void)saveDownloadImage
@@ -1221,11 +1221,11 @@ Once that's done, let's add two new methods as shown below:
 }
 ~~~
 
-In the saveDownloadImage method, we check if **downloadedImageArray** is empty and get its last UIImage, assigning it to the **image** variable. Then we use the **UIImageWriteToSavedPhotosAlbum()** method to save the image to the Photo Album and remove the last object from the downloadedImageArray.
+saveDownloadImage 메소드에서, **downloadedImageArray**가 비었는지를 검사하여 마지막 UIImage를 얻어서 **image** 변수에 할당한다. 다음으로 이미지를 Photo Album에 저장하기 위해서 **UIImageWriteToSavedPhotosAlbum()** 메소드를 사용하고 downloadedImageArray로부터 마지막 객체를 제거한다.
 
-Next, in the selector method, we check if an error has occurred and invoke the **saveDownloadImage** method until the **downloadedImageArray** is empty. At the same time, we update the **statusAlertView** with related titles and messages.
+다음은 셀렉터 메소드내에서 error가 발생했는지 검사하고 **downloadedImageArray**가 빌때까지 **saveDownloadImage** 메소드를 호출한다. 동시에 관련 타이틀과 메시지와 함께 **statusAlertView**를 업데이트한다.
 
-At the end, add the downloaded image object to downloadedImageArray, and call the stopTimer method and the saveDownloadImage method in the **completion** block of the **downloadFiles** method:
+결국 다운받은 이미지 객체를 downloadedImageArray에 추가하고, **downloadFiles** 메소드의 **completion** 블록내에서 stopTimer 메소드와 saveDownloadImage 메소드를 호출한다:
 
 ~~~objc
 
@@ -1253,21 +1253,21 @@ completionBlock:^{
 
 ~~~
 
-Let's build and run the project. Try to download photos in Single Preview Mode and Multiple Preview Mode. Once it's finished, go to the Photo Album to check if the downloaded photos exist:
+프로젝트를 빌드하고 실행하자. 단일 미리보기 모드와 다중 미리보기 모드에서 사진을 다운받아보자. 일단 완료되면 Photo Album으로 가서 다운받은 사진이 존재하는지 검사한다:
 
-* Selecting files and downloading them:
+* 파일 선택하기와 다운받기:
 
 ![downloadFiles1](../../../images/iOS/PlaybackDemo/downloadFiles1.gif)
 
-* Download completion and photos being saved to the Photo Album:
+* 다운로드 완료와 Photo Alubm에 추가되는 사진:
 
 ![downloadFiles2](../../../images/iOS/PlaybackDemo/downloadFiles2.gif)
 
 
-## Summary
+## 요약
    
-   In this tutorial, you learned how to preview photos and videos in Single Preview Mode and Multiple Preview Mode, how to enter multiple edit mode and select files for deleting. You also learned how to download and save photos to the iOS Photo Album. 
+   이 튜토리얼에서 단일/다중 미리보기 모드에서 사진과 비디오 미리보기 방법, 다중 편집 모드 진입방법, 삭제를 위한 파일 선택 등에 대해 배웠다. 또 iOS Photo Album으로 다운받아 저장하는 방법을 배웠다.
    
-   In the next tutorial, we will learn how to preview, edit and download photos and videos for Phantom 3 Advanced. Please move on to our next tutorial. Hope you enjoy it!
+   다음 튜토리얼에서 Phantom 3 Advanced에서 사진과 비디오에 대해서 미리보기, 편집, 다운로드하는 방법을 배워보자. 다음 튜토리얼로 넘어가보자. 즐기자!
    
    
